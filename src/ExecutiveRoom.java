@@ -11,5 +11,6 @@ public class ExecutiveRoom extends Room{
         this.roomNumber = roomNumber;
         this.price = hotel.getPrice() * 1.35;
         this.hotel = hotel;
+        this.roomType = "Executive";
     }
 }

@@ -11,5 +11,6 @@ public class DeluxeRoom extends Room{
         this.roomNumber = roomNumber;
         this.price = hotel.getPrice() * 1.2;
         this.hotel = hotel;
+        this.roomType = "Deluxe";
     }
 }

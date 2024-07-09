@@ -11,6 +11,7 @@ public class Reservation {
     private final int checkOutDate;
     private final double pricePerDay;
     private final double totalPrice;
+    private final String roomType;
 
 
     /**
@@ -31,6 +32,7 @@ public class Reservation {
         this.totalPrice = pricePerDay * (checkOutDate - checkInDate + 1);
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
+        this.roomType = room.getRoomType();
     }
 
 
@@ -91,6 +93,7 @@ public class Reservation {
         System.out.println("Guest Name: " + guestName);
         System.out.println("Hotel: " + hotel.getName());
         System.out.println("Room Number: " + room.getRoomNumber());
+        System.out.println("Room Type: " + roomType);
         System.out.println("Check-in Date: " + checkInDate);
         System.out.println("Check-out Date: " + checkOutDate);
         System.out.println("Price per Day: " + pricePerDay);

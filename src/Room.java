@@ -15,6 +15,7 @@ public class Room {
     protected final ArrayList<Reservation> reservations = new ArrayList<>();
     protected final ArrayList<Integer> reservedDates = new ArrayList<>();
     protected final ArrayList<Integer> availableDates = new ArrayList<>();
+    protected String roomType;
 
 
     /**
@@ -34,6 +35,7 @@ public class Room {
 
         this.price = hotel.getPrice();
         this.hotel = hotel;
+        this.roomType = "Standard";
     }
 
 
@@ -184,6 +186,7 @@ public class Room {
 
     public void viewRoom(){
         System.out.println("Room Number: " + roomNumber);
+        System.out.println("Room Type: " + roomType);
         System.out.println("Room Price: " + price);
         System.out.println("Days room is available:");
         System.out.println(availableDates);
@@ -199,10 +202,11 @@ public class Room {
      * @return The Hotel object the room is in.
      */
 
-
-
-
     public Hotel getHotel(){
         return hotel;
+    }
+
+    public String getRoomType(){
+        return roomType;
     }
 }

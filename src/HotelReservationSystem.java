@@ -48,6 +48,9 @@ public class HotelReservationSystem {
         do {
             System.out.println("Hotel Name: " + hotel.getName());
             System.out.println("Total number of rooms: " + hotel.getNumberOfRooms());
+            System.out.println("Total number of Standard Rooms: " + hotel.getNumberOfStandardRooms());
+            System.out.println("Total number of Deluxe Rooms: " + hotel.getNumberOfDeluxeRooms());
+            System.out.println("Total number of Executive Rooms: " + hotel.getNumberOfExecutiveRooms());
             System.out.println("Monthly earnings: " + hotel.getMonthlyEarnings());
             System.out.println("Choose Information to View: ");
             System.out.println("1. Room availability per date");
@@ -150,33 +153,22 @@ public class HotelReservationSystem {
                     System.out.println("2. Deluxe");
                     System.out.println("3. Executive");
                     int roomType = InputHelper.nextInt();
-                    if(roomType < 1 || roomType > 3){
-                        System.out.println("[Invalid Input]");
-                        System.out.println(" ");
+
+                    if(isNumberOfRoomsInvalid(hotel, roomType, 0)){
                         break;
                     }
+
                     System.out.println("[Enter Number of Rooms to Add]");
                     int numOfRooms = InputHelper.nextInt();
-                    if(numOfRooms < 1){
-                        System.out.println("[Invalid Input]");
-                        System.out.println(" ");
+
+                    if(isNumberOfRoomsInvalid(hotel, roomType, numOfRooms)){
                         break;
                     }
-                    if(roomType == 1 && numOfRooms + hotel.getNumberOfStandardRooms() > 30){
-                        System.out.println("[Hotel Cannot Have More Than 30 Standard Rooms]");
-                        System.out.println(" ");
+
+                    if(!confirmModification()){
                         break;
                     }
-                    if(roomType == 2 && numOfRooms + hotel.getNumberOfDeluxeRooms() > 10){
-                        System.out.println("[Hotel Cannot Have More Than 10 Deluxe Rooms]");
-                        System.out.println(" ");
-                        break;
-                    }
-                    if(roomType == 3 && numOfRooms + hotel.getNumberOfExecutiveRooms() > 10){
-                        System.out.println("[Hotel Cannot Have More Than 10 Executive Rooms]");
-                        System.out.println(" ");
-                        break;
-                    }
+
                     hotel.addRooms(numOfRooms, roomType);
                     break;
                 case 3:
@@ -413,5 +405,44 @@ public class HotelReservationSystem {
         if(exit != null) {
             System.out.println(" ");
         }
+    }
+
+    public boolean isNumberOfRoomsInvalid(Hotel hotel, int roomType, int numOfRooms){
+        if(numOfRooms < 1){
+            System.out.println("[Invalid Number of Rooms]");
+            System.out.println(" ");
+            return true;
+        }
+        boolean isValidNumOfRooms = true;
+        switch (roomType) {
+            case 1:
+                if (hotel.getNumberOfStandardRooms() + numOfRooms > 30) {
+                    System.out.println("[Hotel Cannot Have More Than 30 Standard Rooms]");
+                    System.out.println(" ");
+                    isValidNumOfRooms = false;
+                }
+                break;
+            case 2:
+                if (hotel.getNumberOfDeluxeRooms() + numOfRooms > 10) {
+                    System.out.println("[Hotel Cannot Have More Than 10 Deluxe Rooms]");
+                    System.out.println(" ");
+                    isValidNumOfRooms = false;
+                }
+                break;
+            case 3:
+                if (hotel.getNumberOfExecutiveRooms() + numOfRooms > 10) {
+                    System.out.println("[Hotel Cannot Have More Than 10 Executive Rooms]");
+                    System.out.println(" ");
+                    isValidNumOfRooms = false;
+                }
+                break;
+            default:
+                System.out.println("[Invalid Room Type]");
+                System.out.println(" ");
+                isValidNumOfRooms = false;
+                break;
+        }
+
+        return !isValidNumOfRooms;
     }
 }
