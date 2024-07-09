@@ -30,7 +30,9 @@ public class Hotel {
     public Hotel(String name){
         this.name = name;
         this.price = 1299.00;
-        rooms.add(new Room(101, this));
+        Room room = new Room(101, this);
+        rooms.add(room);
+        firstFloor.add(room);
     }
 
 
@@ -126,7 +128,6 @@ public class Hotel {
         if (addedRooms.size() > 1){
             plural = plural.concat("s");
         }
-
 
         Collections.sort(addedRooms);
         System.out.println("Room" + plural + " " + addedRooms + " Added");
@@ -233,11 +234,13 @@ public class Hotel {
 
 
     public void printRoomNumbers(){
+        ArrayList<Integer> roomNumbers = new ArrayList<>();
         for (Room room : rooms) {
-            if(room != null){
-                System.out.println(room.getRoomNumber());
-            }
+            roomNumbers.add(room.getRoomNumber());
         }
+
+        Collections.sort(roomNumbers);
+        System.out.println(roomNumbers);
     }
 
 
@@ -395,7 +398,7 @@ public class Hotel {
         int roomNumber;
         ArrayList<Integer> roomNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            roomNumbers.add(floorNumber * 100 + i);
+            roomNumbers.add(floorNumber * 100 + i + 1);
         }
 
         boolean missingRoom = false;
@@ -417,18 +420,15 @@ public class Hotel {
     }
 
     public void addRoomType(ArrayList<Room> floor, int roomNumber, ArrayList<Integer> addedRooms, int roomType){
-        switch (roomType){
-            case 1:
-                floor.add(roomNumber, new Room(roomNumber, this));
-                break;
-            case 2:
-                floor.add(roomNumber, new DeluxeRoom(roomNumber, this));
-                break;
-            case 3:
-                floor.add(roomNumber, new ExecutiveRoom(roomNumber, this));
-                break;
-        }
+        Room room = switch (roomType) {
+            case 1 -> new Room(roomNumber, this);
+            case 2 -> new DeluxeRoom(roomNumber, this);
+            case 3 -> new ExecutiveRoom(roomNumber, this);
+            default -> null;
+        };
 
+        rooms.add(room);
+        floor.add(room);
         addedRooms.add(roomNumber);
     }
 

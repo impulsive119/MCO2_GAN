@@ -9,11 +9,6 @@ public class ExecutiveRoom extends Room{
     public ExecutiveRoom(int roomNumber, Hotel hotel) {
         super(roomNumber, hotel);
         this.roomNumber = roomNumber;
-
-        for (int i = 0; i < 31; i++){
-            availableDates.add(i + 1);
-        }
-
         this.price = hotel.getPrice() * 1.35;
         this.hotel = hotel;
     }
