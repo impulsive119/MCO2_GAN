@@ -305,8 +305,39 @@ public class HotelReservationSystem {
         System.out.println("[Input Guest Name]");
         String guestName = InputHelper.nextStr();
 
+        System.out.println("[Would You Like to Enter a Discount Code?]");
+        System.out.println("Enter YES to Avail of Discount Code or Anything Else to Proceed]");
 
-        hotel.addReservation(chosenRoom, guestName, checkInDate, checkOutDate);
+        String availOfDiscountCode = InputHelper.nextStr();
+
+        if(availOfDiscountCode.equals("YES")){
+            String discountCode = InputHelper.nextStr();
+            switch (discountCode){
+                case "I_WORK_HERE":
+                    hotel.addReservation(chosenRoom, guestName, checkInDate, checkOutDate, 1);
+                    break;
+                case "STAY4_GET1":
+                    if(checkOutDate - checkInDate + 1 >= 5){
+                        hotel.addReservation(chosenRoom, guestName, checkInDate, checkOutDate, 2);
+                    }
+                    else{
+                        System.out.println("STAY4_GET1 Discount Code is Only Valid for Reservations 5 Days or Longer");
+                    }
+                    break;
+                case "PAYDAY":
+                    if((checkInDate <= 15 && checkOutDate > 15)||(checkInDate <= 28 && checkOutDate > 28)){
+                        hotel.addReservation(chosenRoom, guestName, checkInDate, checkOutDate, 3);
+                    }
+                    else{
+                        System.out.println("PAYDAY Discount Code is Only Valid for Reservations During Paydays");
+                    }
+                    break;
+                default:
+                    System.out.println("[Invalid Discount Code]");
+            }
+        }else{
+            hotel.addReservation(chosenRoom, guestName, checkInDate, checkOutDate, 0);
+        }
     }
 
 

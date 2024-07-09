@@ -12,6 +12,7 @@ public class Reservation {
     private final double pricePerDay;
     private final double totalPrice;
     private final String roomType;
+    private final Discount discount;
 
 
     /**
@@ -29,12 +30,24 @@ public class Reservation {
         this.room = room;
         this.hotel = room.getHotel();
         this.pricePerDay = room.getPrice();
-        this.totalPrice = pricePerDay * (checkOutDate - checkInDate + 1);
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
+        this.totalPrice = pricePerDay * getStayDuration();
         this.roomType = room.getRoomType();
+        this.discount = null;
     }
 
+    public Reservation(String guestName, Room room, int checkInDate, int checkOutDate, Discount discount){
+        this.guestName = guestName;
+        this.room = room;
+        this.hotel = room.getHotel();
+        this.pricePerDay = room.getPrice() * discount.getDiscountPercentage();
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.totalPrice = pricePerDay * getStayDuration();
+        this.roomType = room.getRoomType();
+        this.discount = discount;
+    }
 
     /**
      * Gets the name of the guest that made the reservation.
@@ -98,6 +111,7 @@ public class Reservation {
         System.out.println("Check-out Date: " + checkOutDate);
         System.out.println("Price per Day: " + pricePerDay);
         System.out.println("Total Price: " + totalPrice);
+        System.out.println("Discount Code: " + getDiscountCode());
     }
 
 
@@ -110,5 +124,18 @@ public class Reservation {
 
     public double getTotalPrice(){
         return totalPrice;
+    }
+
+    public int getStayDuration(){
+        return checkOutDate - checkInDate + 1;
+    }
+
+    private String getDiscountCode(){
+        if(discount == null){
+            return "N/A";
+        }
+        else{
+            return discount.getDiscountCode();
+        }
     }
 }

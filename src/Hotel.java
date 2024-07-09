@@ -281,15 +281,20 @@ public class Hotel {
      */
 
 
-    public void addReservation(Room room, String guestName, int checkInDate, int checkOutDate) {
+    public void addReservation(Room room, String guestName, int checkInDate, int checkOutDate, int discountType) {
         room.setPrice(price); // Set the price for the room
-        Reservation newReservation = new Reservation(guestName, room, checkInDate, checkOutDate);
+        Reservation newReservation = switch (discountType) {
+            case 1 -> new Reservation(guestName, room, checkInDate, checkOutDate, new IWorkHereDiscount());
+            case 2 ->
+                    new Reservation(guestName, room, checkInDate, checkOutDate, new Stay4Get1Discount(checkOutDate - checkInDate + 1));
+            case 3 -> new Reservation(guestName, room, checkInDate, checkOutDate, new PaydayDiscount());
+            default -> new Reservation(guestName, room, checkInDate, checkOutDate);
+        };
         reservations.add(newReservation);
         room.addReservation(newReservation);
         System.out.println("[Reservation Added]");
         System.out.println(" ");
     }
-
 
     /**
      * Allows the user to select a room from the current list of rooms in the hotel.
