@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 /**
@@ -13,8 +12,7 @@ public class Room {
     protected double price;
     protected Hotel hotel;
     protected final ArrayList<Reservation> reservations = new ArrayList<>();
-    protected final ArrayList<Integer> reservedDates = new ArrayList<>();
-    protected final ArrayList<Integer> availableDates = new ArrayList<>();
+    protected final ArrayList<Date> dates = new ArrayList<>();
     protected String roomType;
 
 
@@ -28,12 +26,11 @@ public class Room {
 
     public Room(int roomNumber, Hotel hotel){
         this.roomNumber = roomNumber;
-        for (int i = 0; i < 31; i++){
-            availableDates.add(i + 1);
+        this.price = hotel.getPrice();
+        for (int i = 0; i < 31; i++) {
+            dates.add(new Date(i + 1, price));
         }
 
-
-        this.price = hotel.getPrice();
         this.hotel = hotel;
         this.roomType = "Standard";
     }
@@ -82,7 +79,14 @@ public class Room {
      */
 
 
-    public ArrayList<Integer> getReservedDates(){
+    public ArrayList<Date> getReservedDates(){
+        ArrayList<Date> reservedDates = new ArrayList<>();
+        for(Date date: dates){
+            if (!date.getAvailability()){
+                reservedDates.add(date);
+            }
+        }
+
         return reservedDates;
     }
 
@@ -97,10 +101,8 @@ public class Room {
     public void addReservation(Reservation reservation){
         reservations.add(reservation);
 
-
-        for(int i = reservation.getCheckInDate(); i <= reservation.getCheckOutDate(); i++){
-            availableDates.remove(Integer.valueOf(i));
-            reservedDates.add(i);
+        for(int i = reservation.getCheckInDate().getDate(); i <= reservation.getCheckOutDate().getDate(); i++){
+            dates.get(i).setAvailability(false);
         }
     }
 
@@ -117,12 +119,10 @@ public class Room {
     public boolean isReserved(int checkInDate, int checkOutDate){
         boolean isReserved = false;
         for (int k = checkInDate; k < checkOutDate; k++){
-            for (int date: reservedDates){
-                if (date == k){
+                if (!dates.get(k).getAvailability()){
                     isReserved = true;
                     break;
                 }
-            }
         }
 
 
@@ -138,11 +138,12 @@ public class Room {
 
 
     public void removeReservation(Reservation reservation){
-        for(int i = reservation.getCheckInDate(); i <= reservation.getCheckOutDate(); i++){
-            availableDates.add(i);
-            reservedDates.remove(Integer.valueOf(i));
+        reservations.add(reservation);
+
+        for(int i = reservation.getCheckInDate().getDate(); i <= reservation.getCheckOutDate().getDate(); i++){
+            dates.get(i).setAvailability(true);
         }
-        Collections.sort(availableDates);
+
         reservations.remove(reservation);
     }
 
@@ -189,9 +190,9 @@ public class Room {
         System.out.println("Room Type: " + roomType);
         System.out.println("Room Price: " + price);
         System.out.println("Days room is available:");
-        System.out.println(availableDates);
+        System.out.println();
         System.out.println("Days room is reserved:");
-        System.out.println(reservedDates);
+        System.out.println(getReservedDates());
         System.out.println(" ");
     }
 
@@ -208,5 +209,9 @@ public class Room {
 
     public String getRoomType(){
         return roomType;
+    }
+
+    public Date getDate(int date){
+        return dates.get(date - 1);
     }
 }

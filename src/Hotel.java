@@ -188,28 +188,21 @@ public class Hotel {
     /**
      * Displays the availability of rooms on a specific date.
      *
-     * @param inputDate The date for which availability is checked.
+     * @param date The date for which availability is checked.
      */
 
 
-    public void viewAvailabilityOnDate(int inputDate){
+    public void viewAvailabilityOnDate(int date){
         ArrayList<Room> reservedRooms = new ArrayList<>();
         ArrayList<Room> availableRooms = new ArrayList<>();
 
 
         for(Room room: rooms){
-            boolean isReserved = false;
-            for(int date: room.getReservedDates()){
-                if (inputDate == date) {
-                    isReserved = true;
-                    break;
-                }
-            }
-            if(isReserved){
-                reservedRooms.add(room);
+            if (room.getDate(date - 1).getAvailability()){
+                availableRooms.add(room);
             }
             else{
-                availableRooms.add(room);
+                reservedRooms.add(room);
             }
         }
 
@@ -286,7 +279,7 @@ public class Hotel {
         Reservation newReservation = switch (discountType) {
             case 1 -> new Reservation(guestName, room, checkInDate, checkOutDate, new IWorkHereDiscount());
             case 2 ->
-                    new Reservation(guestName, room, checkInDate, checkOutDate, new Stay4Get1Discount(checkOutDate - checkInDate + 1));
+                    new Reservation(guestName, room, checkInDate, checkOutDate, new Stay4Get1Discount());
             case 3 -> new Reservation(guestName, room, checkInDate, checkOutDate, new PaydayDiscount());
             default -> new Reservation(guestName, room, checkInDate, checkOutDate);
         };

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * The Reservation class represents a booking made by a guest for a selected room in a hotel.
  */
@@ -7,10 +9,9 @@ public class Reservation {
     private final String guestName;
     private final Room room;
     private final Hotel hotel;
-    private final int checkInDate;
-    private final int checkOutDate;
+    private final ArrayList<Date> reservedDates = new ArrayList<>();
     private final double pricePerDay;
-    private final double totalPrice;
+    private double totalPrice;
     private final String roomType;
     private final Discount discount;
 
@@ -30,9 +31,11 @@ public class Reservation {
         this.room = room;
         this.hotel = room.getHotel();
         this.pricePerDay = room.getPrice();
-        this.checkInDate = checkInDate;
-        this.checkOutDate = checkOutDate;
-        this.totalPrice = pricePerDay * getStayDuration();
+        for(int i = checkInDate; i < checkOutDate; i++){
+            this.reservedDates.add(room.getDate(i));
+            this.totalPrice += reservedDates.getLast().getPrice();
+        }
+        reservedDates.getLast().setIsCheckoutDate(true);
         this.roomType = room.getRoomType();
         this.discount = null;
     }
@@ -41,12 +44,21 @@ public class Reservation {
         this.guestName = guestName;
         this.room = room;
         this.hotel = room.getHotel();
-        this.pricePerDay = room.getPrice() * discount.getDiscountPercentage();
-        this.checkInDate = checkInDate;
-        this.checkOutDate = checkOutDate;
-        this.totalPrice = pricePerDay * getStayDuration();
+        this.pricePerDay = room.getPrice();
+        for(int i = checkInDate; i < checkOutDate; i++){
+            this.reservedDates.add(room.getDate(i));
+            this.totalPrice += reservedDates.getLast().getPrice();
+        }
+        reservedDates.getLast().setIsCheckoutDate(true);
         this.roomType = room.getRoomType();
         this.discount = discount;
+        if(discount.getDiscountCode().equals("STAY4_GET1")){
+            totalPrice = Stay4Get1Discount.getDiscountAmount(reservedDates.getFirst().getPrice(), totalPrice);
+        }
+        else{
+            totalPrice *= discount.getDiscountPercentage();
+        }
+
     }
 
     /**
@@ -68,8 +80,8 @@ public class Reservation {
      */
 
 
-    public int getCheckInDate() {
-        return checkInDate;
+    public Date getCheckInDate() {
+        return reservedDates.getFirst();
     }
 
 
@@ -80,8 +92,8 @@ public class Reservation {
      */
 
 
-    public int getCheckOutDate() {
-        return checkOutDate;
+    public Date getCheckOutDate() {
+        return reservedDates.getLast();
     }
 
 
@@ -107,8 +119,8 @@ public class Reservation {
         System.out.println("Hotel: " + hotel.getName());
         System.out.println("Room Number: " + room.getRoomNumber());
         System.out.println("Room Type: " + roomType);
-        System.out.println("Check-in Date: " + checkInDate);
-        System.out.println("Check-out Date: " + checkOutDate);
+        System.out.println("Check-in Date: " + reservedDates.getFirst().getDate());
+        System.out.println("Check-out Date: " + reservedDates.getLast().getDate());
         System.out.println("Price per Day: " + pricePerDay);
         System.out.println("Total Price: " + totalPrice);
         System.out.println("Discount Code: " + getDiscountCode());
@@ -124,10 +136,6 @@ public class Reservation {
 
     public double getTotalPrice(){
         return totalPrice;
-    }
-
-    public int getStayDuration(){
-        return checkOutDate - checkInDate + 1;
     }
 
     private String getDiscountCode(){
