@@ -11,11 +11,11 @@ import java.util.NoSuchElementException;
 public class Hotel {
     private String name;
     private final ArrayList<Room> rooms = new ArrayList<>();
-    private final ArrayList<Room> firstFloor = new ArrayList<>();
-    private final ArrayList<Room> secondFloor = new ArrayList<>();
-    private final ArrayList<Room> thirdFloor = new ArrayList<>();
-    private final ArrayList<Room> fourthFloor = new ArrayList<>();
-    private final ArrayList<Room> fifthFloor = new ArrayList<>();
+    private final Floor firstFloor;
+    private final Floor secondFloor;
+    private final Floor thirdFloor;
+    private final Floor fourthFloor;
+    private final Floor fifthFloor;
     private final ArrayList<Reservation> reservations = new ArrayList<>();
     private double price;
 
@@ -30,9 +30,11 @@ public class Hotel {
     public Hotel(String name){
         this.name = name;
         this.price = 1299.00;
-        Room room = new Room(101, this);
-        rooms.add(room);
-        firstFloor.add(room);
+        firstFloor = new Floor(1, this);
+        secondFloor = new Floor(2, this);
+        thirdFloor = new Floor(3, this);
+        fourthFloor = new Floor(4, this);
+        fifthFloor = new Floor(5, this);
     }
 
 
@@ -101,36 +103,40 @@ public class Hotel {
      */
 
 
-    public void addRooms(int numOfRooms, int roomType){
-        ArrayList<Integer> addedRooms = new ArrayList<>();
+    public void addRooms(int numOfRooms, int roomType) {
+        ArrayList<Room> addedRooms = new ArrayList<>();
+        ArrayList<Integer> roomNumbers = new ArrayList<>();
 
-        for(int j = 0; j < numOfRooms; j++) {
-            switch(roomType){
+        for (int j = 0; j < numOfRooms; j++) {
+            switch (roomType) {
                 case 1:
-                    if(firstFloor.size() < 10){
-                        addRoomToFloor(firstFloor, 1, addedRooms, roomType);
-                    } else if (firstFloor.size() == 10 && secondFloor.size() < 10) {
-                        addRoomToFloor(secondFloor, 2, addedRooms, roomType);
-                    }else if (firstFloor.size() == 10 && secondFloor.size() == 10) {
-                        addRoomToFloor(thirdFloor, 3, addedRooms, roomType);
+                    if (firstFloor.getNumOfRooms() < 10) {
+                        addedRooms.add(firstFloor.addRoom());
+                    } else if (firstFloor.getNumOfRooms() == 10 && secondFloor.getNumOfRooms() < 10) {
+                        addedRooms.add(secondFloor.addRoom());
+                    } else if (firstFloor.getNumOfRooms() == 10 && secondFloor.getNumOfRooms() == 10) {
+                        addedRooms.add(thirdFloor.addRoom());
                     }
                     break;
                 case 2:
-                    addRoomToFloor(fourthFloor, 4, addedRooms, roomType);
+                    addedRooms.add(fourthFloor.addRoom());
                     break;
                 case 3:
-                    addRoomToFloor(fifthFloor, 5, addedRooms, roomType);
+                    addedRooms.add(fifthFloor.addRoom());
                     break;
             }
         }
-        String plural = "";
 
-        if (addedRooms.size() > 1){
-            plural = plural.concat("s");
+        for (Room room : addedRooms) {
+            roomNumbers.add(room.getRoomNumber());
         }
 
-        Collections.sort(addedRooms);
-        System.out.println("Room" + plural + " " + addedRooms + " Added");
+        rooms.addAll(addedRooms);
+
+        Collections.sort(roomNumbers);
+
+        String plural = (addedRooms.size() > 1) ? "s" : "";
+        System.out.println("Room" + plural + " " + roomNumbers + " Added");
     }
 
 
@@ -151,19 +157,19 @@ public class Hotel {
 
         switch (floorNumber){
             case 1:
-                firstFloor.remove(roomDigits - 1);
+                firstFloor.removeRoom(roomDigits - 1);
                 break;
             case 2:
-                secondFloor.remove(roomDigits - 1);
+                secondFloor.removeRoom(roomDigits - 1);
                 break;
             case 3:
-                thirdFloor.remove(roomDigits - 1);
+                thirdFloor.removeRoom(roomDigits - 1);
                 break;
             case 4:
-                fourthFloor.remove(roomDigits - 1);
+                fourthFloor.removeRoom(roomDigits - 1);
                 break;
             case 5:
-                fifthFloor.remove(roomDigits - 1);
+                fifthFloor.removeRoom(roomDigits - 1);
                 break;
         }
     }
@@ -392,53 +398,15 @@ public class Hotel {
         return reservations.size();
     }
 
-    public void addRoomToFloor(ArrayList<Room> floor, int floorNumber, ArrayList<Integer> addedRooms, int roomType){
-        int roomNumber;
-        ArrayList<Integer> roomNumbers = new ArrayList<>();
-        for(int i = 0; i < 10; i++){
-            roomNumbers.add(floorNumber * 100 + i + 1);
-        }
-
-        boolean missingRoom = false;
-        int i = 0;
-        while(i < floor.size() && !missingRoom) {
-            roomNumber = roomNumbers.get(i);
-            if (floor.get(i).getRoomNumber() != roomNumber) {
-                addRoomType(floor, roomNumber, addedRooms, roomType);
-                missingRoom = true;
-            }
-            else{
-                i++;
-            }
-        }
-        if(!missingRoom && i == floor.size()) {
-            roomNumber = roomNumbers.get(i);
-            addRoomType(floor, roomNumber, addedRooms, roomType);
-        }
-    }
-
-    public void addRoomType(ArrayList<Room> floor, int roomNumber, ArrayList<Integer> addedRooms, int roomType){
-        Room room = switch (roomType) {
-            case 1 -> new Room(roomNumber, this);
-            case 2 -> new DeluxeRoom(roomNumber, this);
-            case 3 -> new ExecutiveRoom(roomNumber, this);
-            default -> null;
-        };
-
-        rooms.add(room);
-        floor.add(room);
-        addedRooms.add(roomNumber);
-    }
-
     public int getNumberOfStandardRooms(){
-        return firstFloor.size() + secondFloor. size() + thirdFloor.size();
+        return firstFloor.getNumOfRooms() + secondFloor.getNumOfRooms() + thirdFloor.getNumOfRooms();
     }
 
     public int getNumberOfDeluxeRooms(){
-        return fourthFloor.size();
+        return fourthFloor.getNumOfRooms();
     }
 
     public int getNumberOfExecutiveRooms(){
-        return fifthFloor.size();
+        return fifthFloor.getNumOfRooms();
     }
 }
