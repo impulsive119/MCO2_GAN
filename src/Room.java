@@ -78,6 +78,17 @@ public class Room {
      * @return An ArrayList of the dates the room is reserved.
      */
 
+    public ArrayList<Date> getAvailableDates(){
+        ArrayList<Date> availableDates = new ArrayList<>();
+        for(Date date: dates){
+            if (date.getAvailability()){
+                availableDates.add(date);
+            }
+        }
+
+        return availableDates;
+    }
+
 
     public ArrayList<Date> getReservedDates(){
         ArrayList<Date> reservedDates = new ArrayList<>();
@@ -190,7 +201,7 @@ public class Room {
         System.out.println("Room Type: " + roomType);
         System.out.println("Room Price: " + price);
         System.out.println("Days room is available:");
-        System.out.println();
+        System.out.println(getAvailableDates());
         System.out.println("Days room is reserved:");
         System.out.println(getReservedDates());
         System.out.println(" ");

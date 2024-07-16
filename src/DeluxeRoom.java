@@ -13,4 +13,8 @@ public class DeluxeRoom extends Room{
         this.hotel = hotel;
         this.roomType = "Deluxe";
     }
+
+    public void setPrice(double price){
+        this.price = price * 1.2;
+    }
 }

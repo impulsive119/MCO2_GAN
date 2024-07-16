@@ -404,14 +404,14 @@ public class Hotel {
         while(i < floor.size() && !missingRoom) {
             roomNumber = roomNumbers.get(i);
             if (floor.get(i).getRoomNumber() != roomNumber) {
-                addRoomType(floor, i, addedRooms, roomType);
+                addRoomType(floor, roomNumber, addedRooms, roomType);
                 missingRoom = true;
             }
             else{
                 i++;
             }
         }
-        if(!missingRoom) {
+        if(!missingRoom && i == floor.size()) {
             roomNumber = roomNumbers.get(i);
             addRoomType(floor, roomNumber, addedRooms, roomType);
         }

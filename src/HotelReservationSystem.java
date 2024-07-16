@@ -154,7 +154,7 @@ public class HotelReservationSystem {
                     System.out.println("3. Executive");
                     int roomType = InputHelper.nextInt();
 
-                    if(isNumberOfRoomsInvalid(hotel, roomType, 0)){
+                    if(isRoomTypeFull(hotel, roomType)){
                         break;
                     }
 
@@ -436,6 +436,34 @@ public class HotelReservationSystem {
         if(exit != null) {
             System.out.println(" ");
         }
+    }
+
+    public boolean isRoomTypeFull(Hotel hotel, int roomType){
+        boolean isRoomTypeFull = false;
+        switch (roomType) {
+            case 1:
+                if (hotel.getNumberOfStandardRooms() == 30) {
+                    System.out.println("[Hotel Cannot Have More Than 30 Standard Rooms]");
+                    System.out.println(" ");
+                    isRoomTypeFull = true;
+                }
+                break;
+            case 2:
+                if (hotel.getNumberOfDeluxeRooms() == 10) {
+                    System.out.println("[Hotel Cannot Have More Than 10 Deluxe Rooms]");
+                    System.out.println(" ");
+                    isRoomTypeFull = true;
+                }
+                break;
+            case 3:
+                if (hotel.getNumberOfExecutiveRooms() == 10) {
+                    System.out.println("[Hotel Cannot Have More Than 10 Executive Rooms]");
+                    System.out.println(" ");
+                    isRoomTypeFull = true;
+                }
+                break;
+        }
+        return isRoomTypeFull;
     }
 
     public boolean isNumberOfRoomsInvalid(Hotel hotel, int roomType, int numOfRooms){

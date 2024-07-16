@@ -13,4 +13,8 @@ public class ExecutiveRoom extends Room{
         this.hotel = hotel;
         this.roomType = "Executive";
     }
+
+    public void setPrice(double price){
+        this.price = price * 1.35;
+    }
 }
