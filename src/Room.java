@@ -78,11 +78,11 @@ public class Room {
      * @return An ArrayList of the dates the room is reserved.
      */
 
-    public ArrayList<Date> getAvailableDates(){
-        ArrayList<Date> availableDates = new ArrayList<>();
+    public ArrayList<Integer> getAvailableDates(){
+        ArrayList<Integer> availableDates = new ArrayList<>();
         for(Date date: dates){
             if (date.getAvailability()){
-                availableDates.add(date);
+                availableDates.add(date.getDate());
             }
         }
 
@@ -90,11 +90,11 @@ public class Room {
     }
 
 
-    public ArrayList<Date> getReservedDates(){
-        ArrayList<Date> reservedDates = new ArrayList<>();
+    public ArrayList<Integer> getReservedDates(){
+        ArrayList<Integer> reservedDates = new ArrayList<>();
         for(Date date: dates){
             if (!date.getAvailability()){
-                reservedDates.add(date);
+                reservedDates.add(date.getDate());
             }
         }
 

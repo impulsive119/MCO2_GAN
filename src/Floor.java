@@ -1,3 +1,4 @@
+
 public class Floor {
     private final int floorNumber;
     private final Room[] rooms;
@@ -7,9 +8,7 @@ public class Floor {
     public Floor(int floorNumber, Hotel hotel) {
         this.floorNumber = floorNumber;
         this.hotel = hotel;
-        if(floorNumber == 1){
-            addRoom();
-        }
+
         this.rooms = new Room[10];
     }
 
@@ -17,14 +16,13 @@ public class Floor {
         return numOfRooms;
     }
 
-    public Room addRoom(){
-        boolean isRoomAdded = false;
+    public Room addRoom() {
         int i = 0;
         Room room = null;
         int roomNumber;
-        while (!isRoomAdded){
-            assert rooms != null;
-            if(rooms[i] == null){
+        boolean isRoomAdded = false;
+        while (!isRoomAdded) {
+            if (rooms[i] == null) {
                 roomNumber = floorNumber * 100 + i + 1;
                 room = switch (floorNumber) {
                     case 1, 2, 3 -> new Room(roomNumber, hotel);

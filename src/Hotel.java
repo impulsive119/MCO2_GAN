@@ -35,6 +35,7 @@ public class Hotel {
         thirdFloor = new Floor(3, this);
         fourthFloor = new Floor(4, this);
         fifthFloor = new Floor(5, this);
+        rooms.add(firstFloor.addRoom());
     }
 
 
@@ -199,28 +200,24 @@ public class Hotel {
 
 
     public void viewAvailabilityOnDate(int date){
-        ArrayList<Room> reservedRooms = new ArrayList<>();
-        ArrayList<Room> availableRooms = new ArrayList<>();
+        ArrayList<Integer> reservedRooms = new ArrayList<>();
+        ArrayList<Integer> availableRooms = new ArrayList<>();
 
 
         for(Room room: rooms){
             if (room.getDate(date - 1).getAvailability()){
-                availableRooms.add(room);
+                availableRooms.add(room.getRoomNumber());
             }
             else{
-                reservedRooms.add(room);
+                reservedRooms.add(room.getRoomNumber());
             }
         }
 
 
         System.out.println("Available rooms:");
-        for(Room room: availableRooms){
-            System.out.println(room.getRoomNumber());
-        }
+        System.out.println(availableRooms);
         System.out.println("Reserved rooms:");
-        for(Room room: reservedRooms){
-            System.out.println(room.getRoomNumber());
-        }
+        System.out.println(reservedRooms);
 
 
         System.out.println(" ");
