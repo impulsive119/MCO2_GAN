@@ -24,17 +24,19 @@ public class Room {
      */
 
 
-    public Room(int roomNumber, Hotel hotel){
+    public Room(int roomNumber, Hotel hotel) {
         this.roomNumber = roomNumber;
         this.price = hotel.getPrice();
+        this.hotel = hotel;
+        this.roomType = "Standard";
+        initializeDates();
+    }
+
+    protected void initializeDates() {
         for (int i = 0; i < 31; i++) {
             dates.add(new Date(i + 1, price));
         }
-
-        this.hotel = hotel;
-        this.roomType = "Standard";
     }
-
 
     /**
      * Sets the price of the room.

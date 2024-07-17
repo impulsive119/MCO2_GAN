@@ -1,18 +1,19 @@
-public class ExecutiveRoom extends Room{
+public class ExecutiveRoom extends Room {
 
-    /**
-     * Creates a new Room given a specified room number and hotel to be added to.
-     *
-     * @param roomNumber The room number.
-     * @param hotel      The hotel it will be added to.
-     */
     public ExecutiveRoom(int roomNumber, Hotel hotel) {
         super(roomNumber, hotel);
-        this.roomNumber = roomNumber;
-        this.price = hotel.getPrice() * 1.35;
-        this.hotel = hotel;
-        this.roomType = "Executive";
+        this.roomType = "Deluxe";
     }
+
+    @Override
+    protected void initializeDates() {
+        // Example: Custom price calculation based on the room type
+        double deluxePrice = hotel.getPrice() * 1.35; // Adjust as per your business logic
+        for (int i = 0; i < 31; i++) {
+            dates.add(new Date(i + 1, deluxePrice));
+        }
+    }
+
 
     public void setPrice(double price){
         this.price = price * 1.35;

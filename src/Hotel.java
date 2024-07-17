@@ -205,7 +205,7 @@ public class Hotel {
 
 
         for(Room room: rooms){
-            if (room.getDate(date - 1).getAvailability()){
+            if (room.getDate(date).getAvailability()){
                 availableRooms.add(room.getRoomNumber());
             }
             else{
