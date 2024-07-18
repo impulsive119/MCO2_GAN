@@ -278,7 +278,6 @@ public class Hotel {
 
 
     public void addReservation(Room room, String guestName, int checkInDate, int checkOutDate, int discountType) {
-        room.setPrice(price); // Set the price for the room
         Reservation newReservation = switch (discountType) {
             case 1 -> new Reservation(guestName, room, checkInDate, checkOutDate, new IWorkHereDiscount());
             case 2 ->

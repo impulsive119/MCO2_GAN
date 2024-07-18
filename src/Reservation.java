@@ -29,9 +29,11 @@ public class Reservation {
         this.guestName = guestName;
         this.room = room;
         this.hotel = room.getHotel();
-        for(int i = checkInDate; i < checkOutDate; i++){
+        for(int i = checkInDate; i <= checkOutDate; i++){
             this.reservedDates.add(room.getDate(i));
-            this.totalPrice += reservedDates.getLast().getPrice();
+            if(i != checkOutDate){
+                this.totalPrice += reservedDates.getLast().getPrice();
+            }
         }
         reservedDates.getLast().setIsCheckoutDate(true);
         this.roomType = room.getRoomType();

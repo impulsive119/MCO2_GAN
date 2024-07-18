@@ -172,8 +172,9 @@ public class HotelReservationSystem {
                     hotel.addRooms(numOfRooms, roomType);
                     break;
                 case 3:
+
                     boolean stop = false;
-                    do {
+                    while(hotel.getNumberOfRooms() > 1 && !stop){
                         Room room = hotel.selectRoom();
 
 
@@ -185,13 +186,17 @@ public class HotelReservationSystem {
                             hotel.removeRoom(room);
                         }
 
-
-                        System.out.println("[Enter YES to Remove Another Room and Anything Else to Exit]");
-                        String repeat = InputHelper.nextStr();
-                        if(!repeat.equals("YES")){
+                        if(hotel.getNumberOfRooms() > 1) {
+                            System.out.println("[Enter YES to Remove Another Room and Anything Else to Exit]");
+                            String repeat = InputHelper.nextStr();
+                            if (!repeat.equals("YES")) {
+                                stop = true;
+                            }
+                        }
+                        else{
                             stop = true;
                         }
-                    }while(hotel.getNumberOfRooms() > 1 && !stop);
+                    }
 
 
                     if (hotel.getNumberOfRooms() == 1) {
