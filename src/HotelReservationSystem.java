@@ -316,6 +316,7 @@ public class HotelReservationSystem {
         String availOfDiscountCode = InputHelper.nextStr();
 
         if(availOfDiscountCode.equals("YES")){
+            System.out.println("Enter Discount Code: ");
             String discountCode = InputHelper.nextStr();
             switch (discountCode){
                 case "I_WORK_HERE":
