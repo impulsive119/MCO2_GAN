@@ -35,7 +35,6 @@ public class Reservation {
                 this.totalPrice += reservedDates.getLast().getPrice();
             }
         }
-        reservedDates.getLast().setIsCheckoutDate(true);
         this.roomType = room.getRoomType();
         this.discount = null;
     }
@@ -50,7 +49,6 @@ public class Reservation {
                 this.totalPrice += reservedDates.getLast().getPrice();
             }
         }
-        reservedDates.getLast().setIsCheckoutDate(true);
         this.roomType = room.getRoomType();
         this.discount = discount;
         if(discount.getDiscountCode().equals("STAY4_GET1")){

@@ -18,5 +18,8 @@ public class DeluxeRoom extends Room {
 
     public void setPrice(double price){
         this.price = price * 1.2;
+        for(Date date: dates){
+            date.setPrice(price);
+        }
     }
 }

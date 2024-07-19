@@ -125,9 +125,10 @@ public class HotelReservationSystem {
             System.out.println("2. Add Rooms");
             System.out.println("3. Remove Room");
             System.out.println("4. Change Room Price");
-            System.out.println("5. Remove Reservation");
-            System.out.println("6. Remove Hotel");
-            System.out.println("7. Exit");
+            System.out.println("5. Add Premium to Date");
+            System.out.println("6. Remove Reservation");
+            System.out.println("7. Remove Hotel");
+            System.out.println("8. Exit");
 
 
             int option = InputHelper.nextInt();
@@ -210,7 +211,6 @@ public class HotelReservationSystem {
                         break;
                     }
 
-
                     System.out.println("Enter New Price: ");
                     double newPrice = InputHelper.nextDouble();
                     InputHelper.nextStr();
@@ -222,15 +222,27 @@ public class HotelReservationSystem {
                         break;
                     }
 
-
                     if (!confirmModification()) {
                         break;
                     }
 
-
                     hotel.changePrice(newPrice);
                     break;
                 case 5:
+                    System.out.println("Select a Date from 1 to 31");
+                    int date = InputHelper.nextInt();
+                    if(date < 1 || date > 31){
+                        System.out.println("[Invalid Date]");
+                        break;
+                    }
+                    System.out.println("Enter Premium to be Applied to Date from 50% to 150%");
+                    double premium = InputHelper.nextDouble();
+                    if(premium < 50 || premium > 150){
+                        System.out.println("[Invalid Premium]");
+                        break;
+                    }
+                    hotel.addPremiumToDate(date, premium);
+                case 6:
                     Reservation reservation = hotel.selectReservation();
                     if(reservation == null){
                         break;
@@ -240,7 +252,7 @@ public class HotelReservationSystem {
                     }
                     hotel.removeReservation(reservation);
                     break;
-                case 6:
+                case 7:
                     if(!confirmModification()){
                         break;
                     }
@@ -250,7 +262,7 @@ public class HotelReservationSystem {
                     System.out.println(" ");
                     exit = true;
                     break;
-                case 7:
+                case 8:
                     exit = true;
                     break;
                 default:

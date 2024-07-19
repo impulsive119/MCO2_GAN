@@ -97,12 +97,12 @@ public class Hotel {
     }
 
 
-    /**
-     * Adds a number of rooms to the hotel.
-     *
-     * @param numOfRooms The number of rooms to add.
-     */
 
+    public void addPremiumToDate(int date, double premium){
+        for (Room room: rooms){
+            room.getDate(date).setPrice(room.getPrice() * premium);
+        }
+    }
 
     public void addRooms(int numOfRooms, int roomType) {
         ArrayList<Room> addedRooms = new ArrayList<>();

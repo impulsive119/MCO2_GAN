@@ -17,5 +17,8 @@ public class ExecutiveRoom extends Room {
 
     public void setPrice(double price){
         this.price = price * 1.35;
+        for(Date date: dates){
+            date.setPrice(price);
+        }
     }
 }
