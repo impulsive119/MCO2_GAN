@@ -90,7 +90,7 @@ public class Hotel {
      */
 
 
-    public void changeName(String name){
+    public void setName(String name){
         this.name = name;
         System.out.println("New Name: " + name);
         System.out.println(" ");
@@ -199,8 +199,7 @@ public class Hotel {
      */
 
 
-    public void viewAvailabilityOnDate(int date){
-        ArrayList<Integer> reservedRooms = new ArrayList<>();
+    public ArrayList<Integer> getAvailableRoomsOnDate(int date){
         ArrayList<Integer> availableRooms = new ArrayList<>();
 
 
@@ -208,19 +207,22 @@ public class Hotel {
             if (room.getDate(date).getAvailability()){
                 availableRooms.add(room.getRoomNumber());
             }
-            else{
+        }
+
+        return availableRooms;
+    }
+
+    public ArrayList<Integer> getReservedRoomsOnDate(int date){
+        ArrayList<Integer> reservedRooms = new ArrayList<>();
+
+
+        for(Room room: rooms){
+            if (!room.getDate(date).getAvailability()){
                 reservedRooms.add(room.getRoomNumber());
             }
         }
 
-
-        System.out.println("Available rooms:");
-        System.out.println(availableRooms);
-        System.out.println("Reserved rooms:");
-        System.out.println(reservedRooms);
-
-
-        System.out.println(" ");
+        return reservedRooms;
     }
 
 
@@ -298,29 +300,17 @@ public class Hotel {
      */
 
 
-    public Room selectRoom() {
+    public Room selectRoom(int roomNumber) {
         try {
-            System.out.println("Select Room: ");
-            printRoomNumbers();
-            System.out.print("Enter your choice: ");
-            int chosenRoomNumber = InputHelper.nextInt();
-
-
             for (Room room: rooms){
-                if(room.getRoomNumber() == chosenRoomNumber){
+                if(room.getRoomNumber() == roomNumber){
                     return room;
                 }
             }
 
-
-            System.out.println("[Invalid Room]");
-            System.out.println(" ");
             return null;
 
-
         } catch (NumberFormatException | IndexOutOfBoundsException | NullPointerException e) {
-            System.out.println("[Invalid input]");
-            System.out.println(" ");
             return null;
         }
     }
@@ -333,33 +323,17 @@ public class Hotel {
      */
 
 
-    public Reservation selectReservation(){
-        if (reservations.isEmpty()) {
-            System.out.println("[No Active Reservations]");
-            System.out.println(" ");
-            return null;
-        }
-
-
+    public Reservation selectReservation(int reservationNumber){
         try {
-            System.out.println("Select Reservation: ");
-            printReservations();
-            System.out.print("Enter your choice: ");
-            int chosenReservationIndex = InputHelper.nextInt();
-
-
-            if (chosenReservationIndex > 0 && chosenReservationIndex <= reservations.size()) {
-                return reservations.get(chosenReservationIndex - 1);
-            } else {
-                System.out.println("[Invalid Reservation]");
-                System.out.println(" ");
-                return null;
+            if (reservationNumber > 0 && reservationNumber <= reservations.size()) {
+                return reservations.get(reservationNumber - 1);
             }
         } catch (NumberFormatException | IndexOutOfBoundsException | NoSuchElementException e) {
             System.out.println("[Invalid input]");
             System.out.println(" ");
             return null;
         }
+        return null;
     }
 
 
@@ -404,5 +378,13 @@ public class Hotel {
 
     public int getNumberOfExecutiveRooms(){
         return fifthFloor.getNumOfRooms();
+    }
+
+    public ArrayList<Room> getRooms(){
+        return rooms;
+    }
+
+    public ArrayList<Reservation> getReservations(){
+        return reservations;
     }
 }

@@ -113,18 +113,6 @@ public class Reservation {
      */
 
 
-    public void viewReservation(){
-        System.out.println("Guest Name: " + guestName);
-        System.out.println("Hotel: " + hotel.getName());
-        System.out.println("Room Number: " + room.getRoomNumber());
-        System.out.println("Room Type: " + roomType);
-        System.out.println("Check-in Date: " + reservedDates.getFirst().getDate());
-        System.out.println("Check-out Date: " + reservedDates.getLast().getDate());
-        System.out.println("Total Price: " + totalPrice);
-        System.out.println("Discount Code: " + getDiscountCode());
-    }
-
-
     /**
      * Gets the total price of the reservation.
      *
@@ -136,7 +124,7 @@ public class Reservation {
         return totalPrice;
     }
 
-    private String getDiscountCode(){
+    public String getDiscountCode(){
         if(discount == null){
             return "N/A";
         }
