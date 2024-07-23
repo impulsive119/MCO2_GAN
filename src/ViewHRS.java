@@ -39,26 +39,38 @@ public class ViewHRS extends JFrame {
         System.out.println("4. Exit");
     }
 
+    public void printCheckIn(){
+        System.out.println("Check-In: ");
+    }
+
+    public void printCheckOut(){
+        System.out.println("Check-Out: ");
+    }
+
     public void printSelectDate(){
-        System.out.println("Select a Date from 1 to 31");
+        System.out.print("Select a Date from 1 to 31: ");
     }
 
     public void printSelectHotel(HotelReservationSystem HRS){
         System.out.println("Select a Hotel");
-        for(int i = 0; i < HRS.getNumOfHotels(); i++){
-            System.out.println(i + ". " + HRS.getHotelNames().get(i));
+        for(int i = 1; i <= HRS.getNumOfHotels(); i++){
+            System.out.println(i + ". " + HRS.getHotelNames().get(i - 1));
         }
     }
 
     public void printSelectRoom(Hotel hotel){
         System.out.println("Select a Room");
-        System.out.println(hotel.getRooms());
+        System.out.println(hotel.getRoomNumbers());
     }
     public void printSelectReservation(Hotel hotel){
         System.out.println("Select a Reservation");
-        for(int i = 0; i < hotel.getNumberOfReservations(); i++){
-            System.out.println(i + ". " + hotel.getReservations().get(i).getGuestName());
+        for(int i = 1; i <= hotel.getNumberOfReservations(); i++){
+            System.out.println(i + ". " + hotel.getReservations().get(i - 1).getGuestName());
         }
+    }
+
+    public void printAddedRooms(ArrayList<Integer> roomNumbers){
+        System.out.println(roomNumbers + " Added");
     }
 
     public void printReservationInfo(Reservation reservation){
@@ -77,8 +89,12 @@ public class ViewHRS extends JFrame {
         System.out.println("Invalid Date");
     }
 
+    public void printCheckInError(){
+        System.out.println("Check-In Date Must Be Before Check-Out Date");
+    }
+
     public void printInvalidHotel(){
-        System.out.println("Invalid Date");
+        System.out.println("Invalid Hotel");
     }
 
     public void printInvalidReservation(){
@@ -87,6 +103,19 @@ public class ViewHRS extends JFrame {
 
     public void printInvalidRoom(){
         System.out.println("Invalid Room");
+    }
+
+    public void printRoomIsAlreadyReserved(){
+        System.out.println("[Room is Already Reserved on These Dates]");
+        System.out.println(" ");
+    }
+
+    public void printEnterGuestName(){
+        System.out.println("[Input Guest Name]");
+    }
+    public void printEnterDiscountCode(){
+        System.out.println("[Would You Like to Enter a Discount Code?]");
+        System.out.println("Enter a Discount Code to Avail of It or Anything Else to Proceed");
     }
 
     public void printHRSMenu(){
@@ -175,5 +204,38 @@ public class ViewHRS extends JFrame {
 
     public void printInvalidPremium(){
         System.out.println("Invalid Premium");
+    }
+
+    public void printCheckReservation(int status){
+        switch (status){
+            case 1:
+                System.out.println("Reservation Added");
+                break;
+            case 2:
+                System.out.println("This Discount may Only Be Availed If Stay Lasts At Least 5 Days");
+                break;
+            case 3:
+                System.out.println("This Discount may Only Be Availed If Stay Is on a Payday");
+                break;
+            case 4:
+                break;
+
+        }
+    }
+
+    public void printConfirmation(){
+        System.out.println("Enter CONFIRM to Proceed With Change");
+    }
+
+    public void printToggle(){
+        System.out.println("Enter any key to Exit");
+    }
+
+    public void printDiscardModification(){
+        System.out.println("Modification Discarded");
+    }
+
+    public void printInvalidOption(){
+        System.out.println("Invalid Option");
     }
 }

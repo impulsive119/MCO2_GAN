@@ -35,7 +35,7 @@ public class Hotel {
         thirdFloor = new Floor(3, this);
         fourthFloor = new Floor(4, this);
         fifthFloor = new Floor(5, this);
-        rooms.add(firstFloor.addRoom());
+        rooms.add(firstFloor.addRoom(1));
     }
 
 
@@ -92,8 +92,6 @@ public class Hotel {
 
     public void setName(String name){
         this.name = name;
-        System.out.println("New Name: " + name);
-        System.out.println(" ");
     }
 
 
@@ -104,27 +102,21 @@ public class Hotel {
         }
     }
 
-    public void addRooms(int numOfRooms, int roomType) {
+    public ArrayList<Integer> addRooms(int numOfRooms, int roomType) {
         ArrayList<Room> addedRooms = new ArrayList<>();
         ArrayList<Integer> roomNumbers = new ArrayList<>();
 
         for (int j = 0; j < numOfRooms; j++) {
-            switch (roomType) {
-                case 1:
-                    if (firstFloor.getNumOfRooms() < 10) {
-                        addedRooms.add(firstFloor.addRoom());
-                    } else if (firstFloor.getNumOfRooms() == 10 && secondFloor.getNumOfRooms() < 10) {
-                        addedRooms.add(secondFloor.addRoom());
-                    } else if (firstFloor.getNumOfRooms() == 10 && secondFloor.getNumOfRooms() == 10) {
-                        addedRooms.add(thirdFloor.addRoom());
-                    }
-                    break;
-                case 2:
-                    addedRooms.add(fourthFloor.addRoom());
-                    break;
-                case 3:
-                    addedRooms.add(fifthFloor.addRoom());
-                    break;
+            if (firstFloor.getNumOfRooms() < 10) {
+                addedRooms.add(firstFloor.addRoom(roomType));
+            } else if (firstFloor.getNumOfRooms() == 10 && secondFloor.getNumOfRooms() < 10) {
+                addedRooms.add(secondFloor.addRoom(roomType));
+            } else if (secondFloor.getNumOfRooms() == 10 && thirdFloor.getNumOfRooms() < 10) {
+                addedRooms.add(thirdFloor.addRoom(roomType));
+            }else if (thirdFloor.getNumOfRooms() == 10 && fourthFloor.getNumOfRooms() < 10) {
+                addedRooms.add(fourthFloor.addRoom(roomType));
+            } else if (fourthFloor.getNumOfRooms() == 10 && fifthFloor.getNumOfRooms() < 10) {
+                addedRooms.add(fifthFloor.addRoom(roomType));
             }
         }
 
@@ -136,8 +128,7 @@ public class Hotel {
 
         Collections.sort(roomNumbers);
 
-        String plural = (addedRooms.size() > 1) ? "s" : "";
-        System.out.println("Room" + plural + " " + roomNumbers + " Added");
+        return roomNumbers;
     }
 
 
@@ -152,7 +143,6 @@ public class Hotel {
         int roomNumber = room.getRoomNumber();
         int floorNumber = roomNumber / 100;
         int roomDigits = roomNumber % 100;
-        System.out.println("Room " + roomNumber + " Removed");
 
         rooms.remove(room);
 
@@ -185,7 +175,6 @@ public class Hotel {
 
     public void changePrice(double price){
         this.price = price;
-        System.out.println("Price Changed To: " + this.price);
         for (Room room: rooms){
             room.setPrice(price);
         }
@@ -227,45 +216,12 @@ public class Hotel {
 
 
     /**
-     * Prints the room numbers of all the rooms in the hotel.
-     */
-
-
-    public void printRoomNumbers(){
-        ArrayList<Integer> roomNumbers = new ArrayList<>();
-        for (Room room : rooms) {
-            roomNumbers.add(room.getRoomNumber());
-        }
-
-        Collections.sort(roomNumbers);
-        System.out.println(roomNumbers);
-    }
-
-
-    /**
      * Prints the names of all guests with reservations in the hotel.
      */
-
-
-    public void printReservations(){
-        for(int i = 0; i < reservations.size(); i++){
-            System.out.println((i + 1) + ": " + reservations.get(i).getGuestName());
-        }
-    }
-
-
-    /**
-     * Removes a selected reservation from the hotel.
-     *
-     * @param reservation The reservation to be removed.
-     */
-
 
     public void removeReservation(Reservation reservation){
         reservations.remove(reservation);
         reservation.getRoom().removeReservation(reservation);
-        System.out.println("[Reservation Removed]");
-        System.out.println(" ");
     }
 
 
@@ -279,18 +235,16 @@ public class Hotel {
      */
 
 
-    public void addReservation(Room room, String guestName, int checkInDate, int checkOutDate, int discountType) {
+    public void addReservation(Room room, String guestName, int checkInDate, int checkOutDate, String discountType) {
         Reservation newReservation = switch (discountType) {
-            case 1 -> new Reservation(guestName, room, checkInDate, checkOutDate, new IWorkHereDiscount());
-            case 2 ->
+            case "I_WORK_HERE" -> new Reservation(guestName, room, checkInDate, checkOutDate, new IWorkHereDiscount());
+            case "STAY4_GET1" ->
                     new Reservation(guestName, room, checkInDate, checkOutDate, new Stay4Get1Discount());
-            case 3 -> new Reservation(guestName, room, checkInDate, checkOutDate, new PaydayDiscount());
+            case "PAYDAY" -> new Reservation(guestName, room, checkInDate, checkOutDate, new PaydayDiscount());
             default -> new Reservation(guestName, room, checkInDate, checkOutDate);
         };
         reservations.add(newReservation);
         room.addReservation(newReservation);
-        System.out.println("[Reservation Added]");
-        System.out.println(" ");
     }
 
     /**
@@ -329,8 +283,6 @@ public class Hotel {
                 return reservations.get(reservationNumber - 1);
             }
         } catch (NumberFormatException | IndexOutOfBoundsException | NoSuchElementException e) {
-            System.out.println("[Invalid input]");
-            System.out.println(" ");
             return null;
         }
         return null;
@@ -380,8 +332,12 @@ public class Hotel {
         return fifthFloor.getNumOfRooms();
     }
 
-    public ArrayList<Room> getRooms(){
-        return rooms;
+    public ArrayList<Integer> getRoomNumbers(){
+        ArrayList<Integer> roomNumbers = new ArrayList<>();
+        for(Room room: rooms){
+            roomNumbers.add(room.getRoomNumber());
+        }
+        return roomNumbers;
     }
 
     public ArrayList<Reservation> getReservations(){

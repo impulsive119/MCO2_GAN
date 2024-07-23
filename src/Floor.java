@@ -16,7 +16,7 @@ public class Floor {
         return numOfRooms;
     }
 
-    public Room addRoom() {
+    public Room addRoom(int roomType) {
         int i = 0;
         Room room = null;
         int roomNumber;
@@ -24,10 +24,10 @@ public class Floor {
         while (!isRoomAdded) {
             if (rooms[i] == null) {
                 roomNumber = floorNumber * 100 + i + 1;
-                room = switch (floorNumber) {
-                    case 1, 2, 3 -> new Room(roomNumber, hotel);
-                    case 4 -> new DeluxeRoom(roomNumber, hotel);
-                    case 5 -> new ExecutiveRoom(roomNumber, hotel);
+                room = switch (roomType) {
+                    case 1 -> new Room(roomNumber, hotel);
+                    case 2 -> new DeluxeRoom(roomNumber, hotel);
+                    case 3 -> new ExecutiveRoom(roomNumber, hotel);
                     default -> null;
                 };
                 rooms[i] = room;

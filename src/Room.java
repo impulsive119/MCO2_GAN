@@ -194,24 +194,6 @@ public class Room {
         return monthlyEarnings;
     }
 
-
-    /**
-     * Displays the room's information.
-     */
-
-
-    public void viewRoom(){
-        System.out.println("Room Number: " + roomNumber);
-        System.out.println("Room Type: " + roomType);
-        System.out.println("Room Price: " + price);
-        System.out.println("Days room is available:");
-        System.out.println(getAvailableDates());
-        System.out.println("Days room is reserved:");
-        System.out.println(getReservedDates());
-        System.out.println(" ");
-    }
-
-
     /**
      * Gets the hotel the room is in.
      *

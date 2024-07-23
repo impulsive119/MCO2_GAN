@@ -107,19 +107,6 @@ public class Reservation {
         return room;
     }
 
-
-    /**
-     * Displays the reservation's details
-     */
-
-
-    /**
-     * Gets the total price of the reservation.
-     *
-     * @return The total price of the reservation.
-     */
-
-
     public double getTotalPrice(){
         return totalPrice;
     }
@@ -132,4 +119,6 @@ public class Reservation {
             return discount.getDiscountCode();
         }
     }
+
+
 }
