@@ -75,17 +75,20 @@ public class ControlHRS {
     }
 
     public void addRooms(Hotel hotel){
+        if(hotel.getNumberOfRooms() == 50){
+            GUI.printTooManyRooms();
+            return;
+        }
         GUI.printEnterRoomType();
         int roomType = InputHelper.nextInt();
         if(roomType < 0 || roomType > 3){
             GUI.printInvalidRoomType();
             return;
         }
-
         GUI.printEnterNumOfRooms();
         int numOfRooms = InputHelper.nextInt();
         if(!HRS.isNumberOfRoomsValid(hotel, numOfRooms)){
-            GUI.printTooManyRooms(roomType);
+            GUI.printTooManyRooms();
             return;
         }
         if(confirmModification()){
@@ -196,7 +199,8 @@ public class ControlHRS {
         }
         GUI.printSelectRoom(hotel);
         int roomNumber = InputHelper.nextInt();
-        if(hotel.selectRoom(roomNumber) == null){
+        Room room = hotel.selectRoom(roomNumber);
+        if(room == null){
             GUI.printInvalidRoom();
             return;
         }
@@ -218,7 +222,17 @@ public class ControlHRS {
             GUI.printCheckInError();
             return;
         }
-        if (hotel.selectRoom(roomNumber).isReserved(checkInDate, checkOutDate)){
+        boolean isReservedOnDate = false;
+        for(int i = checkInDate; i < checkOutDate; i++){
+            if(room.getReservedDates().contains(i)){
+                isReservedOnDate = true;
+            }
+        }
+        if(isReservedOnDate){
+            GUI.printRoomIsReserved();
+            return;
+        }
+        if (room.isReserved(checkInDate, checkOutDate)){
             GUI.printRoomIsAlreadyReserved();
             return;
         }
@@ -226,13 +240,14 @@ public class ControlHRS {
         String guestName = InputHelper.nextStr();
         GUI.printEnterDiscountCode();
         String discountCode = InputHelper.nextStr();
-        GUI.printCheckReservation(HRS.bookReservation(hotel, hotel.selectRoom(roomNumber), guestName, checkInDate, checkOutDate, discountCode));
+        GUI.printCheckReservation(HRS.bookReservation(hotel, room, guestName, checkInDate, checkOutDate, discountCode));
     }
 
     public boolean confirmModification(){
         GUI.printConfirmation();
         String confirmation = InputHelper.nextStr();
         if(confirmation.equals("CONFIRM")){
+            GUI.printModificationConfirmed();
             return true;
         }else{
             GUI.printDiscardModification();

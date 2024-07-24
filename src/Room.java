@@ -117,7 +117,7 @@ public class Room {
     public void addReservation(Reservation reservation){
         reservations.add(reservation);
 
-        for(int i = reservation.getCheckInDate().getDate(); i <= reservation.getCheckOutDate().getDate(); i++){
+        for(int i = reservation.getCheckInDate().getDate(); i < reservation.getCheckOutDate().getDate(); i++){
             dates.get(i - 1).setAvailability(false);
         }
     }

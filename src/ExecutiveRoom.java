@@ -15,11 +15,11 @@ public class ExecutiveRoom extends Room {
         }
     }
 
-
+    @Override
     public void setPrice(double price){
         this.price = price * 1.35;
         for(Date date: dates){
-            date.setPrice(price);
+            date.setPrice(this.price);
         }
     }
 }

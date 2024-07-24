@@ -26,9 +26,7 @@ public class HotelReservationSystem {
     public int bookReservation(Hotel hotel, Room room, String guestName, int checkInDate, int checkOutDate, String discountCode) {
         int successStatus;
         switch (discountCode){
-            case "I_WORK_HERE":
-                hotel.addReservation(room, guestName, checkInDate, checkOutDate, discountCode);
-                case "STAY4_GET1":
+            case "STAY4_GET1":
                     if(checkOutDate - checkInDate + 1 >= 5){
                         hotel.addReservation(room, guestName, checkInDate, checkOutDate, discountCode);
                         successStatus = 1;
@@ -47,6 +45,7 @@ public class HotelReservationSystem {
                     }
                     break;
                     default:
+                        hotel.addReservation(room, guestName, checkInDate, checkOutDate, discountCode);
                     successStatus = 1;
         }
         return successStatus;

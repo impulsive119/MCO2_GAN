@@ -17,10 +17,11 @@ public class DeluxeRoom extends Room {
 
     // Additional methods specific to DeluxeRoom
 
+    @Override
     public void setPrice(double price){
         this.price = price * 1.2;
         for(Date date: dates){
-            date.setPrice(price);
+            date.setPrice(this.price);
         }
     }
 }
