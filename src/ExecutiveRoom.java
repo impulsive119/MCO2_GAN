@@ -18,8 +18,8 @@ public class ExecutiveRoom extends Room {
     @Override
     public void setPrice(double price){
         this.price = price * 1.35;
-        for(Date date: dates){
-            date.setPrice(this.price);
+        for(int i = 0; i < 31; i++){
+            dates.get(i).setPrice(this.price * hotel.getPremiums()[i]);
         }
     }
 }

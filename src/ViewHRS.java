@@ -54,7 +54,6 @@ public class ViewHRS extends JFrame {
         System.out.println("2. Room Information");
         System.out.println("3. Reservation Information");
         System.out.println("4. Exit");
-        System.out.println(" ");
     }
 
     public void printCheckIn(){

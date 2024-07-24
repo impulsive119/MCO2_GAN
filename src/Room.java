@@ -47,8 +47,8 @@ public class Room {
 
     public void setPrice(double price){
         this.price = price;
-        for(Date date: dates){
-            date.setPrice(price);
+        for(int i = 0; i < 31; i++){
+            dates.get(i).setPrice(price * hotel.getPremiums()[i]);
         }
     }
 
@@ -153,10 +153,9 @@ public class Room {
 
 
     public void removeReservation(Reservation reservation){
-        reservations.add(reservation);
 
-        for(int i = reservation.getCheckInDate().getDate(); i <= reservation.getCheckOutDate().getDate(); i++){
-            dates.get(i).setAvailability(true);
+        for(Date date: reservation.getReservedDates()){
+            date.setAvailability(true);
         }
 
         reservations.remove(reservation);

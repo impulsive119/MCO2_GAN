@@ -120,5 +120,7 @@ public class Reservation {
         }
     }
 
-
+    public ArrayList<Date> getReservedDates(){
+        return reservedDates;
+    }
 }

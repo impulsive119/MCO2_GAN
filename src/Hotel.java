@@ -18,6 +18,7 @@ public class Hotel {
     private final Floor fifthFloor;
     private final ArrayList<Reservation> reservations = new ArrayList<>();
     private double price;
+    private final double[] premiums = new double[31];
 
 
     /**
@@ -36,6 +37,9 @@ public class Hotel {
         fourthFloor = new Floor(4, this);
         fifthFloor = new Floor(5, this);
         rooms.add(firstFloor.addRoom(1));
+        for(int i = 0; i < 31; i++){
+            premiums[i] = 1;
+        }
     }
 
 
@@ -44,6 +48,10 @@ public class Hotel {
      *
      * @return The number of rooms in the hotel.
      */
+
+    public double[] getPremiums(){
+        return premiums;
+    }
 
 
     public int getNumberOfRooms(){
@@ -97,8 +105,9 @@ public class Hotel {
 
 
     public void addPremiumToDate(int date, double premium){
-        for (Room room: rooms){
-            room.getDate(date).setPrice(room.getPrice() * premium);
+        premiums[date - 1] = premium;
+        for(Room room: rooms){
+            room.setPrice(price);
         }
     }
 

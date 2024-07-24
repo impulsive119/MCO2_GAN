@@ -149,6 +149,10 @@ public class ControlHRS {
     }
 
     public void setPremiumOnDate(Hotel hotel){
+        if(hotel.getNumberOfReservations() > 0){
+            GUI.printHasActiveReservations();
+            return;
+        }
         GUI.printSelectDate();
         int date = InputHelper.nextInt();
         if(date < 1 || date > 31){
