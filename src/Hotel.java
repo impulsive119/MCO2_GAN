@@ -321,15 +321,33 @@ public class Hotel {
     }
 
     public int getNumberOfStandardRooms(){
-        return firstFloor.getNumOfRooms() + secondFloor.getNumOfRooms() + thirdFloor.getNumOfRooms();
+        int numOfRooms = 0;
+        for(Room room: rooms){
+            if(room.getRoomType().equals("Standard")){
+                numOfRooms++;
+            }
+        }
+        return numOfRooms;
     }
 
     public int getNumberOfDeluxeRooms(){
-        return fourthFloor.getNumOfRooms();
+        int numOfRooms = 0;
+        for(Room room: rooms){
+            if(room.getRoomType().equals("Deluxe")){
+                numOfRooms++;
+            }
+        }
+        return numOfRooms;
     }
 
     public int getNumberOfExecutiveRooms(){
-        return fifthFloor.getNumOfRooms();
+        int numOfRooms = 0;
+        for(Room room: rooms){
+            if(room.getRoomType().equals("Executive")){
+                numOfRooms++;
+            }
+        }
+        return numOfRooms;
     }
 
     public ArrayList<Integer> getRoomNumbers(){

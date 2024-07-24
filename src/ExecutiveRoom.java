@@ -2,7 +2,8 @@ public class ExecutiveRoom extends Room {
 
     public ExecutiveRoom(int roomNumber, Hotel hotel) {
         super(roomNumber, hotel);
-        this.roomType = "Deluxe";
+        this.price = hotel.getPrice() * 1.35;
+        this.roomType = "Executive";
     }
 
     @Override

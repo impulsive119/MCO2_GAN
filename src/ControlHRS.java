@@ -77,7 +77,7 @@ public class ControlHRS {
     public void addRooms(Hotel hotel){
         GUI.printEnterRoomType();
         int roomType = InputHelper.nextInt();
-        if(roomType < 0 || roomType > 4){
+        if(roomType < 0 || roomType > 3){
             GUI.printInvalidRoomType();
             return;
         }
