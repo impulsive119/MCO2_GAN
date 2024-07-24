@@ -1,12 +1,10 @@
 import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 public class ViewHRS extends JFrame {
 
     ViewHRS (){
-        JPanel hrsPanel = new JPanel();
+  //      JPanel hrsPanel = new JPanel();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1000, 1000);
     }
@@ -23,6 +21,23 @@ public class ViewHRS extends JFrame {
     public void printHotelNameError (){
         System.out.println("[Hotel Name is Already Used]");
         System.out.println(" ");
+    }
+
+    public void printNoHotels(){
+        System.out.println("There are no available hotels");
+        System.out.println(" ");
+    }
+
+    public void printNoReservations(){
+        System.out.println("There are no Active Reservations");
+        System.out.println(" ");
+    }
+    public void printMinimumRooms(){
+        System.out.println("Hotel must have at least 1 room");
+    }
+
+    public void printHasActiveReservations(){
+        System.out.println("Must Have No Active Reservations to Perform this Action");
     }
 
     public void printHotelInfo(Hotel hotel){
@@ -237,5 +252,13 @@ public class ViewHRS extends JFrame {
 
     public void printInvalidOption(){
         System.out.println("Invalid Option");
+    }
+
+    public void printKeepRemovingRooms(){
+        System.out.println("Enter CONTINUE to keep removing rooms and anything else to stop");
+    }
+
+    public void printSpace(){
+        System.out.println(" ");
     }
 }

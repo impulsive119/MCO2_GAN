@@ -24,5 +24,7 @@ public class Driver {
                     exit = true;
             }
         }
+
+        InputHelper.close();
     }
 }

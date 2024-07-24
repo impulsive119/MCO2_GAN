@@ -117,4 +117,13 @@ public class HotelReservationSystem {
         hotels.remove(hotel);
         hotelNames.remove(hotel.getName());
     }
+
+    public void changeHotelName(Hotel hotel, String newName){
+        for(int i = 0; i < hotelNames.size(); i++){
+            if (hotelNames.get(i).equals(hotel.getName())){
+                hotelNames.set(i, newName);
+            }
+        }
+        hotel.setName(newName);
+    }
 }

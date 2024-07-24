@@ -49,7 +49,12 @@ public class InputHelper {
 
 
     public static double nextDouble(){
-        return scanner.nextDouble();
+        String input = scanner.nextLine();
+        try {
+            return Double.parseDouble(input);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 
 

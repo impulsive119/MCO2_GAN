@@ -46,6 +46,10 @@ public class ControlHRS {
     }
 
     public void viewReservation(Hotel hotel){
+        if(hotel.getNumberOfReservations() == 0){
+            GUI.printNoReservations();
+            return;
+        }
         GUI.printSelectReservation(hotel);
         int reservationNumber = InputHelper.nextInt();
         Reservation reservation = hotel.selectReservation(reservationNumber);
@@ -66,7 +70,7 @@ public class ControlHRS {
             return;
         }
         if(confirmModification()){
-            hotel.setName(name);
+            HRS.changeHotelName(hotel, name);
         }
     }
 
@@ -90,25 +94,44 @@ public class ControlHRS {
     }
 
     public void removeRoom(Hotel hotel){
-        GUI.printSelectRoom(hotel);
-        int roomNumber = InputHelper.nextInt();
-        Room room = hotel.selectRoom(roomNumber);
-        if (room == null) {
-            GUI.printInvalidRoom();
-            return;
+        boolean exit = false;
+        boolean error = hotel.getNumberOfRooms() == 1;
+        while(hotel.getNumberOfRooms() > 1 && !exit) {
+            GUI.printSelectRoom(hotel);
+            int roomNumber = InputHelper.nextInt();
+            Room room = hotel.selectRoom(roomNumber);
+            if (room == null) {
+                GUI.printInvalidRoom();
+                return;
+            }
+            if (room.getNumOfReservations() != 0) {
+                GUI.printCannotRemoveRoomWithReservations();
+                return;
+            }
+            if (confirmModification()) {
+                hotel.removeRoom(room);
+            }
+            if(hotel.getNumberOfRooms() == 1){
+                error = true;
+                exit = true;
+            }
+            if (!continueRemovingRooms()){
+                exit = true;
+            }
         }
-        if (room.getNumOfReservations() != 0) {
-            GUI.printCannotRemoveRoomWithReservations();
-            return;
+        if(error){
+            GUI.printMinimumRooms();
         }
-        if(confirmModification()) {
-            hotel.removeRoom(room);
-        }
+    }
+
+    public boolean continueRemovingRooms(){
+        GUI.printKeepRemovingRooms();
+        return InputHelper.nextStr().equals("CONTINUE");
     }
 
     public void changePrice(Hotel hotel){
         if(hotel.getNumberOfReservations() > 0){
-            System.out.println("Cannot Change Price if Hotel has Active Reservations");
+            GUI.printHasActiveReservations();
             return;
         }
         GUI.printEnterNewPrice();
@@ -160,6 +183,10 @@ public class ControlHRS {
     }
 
     public void bookReservation(){
+        if(HRS.getNumOfHotels() == 0){
+            GUI.printNoHotels();
+            return;
+        }
         GUI.printSelectHotel(HRS);
         int hotelNumber = InputHelper.nextInt();
         Hotel hotel = HRS.selectHotel(hotelNumber);
@@ -216,12 +243,16 @@ public class ControlHRS {
     public void toggleMenu(){
         GUI.printToggle();
         String toggle = InputHelper.nextStr();
-        if(toggle != null){
-            return;
+        if(toggle !=null){
+            GUI.printSpace();
         }
     }
 
     public void viewHotel(){
+        if(HRS.getNumOfHotels() == 0){
+            GUI.printNoHotels();
+            return;
+        }
         boolean exit = false;
         GUI.printSelectHotel(HRS);
         int hotelNumber = InputHelper.nextInt();
@@ -253,6 +284,10 @@ public class ControlHRS {
     }
 
     public void manageHotel(){
+        if(HRS.getNumOfHotels() == 0){
+            GUI.printNoHotels();
+            return;
+        }
         boolean exit = false;
         GUI.printSelectHotel(HRS);
         int hotelNumber = InputHelper.nextInt();
@@ -285,6 +320,7 @@ public class ControlHRS {
                     break;
                 case 7:
                     removeHotel(hotel);
+                    exit = true;
                     break;
                 case 8:
                     exit = true;
