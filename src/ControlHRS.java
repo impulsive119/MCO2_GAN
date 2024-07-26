@@ -81,7 +81,7 @@ public class ControlHRS {
         }
         GUI.printEnterRoomType();
         int roomType = InputHelper.nextInt();
-        if(roomType < 0 || roomType > 3){
+        if(roomType < 1 || roomType > 3){
             GUI.printInvalidRoomType();
             return;
         }
