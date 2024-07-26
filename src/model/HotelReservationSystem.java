@@ -1,23 +1,22 @@
+package model;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 
 /**
- * The HotelReservationSystem class manages operations involving hotels, rooms, and reservations, which includes
+ * The model.HotelReservationSystem class manages operations involving hotels, rooms, and reservations, which includes
  * modification of data, input verification, and data output.
  */
 
 
 public class HotelReservationSystem {
     private final ArrayList<Hotel> hotels = new ArrayList<>();
-    private final ArrayList<String> hotelNames = new ArrayList<>();
 
     public boolean createHotel(String hotelName) {
-        if (isNameUnique(hotelNames, hotelName)) {
-            Hotel newHotel = new Hotel(hotelName);
+        if (isHotelNameAvailable(hotelName)) {
+            Hotel newHotel = new Hotel(hotelName, this);
             hotels.add(newHotel);
-            hotelNames.add(newHotel.getName());
             return true;
         } else {
             return false;
@@ -53,20 +52,28 @@ public class HotelReservationSystem {
 
 
     /**
-     * Checks if a name is unique given the list of existing names.
+     * Checks if name has been used.
      *
-     * @param names The list of existing names.
      * @param name  The name to check.
-     * @return True if the name is unique (not found in the list), false otherwise.
+     * @return true if the name has been used, false otherwise.
      */
 
 
-    public boolean isNameUnique(ArrayList<String> names, String name) {return !names.contains(name);}
+    public boolean isHotelNameAvailable(String name) {
+        boolean found = true;
+        for (Hotel hotel : hotels) {
+            if (name.equals(hotel.getName())) {
+                found = false;
+                break;
+            }
+        }
+        return found;
+    }
 
     /**
      * Allows the user to select a hotel from the current list of hotels.
      *
-     * @return The selected Hotel object, which is null if the selected hotel is invalid.
+     * @return The selected model.Hotel object, which is null if the selected hotel is invalid.
      */
 
 
@@ -109,20 +116,14 @@ public class HotelReservationSystem {
     }
 
     public ArrayList<String> getHotelNames(){
+        ArrayList<String> hotelNames = new ArrayList<>();
+        for(Hotel hotel: hotels){
+            hotelNames.add(hotel.getName());
+        }
         return hotelNames;
     }
 
     public void removeHotel(Hotel hotel){
         hotels.remove(hotel);
-        hotelNames.remove(hotel.getName());
-    }
-
-    public void changeHotelName(Hotel hotel, String newName){
-        for(int i = 0; i < hotelNames.size(); i++){
-            if (hotelNames.get(i).equals(hotel.getName())){
-                hotelNames.set(i, newName);
-            }
-        }
-        hotel.setName(newName);
     }
 }

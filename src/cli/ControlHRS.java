@@ -1,3 +1,10 @@
+package cli;
+
+import model.Hotel;
+import model.HotelReservationSystem;
+import model.Reservation;
+import model.Room;
+
 public class ControlHRS {
     private final HotelReservationSystem HRS;
     private final ViewHRS GUI;
@@ -65,12 +72,10 @@ public class ControlHRS {
     public void changeName(Hotel hotel){
         GUI.printEnterNewHotelName();
         String name = InputHelper.nextStr();
-        if(!HRS.isNameUnique(HRS.getHotelNames(), name)){
+        if(hotel.setName(name)){
+            GUI.printNewHotelName(hotel);
+        }else{
             GUI.printHotelNameError();
-            return;
-        }
-        if(confirmModification()){
-            HRS.changeHotelName(hotel, name);
         }
     }
 
@@ -107,7 +112,7 @@ public class ControlHRS {
                 GUI.printInvalidRoom();
                 return;
             }
-            if (room.getNumOfReservations() != 0) {
+            if (!room.getReservations().isEmpty()) {
                 GUI.printCannotRemoveRoomWithReservations();
                 return;
             }
@@ -171,6 +176,10 @@ public class ControlHRS {
     }
 
     public void removeReservation(Hotel hotel){
+        if(hotel.getReservations().isEmpty()){
+            GUI.printNoReservations();
+            return;
+        }
         GUI.printSelectReservation(hotel);
         int reservation = InputHelper.nextInt();
         if(hotel.selectReservation(reservation) == null){

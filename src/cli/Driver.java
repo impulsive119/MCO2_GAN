@@ -1,3 +1,7 @@
+package cli;
+
+import model.HotelReservationSystem;
+
 public class Driver {
     public static void main (String[] args){
         HotelReservationSystem HRS = new HotelReservationSystem();

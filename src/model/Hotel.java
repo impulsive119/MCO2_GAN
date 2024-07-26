@@ -1,24 +1,25 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.NoSuchElementException;
 
 
 /**
- * The Hotel class represents a hotel and allows the user to manage rooms, book reservations, and edit pricing.
+ * The model.Hotel class represents a hotel and allows the user to manage rooms, book reservations, and edit pricing.
  */
 
 
 public class Hotel {
     private String name;
-    private final ArrayList<Room> rooms = new ArrayList<>();
     private final Floor firstFloor;
     private final Floor secondFloor;
     private final Floor thirdFloor;
     private final Floor fourthFloor;
     private final Floor fifthFloor;
-    private final ArrayList<Reservation> reservations = new ArrayList<>();
     private double price;
     private final double[] premiums = new double[31];
+    private final HotelReservationSystem HRS;
 
 
     /**
@@ -28,7 +29,7 @@ public class Hotel {
      */
 
 
-    public Hotel(String name){
+    public Hotel(String name, HotelReservationSystem HRS){
         this.name = name;
         this.price = 1299.00;
         firstFloor = new Floor(1, this);
@@ -36,10 +37,11 @@ public class Hotel {
         thirdFloor = new Floor(3, this);
         fourthFloor = new Floor(4, this);
         fifthFloor = new Floor(5, this);
-        rooms.add(firstFloor.addRoom(1));
         for(int i = 0; i < 31; i++){
             premiums[i] = 1;
         }
+        addRooms(1, 1);
+        this.HRS = HRS;
     }
 
 
@@ -55,15 +57,7 @@ public class Hotel {
 
 
     public int getNumberOfRooms(){
-        int numberOfRooms = 0;
-        for (Room room: rooms){
-            if (room != null){
-                numberOfRooms++;
-            }
-        }
-
-
-        return numberOfRooms;
+        return getRooms().size();
     }
 
 
@@ -98,17 +92,21 @@ public class Hotel {
      */
 
 
-    public void setName(String name){
-        this.name = name;
+    public boolean setName(String name){
+
+        if(HRS.isHotelNameAvailable(name)){
+            this.name = name;
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 
 
     public void addPremiumToDate(int date, double premium){
         premiums[date - 1] = premium;
-        for(Room room: rooms){
-            room.setPrice(price);
-        }
     }
 
     public ArrayList<Integer> addRooms(int numOfRooms, int roomType) {
@@ -133,8 +131,6 @@ public class Hotel {
             roomNumbers.add(room.getRoomNumber());
         }
 
-        rooms.addAll(addedRooms);
-
         Collections.sort(roomNumbers);
 
         return roomNumbers;
@@ -152,8 +148,6 @@ public class Hotel {
         int roomNumber = room.getRoomNumber();
         int floorNumber = roomNumber / 100;
         int roomDigits = roomNumber % 100;
-
-        rooms.remove(room);
 
         switch (floorNumber){
             case 1:
@@ -184,9 +178,6 @@ public class Hotel {
 
     public void changePrice(double price){
         this.price = price;
-        for (Room room: rooms){
-            room.setPrice(price);
-        }
     }
 
 
@@ -201,8 +192,8 @@ public class Hotel {
         ArrayList<Integer> availableRooms = new ArrayList<>();
 
 
-        for(Room room: rooms){
-            if (room.getDate(date).getAvailability()){
+        for(Room room: getRooms()){
+            if(!room.isReserved(date, date + 1)){
                 availableRooms.add(room.getRoomNumber());
             }
         }
@@ -214,8 +205,8 @@ public class Hotel {
         ArrayList<Integer> reservedRooms = new ArrayList<>();
 
 
-        for(Room room: rooms){
-            if (!room.getDate(date).getAvailability()){
+        for(Room room: getRooms()){
+            if(room.isReserved(date, date + 1)){
                 reservedRooms.add(room.getRoomNumber());
             }
         }
@@ -229,7 +220,6 @@ public class Hotel {
      */
 
     public void removeReservation(Reservation reservation){
-        reservations.remove(reservation);
         reservation.getRoom().removeReservation(reservation);
     }
 
@@ -246,26 +236,25 @@ public class Hotel {
 
     public void addReservation(Room room, String guestName, int checkInDate, int checkOutDate, String discountType) {
         Reservation newReservation = switch (discountType) {
-            case "I_WORK_HERE" -> new Reservation(guestName, room, checkInDate, checkOutDate, new IWorkHereDiscount());
+            case "I_WORK_HERE" -> new Reservation(guestName, room, checkInDate, checkOutDate, "I_WORK_HERE");
             case "STAY4_GET1" ->
-                    new Reservation(guestName, room, checkInDate, checkOutDate, new Stay4Get1Discount());
-            case "PAYDAY" -> new Reservation(guestName, room, checkInDate, checkOutDate, new PaydayDiscount());
+                    new Reservation(guestName, room, checkInDate, checkOutDate, "STAY4_GET1");
+            case "PAYDAY" -> new Reservation(guestName, room, checkInDate, checkOutDate, "PAYDAY");
             default -> new Reservation(guestName, room, checkInDate, checkOutDate);
         };
-        reservations.add(newReservation);
         room.addReservation(newReservation);
     }
 
     /**
      * Allows the user to select a room from the current list of rooms in the hotel.
      *
-     * @return The selected Room object, which is null if the selected room is invalid.
+     * @return The selected model.Room object, which is null if the selected room is invalid.
      */
 
 
     public Room selectRoom(int roomNumber) {
         try {
-            for (Room room: rooms){
+            for (Room room: getRooms()){
                 if(room.getRoomNumber() == roomNumber){
                     return room;
                 }
@@ -282,14 +271,14 @@ public class Hotel {
     /**
      * Allows the user to select a reservation from the current list of reservations in the hotel.
      *
-     * @return The selected Reservation object, which is null if the reservation is invalid.
+     * @return The selected model.Reservation object, which is null if the reservation is invalid.
      */
 
 
     public Reservation selectReservation(int reservationNumber){
         try {
-            if (reservationNumber > 0 && reservationNumber <= reservations.size()) {
-                return reservations.get(reservationNumber - 1);
+            if (reservationNumber > 0 && reservationNumber <= getReservations().size()) {
+                return getReservations().get(reservationNumber - 1);
             }
         } catch (NumberFormatException | IndexOutOfBoundsException | NoSuchElementException e) {
             return null;
@@ -309,7 +298,7 @@ public class Hotel {
         double earnings = 0;
 
 
-        for(Room room: rooms){
+        for(Room room: getRooms()){
             earnings += room.getRoomEarnings();
         }
 
@@ -326,12 +315,12 @@ public class Hotel {
 
 
     public int getNumberOfReservations(){
-        return reservations.size();
+        return getReservations().size();
     }
 
     public int getNumberOfStandardRooms(){
         int numOfRooms = 0;
-        for(Room room: rooms){
+        for(Room room: getRooms()){
             if(room.getRoomType().equals("Standard")){
                 numOfRooms++;
             }
@@ -341,7 +330,7 @@ public class Hotel {
 
     public int getNumberOfDeluxeRooms(){
         int numOfRooms = 0;
-        for(Room room: rooms){
+        for(Room room: getRooms()){
             if(room.getRoomType().equals("Deluxe")){
                 numOfRooms++;
             }
@@ -351,7 +340,7 @@ public class Hotel {
 
     public int getNumberOfExecutiveRooms(){
         int numOfRooms = 0;
-        for(Room room: rooms){
+        for(Room room: getRooms()){
             if(room.getRoomType().equals("Executive")){
                 numOfRooms++;
             }
@@ -361,7 +350,7 @@ public class Hotel {
 
     public ArrayList<Integer> getRoomNumbers(){
         ArrayList<Integer> roomNumbers = new ArrayList<>();
-        for(Room room: rooms){
+        for(Room room: getRooms()){
             roomNumbers.add(room.getRoomNumber());
         }
         Collections.sort(roomNumbers);
@@ -369,6 +358,20 @@ public class Hotel {
     }
 
     public ArrayList<Reservation> getReservations(){
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        for(Room room: getRooms()){
+            reservations.addAll(room.getReservations());
+        }
         return reservations;
+    }
+
+    public ArrayList<Room> getRooms(){
+        ArrayList<Room> rooms = new ArrayList<>();
+        rooms.addAll(firstFloor.getRooms());
+        rooms.addAll(secondFloor.getRooms());
+        rooms.addAll(thirdFloor.getRooms());
+        rooms.addAll(fourthFloor.getRooms());
+        rooms.addAll(fifthFloor.getRooms());
+        return rooms;
     }
 }

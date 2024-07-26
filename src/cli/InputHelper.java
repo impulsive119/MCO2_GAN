@@ -1,8 +1,10 @@
+package cli;
+
 import java.util.Scanner;
 
 
 /**
- * The InputHelper class is a utility class containing a scanner that lets the system handle user inputs.
+ * The cli.InputHelper class is a utility class containing a scanner that lets the system handle user inputs.
  */
 
 

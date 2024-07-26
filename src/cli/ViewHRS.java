@@ -1,3 +1,10 @@
+package cli;
+
+import model.Hotel;
+import model.HotelReservationSystem;
+import model.Reservation;
+import model.Room;
+
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -96,8 +103,8 @@ public class ViewHRS extends JFrame {
         System.out.println("Hotel: " + reservation.getRoom().getHotel().getName());
         System.out.println("Room Number: " + reservation.getRoom().getRoomNumber());
         System.out.println("Room Type: " + reservation.getRoom().getRoomType());
-        System.out.println("Check-in Date: " + reservation.getCheckInDate().getDate());
-        System.out.println("Check-out Date: " + reservation.getCheckOutDate().getDate());
+        System.out.println("Check-in Date: " + reservation.getCheckInDate());
+        System.out.println("Check-out Date: " + reservation.getCheckOutDate());
         System.out.println("Total Price: " + reservation.getTotalPrice());
         System.out.println("Discount Code: " + reservation.getDiscountCode());
         System.out.println(" ");
@@ -165,9 +172,9 @@ public class ViewHRS extends JFrame {
     }
 
     public void printAvailabilityOnDate(ArrayList<Integer> availableDates, ArrayList<Integer> reservedDates){
-        System.out.println("Available Dates: ");
+        System.out.println("Available Rooms: ");
         System.out.println(availableDates);
-        System.out.println("Reserved Dates: ");
+        System.out.println("Reserved Rooms: ");
         System.out.println(reservedDates);
         System.out.println(" ");
     }

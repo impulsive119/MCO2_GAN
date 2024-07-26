@@ -1,8 +1,10 @@
+package model;
+
+import java.util.ArrayList;
 
 public class Floor {
     private final int floorNumber;
     private final Room[] rooms;
-    private int numOfRooms;
     private final Hotel hotel;
 
     public Floor(int floorNumber, Hotel hotel) {
@@ -13,7 +15,17 @@ public class Floor {
     }
 
     public int getNumOfRooms(){
-        return numOfRooms;
+        return getRooms().size();
+    }
+
+    public ArrayList<Room> getRooms(){
+        ArrayList<Room> returnedRooms = new ArrayList<>();
+        for(int i = 0; i < 10; i++){
+            if(rooms[i] != null){
+               returnedRooms.add(rooms[i]);
+            }
+        }
+        return returnedRooms;
     }
 
     public Room addRoom(int roomType) {
@@ -25,13 +37,12 @@ public class Floor {
             if (rooms[i] == null) {
                 roomNumber = floorNumber * 100 + i + 1;
                 room = switch (roomType) {
-                    case 1 -> new Room(roomNumber, hotel);
-                    case 2 -> new DeluxeRoom(roomNumber, hotel);
-                    case 3 -> new ExecutiveRoom(roomNumber, hotel);
+                    case 1 -> new Room(roomNumber, this);
+                    case 2 -> new DeluxeRoom(roomNumber, this);
+                    case 3 -> new ExecutiveRoom(roomNumber, this);
                     default -> null;
                 };
                 rooms[i] = room;
-                numOfRooms++;
                 isRoomAdded = true;
             }
             i++;
@@ -41,6 +52,9 @@ public class Floor {
 
     public void removeRoom(int roomIndex){
         rooms[roomIndex] = null;
-        numOfRooms--;
+    }
+
+    public Hotel getHotel(){
+        return hotel;
     }
 }
