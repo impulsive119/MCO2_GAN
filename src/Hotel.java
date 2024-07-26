@@ -364,6 +364,7 @@ public class Hotel {
         for(Room room: rooms){
             roomNumbers.add(room.getRoomNumber());
         }
+        Collections.sort(roomNumbers);
         return roomNumbers;
     }
 

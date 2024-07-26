@@ -116,7 +116,7 @@ public class ControlHRS {
             }
             if(hotel.getNumberOfRooms() == 1){
                 error = true;
-                exit = true;
+                break;
             }
             if (!continueRemovingRooms()){
                 exit = true;
