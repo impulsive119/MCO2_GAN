@@ -16,10 +16,10 @@ public abstract class ChangePriceForm extends InputForm{
     protected void onEnter(Hotel hotel) {
         double price = Double.parseDouble(priceField.getText());
         if(price < 100){
-            JOptionPane.showInputDialog("Price Must Be Greater than 100.00");
+            JOptionPane.showMessageDialog(this,"Price Must Be Greater than 100.00");
         }else{
             hotel.changePrice(price);
-            JOptionPane.showInputDialog("New Price: " + price);
+            JOptionPane.showMessageDialog(this, "New Price: " + price);
         }
     }
 }

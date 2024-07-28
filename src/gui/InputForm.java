@@ -83,5 +83,4 @@ public abstract class InputForm extends JPanel {
     }
 
     protected abstract void onEnter(Hotel hotel);
-
 }

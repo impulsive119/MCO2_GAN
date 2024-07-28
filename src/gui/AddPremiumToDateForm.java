@@ -19,12 +19,12 @@ public abstract class AddPremiumToDateForm extends InputForm{
         int date = Integer.parseInt(dateField.getText());
         double premium = Double.parseDouble(premiumField.getText());
         if(date < 1 || date > 31){
-            JOptionPane.showInputDialog("Invalid Date");
+            JOptionPane.showMessageDialog(this, "Invalid Date");
         }else if(premium < 0.5 || premium > 1.5 ){
-            JOptionPane.showInputDialog("Value Must Be Between 0.5 and 1.5");
+            JOptionPane.showMessageDialog(this, "Value Must Be Between 0.5 and 1.5");
         }else{
             hotel.addPremiumToDate(date, premium);
-            JOptionPane.showInputDialog("Premium Added");
+            JOptionPane.showMessageDialog(this,"Premium Added");
         }
     }
 }

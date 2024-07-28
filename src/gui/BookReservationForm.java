@@ -44,6 +44,8 @@ public abstract class BookReservationForm extends InputForm{
             JOptionPane.showMessageDialog(this, "Room is Reserved on these Dates");
         } else{
             room.addReservation( guestName, checkInDate, checkOutDate, discountCode);
+            JOptionPane.showMessageDialog(this, "Reservation Booked");
+
         }
     }
 }
