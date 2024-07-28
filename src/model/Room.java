@@ -81,15 +81,34 @@ public class Room {
         return availableDates;
     }
 
-    /**
-     * Adds a reservation to the room, marking the dates specified by the reservation as such.
-     *
-     * @param reservation The reservation to be added.
-     */
+    public int addReservation(String guestName, int checkInDate, int checkOutDate, String discountType) {
+        Reservation newReservation = null;
+        int isDiscountValid = 1;
+        switch (discountType){
+            case "I_WORK_HERE":
+                newReservation = new Reservation(guestName, this,checkInDate, checkOutDate, discountType);
+                break;
+            case "STAY4_GET1":
+                if(checkOutDate - checkInDate < 5){
+                    isDiscountValid = 2;
+                }else{
+                    newReservation = new Reservation(guestName, this,checkInDate, checkOutDate, discountType);
+                }
+                break;
+            case "PAYDAY":
+                if((checkInDate <= 15 && checkOutDate > 15) || (checkInDate <= 30 && checkOutDate > 30)){
+                    newReservation = new Reservation(guestName, this,checkInDate, checkOutDate, discountType);
+                }else{
+                    isDiscountValid = 3;
+                }
+                break;
 
 
-    public void addReservation(Reservation reservation){
-        reservations.add(reservation);
+        }
+        if(isDiscountValid == 1){
+            reservations.add(newReservation);
+        }
+        return isDiscountValid;
     }
 
 

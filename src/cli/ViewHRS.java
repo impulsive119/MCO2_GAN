@@ -136,12 +136,6 @@ public class ViewHRS extends JFrame {
         System.out.println(" ");
     }
 
-    public void printRoomIsAlreadyReserved(){
-        System.out.println("[Room is Already Reserved on These Dates]");
-        System.out.println(" ");
-        System.out.println(" ");
-    }
-
     public void printEnterGuestName(){
         System.out.println("Input Guest Name: ");
     }

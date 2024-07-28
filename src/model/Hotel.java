@@ -225,27 +225,6 @@ public class Hotel {
 
 
     /**
-     * Adds a reservation for a selected room given the guest's name and dates of stay.
-     *
-     * @param room        The room to be reserved.
-     * @param guestName   The name of the guest.
-     * @param checkInDate The check-in date for the reservation.
-     * @param checkOutDate The check-out date for the reservation.
-     */
-
-
-    public void addReservation(Room room, String guestName, int checkInDate, int checkOutDate, String discountType) {
-        Reservation newReservation = switch (discountType) {
-            case "I_WORK_HERE" -> new Reservation(guestName, room, checkInDate, checkOutDate, "I_WORK_HERE");
-            case "STAY4_GET1" ->
-                    new Reservation(guestName, room, checkInDate, checkOutDate, "STAY4_GET1");
-            case "PAYDAY" -> new Reservation(guestName, room, checkInDate, checkOutDate, "PAYDAY");
-            default -> new Reservation(guestName, room, checkInDate, checkOutDate);
-        };
-        room.addReservation(newReservation);
-    }
-
-    /**
      * Allows the user to select a room from the current list of rooms in the hotel.
      *
      * @return The selected model.Room object, which is null if the selected room is invalid.
@@ -373,5 +352,17 @@ public class Hotel {
         rooms.addAll(fourthFloor.getRooms());
         rooms.addAll(fifthFloor.getRooms());
         return rooms;
+    }
+
+    public Reservation getReservation(String name){
+        ArrayList<Room> rooms = getRooms();
+        for(Room room: rooms){
+            for(Reservation reservation: room.getReservations()){
+                if(reservation.getGuestName().equals(name)){
+                    return reservation;
+                }
+            }
+        }
+        return null;
     }
 }

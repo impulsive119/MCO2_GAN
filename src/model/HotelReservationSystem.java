@@ -22,34 +22,6 @@ public class HotelReservationSystem {
             return false;
         }
     }
-    public int bookReservation(Hotel hotel, Room room, String guestName, int checkInDate, int checkOutDate, String discountCode) {
-        int successStatus;
-        switch (discountCode){
-            case "STAY4_GET1":
-                    if(checkOutDate - checkInDate + 1 >= 5){
-                        hotel.addReservation(room, guestName, checkInDate, checkOutDate, discountCode);
-                        successStatus = 1;
-                    }
-                    else{
-                        successStatus = 2;
-                    }
-                    break;
-                    case "PAYDAY":
-                    if((checkInDate <= 15 && checkOutDate > 15)||(checkInDate <= 28 && checkOutDate > 28)){
-                        hotel.addReservation(room, guestName, checkInDate, checkOutDate, discountCode);
-                        successStatus = 1;
-                    }
-                    else{
-                        successStatus = 3;
-                    }
-                    break;
-                    default:
-                        hotel.addReservation(room, guestName, checkInDate, checkOutDate, discountCode);
-                    successStatus = 1;
-        }
-        return successStatus;
-    }
-
 
     /**
      * Checks if name has been used.

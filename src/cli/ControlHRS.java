@@ -7,97 +7,97 @@ import model.Room;
 
 public class ControlHRS {
     private final HotelReservationSystem HRS;
-    private final ViewHRS GUI;
+    private final ViewHRS View;
 
-    public ControlHRS(HotelReservationSystem HRS, ViewHRS GUI){
+    public ControlHRS(HotelReservationSystem HRS, ViewHRS View){
         this.HRS = HRS;
-        this.GUI = GUI;
+        this.View = View;
     }
 
     public void printMenu(){
-        GUI.printHRSMenu();
+        View.printHRSMenu();
     }
 
     public void createHotel(){
-        GUI.printEnterNewHotelName();
+        View.printEnterNewHotelName();
         String hotelName = InputHelper.nextStr();
         if(HRS.createHotel(hotelName)){
-            GUI.printNewHotelName(HRS.getHotel(hotelName));
+            View.printNewHotelName(HRS.getHotel(hotelName));
         } else{
-            GUI.printHotelNameError();
+            View.printHotelNameError();
         }
     }
 
     public void viewAvailabilityOnDate(Hotel hotel){
-        GUI.printSelectDate();
+        View.printSelectDate();
         int date = InputHelper.nextInt();
         if(date < 1 || date > 31){
-            GUI.printInvalidDate();
+            View.printInvalidDate();
         }
         else {
-            GUI.printAvailabilityOnDate(hotel.getAvailableRoomsOnDate(date), hotel.getReservedRoomsOnDate(date));
+            View.printAvailabilityOnDate(hotel.getAvailableRoomsOnDate(date), hotel.getReservedRoomsOnDate(date));
             toggleMenu();
         }
     }
 
     public void viewRoom(Hotel hotel){
-        GUI.printSelectRoom(hotel);
+        View.printSelectRoom(hotel);
         int roomNumber = InputHelper.nextInt();
         if(hotel.selectRoom(roomNumber) != null){
-            GUI.printRoomInfo(hotel.selectRoom(roomNumber));
+            View.printRoomInfo(hotel.selectRoom(roomNumber));
             toggleMenu();
         }else{
-            GUI.printInvalidRoom();
+            View.printInvalidRoom();
         }
 
     }
 
     public void viewReservation(Hotel hotel){
         if(hotel.getNumberOfReservations() == 0){
-            GUI.printNoReservations();
+            View.printNoReservations();
             return;
         }
-        GUI.printSelectReservation(hotel);
+        View.printSelectReservation(hotel);
         int reservationNumber = InputHelper.nextInt();
         Reservation reservation = hotel.selectReservation(reservationNumber);
         if( reservation != null) {
-            GUI.printReservationInfo(reservation);
+            View.printReservationInfo(reservation);
             toggleMenu();
         }
         else{
-            GUI.printInvalidReservation();
+            View.printInvalidReservation();
         }
     }
 
     public void changeName(Hotel hotel){
-        GUI.printEnterNewHotelName();
+        View.printEnterNewHotelName();
         String name = InputHelper.nextStr();
         if(hotel.setName(name)){
-            GUI.printNewHotelName(hotel);
+            View.printNewHotelName(hotel);
         }else{
-            GUI.printHotelNameError();
+            View.printHotelNameError();
         }
     }
 
     public void addRooms(Hotel hotel){
         if(hotel.getNumberOfRooms() == 50){
-            GUI.printTooManyRooms();
+            View.printTooManyRooms();
             return;
         }
-        GUI.printEnterRoomType();
+        View.printEnterRoomType();
         int roomType = InputHelper.nextInt();
         if(roomType < 1 || roomType > 3){
-            GUI.printInvalidRoomType();
+            View.printInvalidRoomType();
             return;
         }
-        GUI.printEnterNumOfRooms();
+        View.printEnterNumOfRooms();
         int numOfRooms = InputHelper.nextInt();
         if(!HRS.isNumberOfRoomsValid(hotel, numOfRooms)){
-            GUI.printTooManyRooms();
+            View.printTooManyRooms();
             return;
         }
         if(confirmModification()){
-            GUI.printAddedRooms(hotel.addRooms(numOfRooms, roomType));
+            View.printAddedRooms(hotel.addRooms(numOfRooms, roomType));
         }
     }
 
@@ -105,15 +105,15 @@ public class ControlHRS {
         boolean exit = false;
         boolean error = hotel.getNumberOfRooms() == 1;
         while(hotel.getNumberOfRooms() > 1 && !exit) {
-            GUI.printSelectRoom(hotel);
+            View.printSelectRoom(hotel);
             int roomNumber = InputHelper.nextInt();
             Room room = hotel.selectRoom(roomNumber);
             if (room == null) {
-                GUI.printInvalidRoom();
+                View.printInvalidRoom();
                 return;
             }
             if (!room.getReservations().isEmpty()) {
-                GUI.printCannotRemoveRoomWithReservations();
+                View.printCannotRemoveRoomWithReservations();
                 return;
             }
             if (confirmModification()) {
@@ -128,24 +128,24 @@ public class ControlHRS {
             }
         }
         if(error){
-            GUI.printMinimumRooms();
+            View.printMinimumRooms();
         }
     }
 
     public boolean continueRemovingRooms(){
-        GUI.printKeepRemovingRooms();
+        View.printKeepRemovingRooms();
         return InputHelper.nextStr().equals("CONTINUE");
     }
 
     public void changePrice(Hotel hotel){
         if(hotel.getNumberOfReservations() > 0){
-            GUI.printHasActiveReservations();
+            View.printHasActiveReservations();
             return;
         }
-        GUI.printEnterNewPrice();
+        View.printEnterNewPrice();
         double price = InputHelper.nextDouble();
         if(price < 100){
-            GUI.printMinimumHotelPrice();
+            View.printMinimumHotelPrice();
             return;
         }
         if(confirmModification()){
@@ -155,19 +155,19 @@ public class ControlHRS {
 
     public void setPremiumOnDate(Hotel hotel){
         if(hotel.getNumberOfReservations() > 0){
-            GUI.printHasActiveReservations();
+            View.printHasActiveReservations();
             return;
         }
-        GUI.printSelectDate();
+        View.printSelectDate();
         int date = InputHelper.nextInt();
         if(date < 1 || date > 31){
-            GUI.printInvalidDate();
+            View.printInvalidDate();
             return;
         }
-        GUI.printSetPremium();
+        View.printSetPremium();
         double premium = InputHelper.nextDouble();
         if(premium < 0.5 || premium > 1.5){
-            GUI.printInvalidPremium();
+            View.printInvalidPremium();
             return;
         }
         if(confirmModification()){
@@ -177,13 +177,13 @@ public class ControlHRS {
 
     public void removeReservation(Hotel hotel){
         if(hotel.getReservations().isEmpty()){
-            GUI.printNoReservations();
+            View.printNoReservations();
             return;
         }
-        GUI.printSelectReservation(hotel);
+        View.printSelectReservation(hotel);
         int reservation = InputHelper.nextInt();
         if(hotel.selectReservation(reservation) == null){
-            GUI.printInvalidReservation();
+            View.printInvalidReservation();
             return;
 
         }
@@ -200,39 +200,39 @@ public class ControlHRS {
 
     public void bookReservation(){
         if(HRS.getNumOfHotels() == 0){
-            GUI.printNoHotels();
+            View.printNoHotels();
             return;
         }
-        GUI.printSelectHotel(HRS);
+        View.printSelectHotel(HRS);
         int hotelNumber = InputHelper.nextInt();
         Hotel hotel = HRS.selectHotel(hotelNumber);
         if(hotel == null){
-            GUI.printInvalidHotel();
+            View.printInvalidHotel();
             return;
         }
-        GUI.printSelectRoom(hotel);
+        View.printSelectRoom(hotel);
         int roomNumber = InputHelper.nextInt();
         Room room = hotel.selectRoom(roomNumber);
         if(room == null){
-            GUI.printInvalidRoom();
+            View.printInvalidRoom();
             return;
         }
-        GUI.printCheckIn();
-        GUI.printSelectDate();
+        View.printCheckIn();
+        View.printSelectDate();
         int checkInDate = InputHelper.nextInt();
         if(checkInDate < 1 || checkInDate > 30){
-            GUI.printInvalidDate();
+            View.printInvalidDate();
             return;
         }
-        GUI.printCheckOut();
-        GUI.printSelectDate();
+        View.printCheckOut();
+        View.printSelectDate();
         int checkOutDate = InputHelper.nextInt();
         if(checkOutDate > 31 || checkOutDate < 2){
-            GUI.printInvalidDate();
+            View.printInvalidDate();
             return;
         }
         if(checkInDate >= checkOutDate){
-            GUI.printCheckInError();
+            View.printCheckInError();
             return;
         }
         boolean isReservedOnDate = false;
@@ -242,55 +242,51 @@ public class ControlHRS {
             }
         }
         if(isReservedOnDate){
-            GUI.printRoomIsReserved();
+            View.printRoomIsReserved();
             return;
         }
-        if (room.isReserved(checkInDate, checkOutDate)){
-            GUI.printRoomIsAlreadyReserved();
-            return;
-        }
-        GUI.printEnterGuestName();
+        View.printEnterGuestName();
         String guestName = InputHelper.nextStr();
-        GUI.printEnterDiscountCode();
+        View.printEnterDiscountCode();
         String discountCode = InputHelper.nextStr();
-        GUI.printCheckReservation(HRS.bookReservation(hotel, room, guestName, checkInDate, checkOutDate, discountCode));
+        View.printCheckReservation(room.addReservation(guestName, checkInDate, checkOutDate, discountCode));
     }
 
     public boolean confirmModification(){
-        GUI.printConfirmation();
+        View.printConfirmation();
         String confirmation = InputHelper.nextStr();
         if(confirmation.equals("CONFIRM")){
-            GUI.printModificationConfirmed();
+            View.printModificationConfirmed();
             return true;
         }else{
-            GUI.printDiscardModification();
+            View.printDiscardModification();
             return false;
         }
     }
 
     public void toggleMenu(){
-        GUI.printToggle();
+        View.printToggle();
         String toggle = InputHelper.nextStr();
         if(toggle !=null){
-            GUI.printSpace();
+            View.printSpace();
         }
     }
 
     public void viewHotel(){
         if(HRS.getNumOfHotels() == 0){
-            GUI.printNoHotels();
+            View.printNoHotels();
             return;
         }
         boolean exit = false;
-        GUI.printSelectHotel(HRS);
+        View.printSelectHotel(HRS);
         int hotelNumber = InputHelper.nextInt();
         Hotel hotel = HRS.selectHotel(hotelNumber);
         if(hotel == null){
-            GUI.printInvalidHotel();
+            View.printInvalidHotel();
             return;
         }
         while(!exit){
-            GUI.printHotelInfo(hotel);
+            View.printHotelInfo(hotel);
             int option = InputHelper.nextInt();
             switch (option){
                 case 1:
@@ -306,26 +302,26 @@ public class ControlHRS {
                     exit = true;
                     break;
                 default:
-                    GUI.printInvalidOption();
+                    View.printInvalidOption();
             }
         }
     }
 
     public void manageHotel(){
         if(HRS.getNumOfHotels() == 0){
-            GUI.printNoHotels();
+            View.printNoHotels();
             return;
         }
         boolean exit = false;
-        GUI.printSelectHotel(HRS);
+        View.printSelectHotel(HRS);
         int hotelNumber = InputHelper.nextInt();
         Hotel hotel = HRS.selectHotel(hotelNumber);
         if(hotel == null){
-            GUI.printInvalidHotel();
+            View.printInvalidHotel();
             return;
         }
         while(!exit){
-            GUI.printHotelManagementMenu();
+            View.printHotelManagementMenu();
             int option = InputHelper.nextInt();
             switch (option){
                 case 1:
@@ -354,7 +350,7 @@ public class ControlHRS {
                     exit = true;
                     break;
                 default:
-                    GUI.printInvalidOption();
+                    View.printInvalidOption();
             }
         }
     }
