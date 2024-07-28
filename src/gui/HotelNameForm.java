@@ -4,7 +4,7 @@ import model.Hotel;
 
 import javax.swing.*;
 
-public abstract class HotelCreationForm extends InputForm{
+public abstract class HotelNameForm extends InputForm{
     private JTextField hotelNameField;
 
     @Override

@@ -1,7 +1,7 @@
 package gui;
 
 import model.Hotel;
-import model.HotelReservationSystem;
+import model.Reservation;
 import model.Room;
 
 import javax.swing.JButton;
@@ -84,5 +84,4 @@ public abstract class InputForm extends JPanel {
 
     protected abstract void onEnter(Hotel hotel);
 
-    protected abstract void onEnter(Room hotel);
 }

@@ -6,7 +6,7 @@ import model.Reservation;
 import javax.swing.*;
 
 public abstract class ReservationDropdown extends Dropdown{
-    public Reservation setDropdown(Hotel hotel){
+    public Reservation reservationDropdown(Hotel hotel){
         String[] reservations = new String[hotel.getNumberOfReservations()];
         for(int i = 0; i < hotel.getNumberOfReservations(); i++){
             reservations[i] = hotel.getReservations().get(i).getGuestName();
