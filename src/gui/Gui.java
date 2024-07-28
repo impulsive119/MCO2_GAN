@@ -1,18 +1,13 @@
 package gui;
 
-import model.Hotel;
 import model.HotelReservationSystem;
-import model.Reservation;
-import model.Room;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 
 public class Gui {
     private final HotelReservationSystem HRS;
@@ -28,17 +23,6 @@ public class Gui {
         createHotel.add(new JMenuItem("Enter Hotel Name")).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setDropdown(new HotelDropdown() {
-                    @Override
-                    public Reservation reservationDropdown(Hotel hotel) {
-                        return null;
-                    }
-
-                    @Override
-                    public Room roomDropdown(Hotel hotel) {
-                        return null;
-                    }
-                });
             }
         });
 
@@ -53,22 +37,6 @@ public class Gui {
         bookReservation.add(new JMenuItem("Book Reservation")).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setDropdown(new HotelDropdown() {
-                    @Override
-                    public String hotelDropdown(HotelReservationSystem HRS) {
-                        return super.hotelDropdown(HRS);
-                    }
-
-                    @Override
-                    public Reservation reservationDropdown(Hotel hotel) {
-                        return null;
-                    }
-
-                    @Override
-                    public Room roomDropdown(Hotel hotel) {
-                        return null;
-                    }
-                });
             }
         });
 
@@ -90,12 +58,5 @@ public class Gui {
         root.getContentPane().add(form);
         root.setVisible(true);
     }
-
-    private void setDropdown (Dropdown dropdown){
-        root.getContentPane().removeAll();
-        root.getContentPane().add(dropdown);
-        root.setVisible(true);
-    }
-
 
 }

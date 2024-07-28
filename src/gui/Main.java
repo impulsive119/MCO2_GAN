@@ -10,5 +10,4 @@ public class Main {
         Gui gui = new Gui(new HotelReservationSystem());
         gui.start();
     }
-
 }

@@ -73,6 +73,10 @@ public class HotelReservationSystem {
         return numOfRooms >= 1 && numOfRooms + hotel.getNumberOfRooms() <= 50;
     }
 
+    public ArrayList<Hotel> getHotels(){
+        return hotels;
+    }
+
     public Hotel getHotel(String name){
         for(Hotel hotel: hotels){
             if(hotel.getName().equals(name)){
