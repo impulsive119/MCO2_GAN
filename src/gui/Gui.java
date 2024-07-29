@@ -6,8 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Gui {
     private final HotelReservationSystem HRS;
@@ -20,112 +18,44 @@ public class Gui {
     public void start() {
         JMenu createHotel = new JMenu("Create Hotel");
 
-        createHotel.add(new JMenuItem("Enter Hotel Name")).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setForm(new AddHotelForm(HRS));
-            }
-        });
+        createHotel.add(new JMenuItem("Enter Hotel Name")).addActionListener(_ -> setForm(new AddHotelForm(HRS)));
 
         JMenu viewHotel = new JMenu("View Hotel");
 
-        viewHotel.add(new JMenuItem("View Availability On Date")).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setForm(new ViewAvailabilityOnDateForm(HRS) {
-                });
-            }
-        });
+        viewHotel.add(new JMenuItem("View Availability On Date")).addActionListener(_ -> setForm(new ViewAvailabilityOnDateForm(HRS) {
+        }));
 
-        viewHotel.add(new JMenuItem("View Room Information")).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setForm(new ViewRoomForm(HRS) {
-                });
-            }
-        });
+        viewHotel.add(new JMenuItem("View Room Information")).addActionListener(_ -> setForm(new ViewRoomForm(HRS) {
+        }));
 
-        viewHotel.add(new JMenuItem("View Reservation")).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setForm(new ViewReservationForm(HRS) {
-                });
-            }
-        });
+        viewHotel.add(new JMenuItem("View Reservation")).addActionListener(_ -> setForm(new ViewReservationForm(HRS) {
+        }));
 
         JMenu manageHotel = new JMenu("Manage Hotel");
 
-        manageHotel.add(new JMenuItem("Change Name")).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setForm(new ChangeHotelNameForm(HRS) {
-                });
-            }
-        });
+        manageHotel.add(new JMenuItem("Change Name")).addActionListener(_ -> setForm(new ChangeHotelNameForm(HRS) {
+        }));
 
-        manageHotel.add(new JMenuItem("Change Name")).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setForm(new ChangeHotelNameForm(HRS) {
-                });
-            }
-        });
+        manageHotel.add(new JMenuItem("Add Rooms")).addActionListener(_ -> setForm(new AddRoomsForm(HRS) {
+        }));
 
-        manageHotel.add(new JMenuItem("Add Rooms")).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setForm(new AddRoomsForm(HRS) {
-                });
-            }
-        });
+        manageHotel.add(new JMenuItem("Remove Rooms")).addActionListener(_ -> setForm(new RemoveRoomForm(HRS) {
+        }));
 
-        manageHotel.add(new JMenuItem("Remove Rooms")).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setForm(new RemoveRoomForm(HRS) {
-                });
-            }
-        });
+        manageHotel.add(new JMenuItem("Change Price")).addActionListener(_ -> setForm(new ChangePriceForm(HRS) {
+        }));
 
-        manageHotel.add(new JMenuItem("Change Price")).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setForm(new ChangePriceForm(HRS) {
-                });
-            }
-        });
+        manageHotel.add(new JMenuItem("Add Premium To Date")).addActionListener(_ -> setForm(new AddPremiumToDateForm(HRS) {
+        }));
 
-        manageHotel.add(new JMenuItem("Add Premium To Date")).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setForm(new AddPremiumToDateForm(HRS) {
-                });
-            }
-        });
+        manageHotel.add(new JMenuItem("Remove Reservation")).addActionListener(_ -> setForm(new RemoveReservationForm(HRS) {
+        }));
 
-        manageHotel.add(new JMenuItem("Remove Reservation")).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setForm(new RemoveReservationForm(HRS) {
-                });
-            }
-        });
-
-        manageHotel.add(new JMenuItem("Remove Hotel")).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setForm(new RemoveHotelForm(HRS) {
-                });
-            }
-        });
+        manageHotel.add(new JMenuItem("Remove Hotel")).addActionListener(_ -> setForm(new RemoveHotelForm(HRS) {
+        }));
 
         JMenu bookReservation = new JMenu("Book Reservation");
-        bookReservation.add(new JMenuItem("Book Reservation")).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setForm(new BookReservationForm(HRS));
-            }
-        });
+        bookReservation.add(new JMenuItem("Book Reservation")).addActionListener(_ -> setForm(new BookReservationForm(HRS)));
 
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(createHotel);

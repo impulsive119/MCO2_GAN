@@ -6,13 +6,11 @@ import model.Room;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 public abstract class RemoveRoomForm extends InputForm{
     private ComboBox roomComboBox;
     private ComboBox hotelComboBox;
-    private JButton enterButton;
 
     public RemoveRoomForm(HotelReservationSystem HRS) {
         super(HRS);
@@ -20,21 +18,11 @@ public abstract class RemoveRoomForm extends InputForm{
 
     @Override
     protected void addInputFields(){
-        hotelComboBox = addComboBox("Select a Hotel:", HRS.getHotels().toArray());
-        roomComboBox = addComboBox("Select a Room", null);
-        roomComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                hotelComboBoxClicked(e);
-            }
-        });
-        enterButton = addEnterButton();
-        enterButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onEnter();
-            }
-        });
+        hotelComboBox = addComboBox("Select a Hotel:", HRS.getHotelNames().toArray());
+        roomComboBox = addComboBox();
+        roomComboBox.addActionListener(this::hotelComboBoxClicked);
+        JButton enterButton = addEnterButton();
+        enterButton.addActionListener(_ -> onEnter());
     }
 
     private void hotelComboBoxClicked(ActionEvent e) {
@@ -49,11 +37,9 @@ public abstract class RemoveRoomForm extends InputForm{
 
     @Override
     protected void onEnter(){
-        Hotel hotel = (Hotel) hotelComboBox.getSelectedItem();
-        Room chosenRoom = null;
-        if(hotel != null){
-            chosenRoom = hotel.selectRoom((int)roomComboBox.getSelectedItem());
-        }
+        String hotelName = (String) hotelComboBox.getSelectedItem();
+        Hotel hotel = HRS.getHotel(hotelName);
+        Room chosenRoom = hotel.selectRoom((int)roomComboBox.getSelectedItem());
 
         if(chosenRoom != null) {
             hotel.removeRoom(chosenRoom);

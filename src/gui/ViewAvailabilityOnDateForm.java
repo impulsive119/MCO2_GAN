@@ -5,13 +5,9 @@ import javax.swing.*;
 import model.HotelReservationSystem;
 import model.Hotel;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 public abstract class ViewAvailabilityOnDateForm extends InputForm{
     private ComboBox hotelComboBox;
     private JTextField dateField;
-    private JButton enterButton;
 
     public ViewAvailabilityOnDateForm(HotelReservationSystem HRS) {
         super(HRS);
@@ -21,19 +17,15 @@ public abstract class ViewAvailabilityOnDateForm extends InputForm{
     protected void addInputFields(){
         hotelComboBox = addComboBox("Select a Hotel",  HRS.getHotelNames().toArray());
         dateField = addTextField("Enter Date: ");
-        enterButton = addEnterButton();
-        enterButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onEnter();
-            }
-        });
+        JButton enterButton = addEnterButton();
+        enterButton.addActionListener(_ -> onEnter());
     }
 
     @Override
     protected void onEnter(){
-        Hotel hotel = (Hotel)hotelComboBox.getSelectedItem();
+        String hotelName = (String) hotelComboBox.getSelectedItem();
         int date = Integer.parseInt(dateField.getText());
+        Hotel hotel = HRS.getHotel(hotelName);
 
         if(date < 1 || date > 31) {
             JOptionPane.showMessageDialog(this, "Invalid Hotel Name");

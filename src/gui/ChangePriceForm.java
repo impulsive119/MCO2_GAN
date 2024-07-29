@@ -8,7 +8,6 @@ import javax.swing.*;
 public class ChangePriceForm extends InputForm{
     private JTextField priceField;
     private ComboBox hotelComboBox;
-    private JButton enterButton;
 
     public ChangePriceForm(HotelReservationSystem HRS) {
         super(HRS);
@@ -18,20 +17,20 @@ public class ChangePriceForm extends InputForm{
     protected void addInputFields(){
         hotelComboBox = addComboBox("Select a Hotel", HRS.getHotelNames().toArray());
         priceField = addTextField("Enter New Price: ");
-        enterButton = addEnterButton();
+        JButton enterButton = addEnterButton();
+        enterButton.addActionListener(_ -> onEnter());
     }
 
     @Override
     protected void onEnter() {
-        Hotel hotel = (Hotel) hotelComboBox.getSelectedItem();
+        String hotelName = (String) hotelComboBox.getSelectedItem();
+        Hotel hotel = HRS.getHotel(hotelName);
         double price = Double.parseDouble(priceField.getText());
-        if(hotel != null) {
-            if (price < 100) {
-                JOptionPane.showMessageDialog(this, "Price Must Be Greater than 100.00");
-            } else {
-                hotel.changePrice(price);
-                JOptionPane.showMessageDialog(this, "New Price: " + price);
-            }
+        if (price < 100) {
+            JOptionPane.showMessageDialog(this, "Price Must Be Greater than 100.00");
+        } else {
+            hotel.changePrice(price);
+            JOptionPane.showMessageDialog(this, "New Price: " + price);
         }
     }
 }

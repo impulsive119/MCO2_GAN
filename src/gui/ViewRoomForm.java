@@ -12,7 +12,6 @@ import java.util.List;
 public abstract class ViewRoomForm extends InputForm{
     private ComboBox roomComboBox;
     private ComboBox hotelComboBox;
-    private JButton enterButton;
 
     public ViewRoomForm(HotelReservationSystem HRS) {
         super(HRS);
@@ -20,21 +19,11 @@ public abstract class ViewRoomForm extends InputForm{
 
     @Override
     protected void addInputFields(){
-        hotelComboBox = addComboBox("Select a Hotel:", HRS.getHotels().toArray());
-        roomComboBox = addComboBox("Select a Room", null);
-        roomComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                hotelComboBoxClicked(e);
-            }
-        });
-        enterButton = addEnterButton();
-        enterButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onEnter();
-            }
-        });
+        hotelComboBox = addComboBox("Select a Hotel:", HRS.getHotelNames().toArray());
+        roomComboBox = addComboBox();
+        roomComboBox.addActionListener(this::hotelComboBoxClicked);
+        JButton enterButton = addEnterButton();
+        enterButton.addActionListener(_ -> onEnter());
     }
 
     private void hotelComboBoxClicked(ActionEvent e) {
@@ -49,30 +38,25 @@ public abstract class ViewRoomForm extends InputForm{
 
     @Override
     protected void onEnter(){
-        Hotel hotel = (Hotel) hotelComboBox.getSelectedItem();
-        int roomNumber = 0;
-        if(hotel != null){
-            roomNumber= (int) roomComboBox.getSelectedItem();
-        }
+        String hotelName = (String) hotelComboBox.getSelectedItem();
+        Hotel hotel = HRS.getHotel(hotelName);
+        int roomNumber= (int) roomComboBox.getSelectedItem();
 
         Room chosenRoom = null;
-        if(hotel != null) {
-            for (Room room : hotel.getRooms()) {
-                if (room.getRoomNumber() == roomNumber) {
-                    chosenRoom = room;
-                }
-            }
-            if (chosenRoom != null) {
-                JOptionPane.showMessageDialog(
-                        this, "Room Number: " + roomNumber + "\n" +
-                                "Room Type: " + chosenRoom.getRoomType() + "\n" +
-                                "Room Price: " + chosenRoom.getPrice() + "\n" +
-                                "Room Type: " + chosenRoom.getRoomType() + "\n" +
-                                "Days Room is Available: " + "\n" +
-                                chosenRoom.getAvailableDates() + "\n" +
-                                "Days Room is Reserved: " + "\n" +
-                                chosenRoom.getReservedDates());
-            }
+        for (Room room : hotel.getRooms()) {
+            if (room.getRoomNumber() == roomNumber) chosenRoom = room;
         }
+        if (chosenRoom != null) {
+            JOptionPane.showMessageDialog(
+                    this, "Room Number: " + roomNumber + "\n" +
+                            "Room Type: " + chosenRoom.getRoomType() + "\n" +
+                            "Room Price: " + chosenRoom.getPrice() + "\n" +
+                            "Room Type: " + chosenRoom.getRoomType() + "\n" +
+                            "Days Room is Available: " + "\n" +
+                            chosenRoom.getAvailableDates() + "\n" +
+                            "Days Room is Reserved: " + "\n" +
+                            chosenRoom.getReservedDates());
+        }
+
     }
 }

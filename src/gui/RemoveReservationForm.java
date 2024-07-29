@@ -3,17 +3,13 @@ package gui;
 import model.Hotel;
 import model.HotelReservationSystem;
 import model.Reservation;
-import model.Room;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 public abstract class RemoveReservationForm extends InputForm{
     private ComboBox reservationComboBox;
     private ComboBox hotelComboBox;
-    private JButton enterButton;
 
     public RemoveReservationForm(HotelReservationSystem HRS) {
         super(HRS);
@@ -21,21 +17,11 @@ public abstract class RemoveReservationForm extends InputForm{
 
     @Override
     protected void addInputFields(){
-        hotelComboBox = addComboBox("Select a Hotel:", HRS.getHotels().toArray());
-        reservationComboBox = addComboBox("Select a Reservation", null);
-        reservationComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                hotelComboBoxClicked(e);
-            }
-        });
-        enterButton = addEnterButton();
-        enterButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onEnter();
-            }
-        });
+        hotelComboBox = addComboBox("Select a Hotel:", HRS.getHotelNames().toArray());
+        reservationComboBox = addComboBox();
+        reservationComboBox.addActionListener(this::hotelComboBoxClicked);
+        JButton enterButton = addEnterButton();
+        enterButton.addActionListener(_ -> onEnter());
     }
 
     private void hotelComboBoxClicked(ActionEvent e) {
@@ -50,11 +36,9 @@ public abstract class RemoveReservationForm extends InputForm{
 
     @Override
     protected void onEnter(){
-        Hotel hotel = (Hotel) hotelComboBox.getSelectedItem();
-        Reservation chosenReservation = null;
-        if(hotel != null){
-            chosenReservation = hotel.selectReservation((int)reservationComboBox.getSelectedItem());
-        }
+        String hotelName = (String) hotelComboBox.getSelectedItem();
+        Hotel hotel = HRS.getHotel(hotelName);
+        Reservation chosenReservation = hotel.selectReservation((int)reservationComboBox.getSelectedItem());
 
         if(chosenReservation != null) {
             hotel.removeReservation(chosenReservation);

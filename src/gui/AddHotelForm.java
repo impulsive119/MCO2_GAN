@@ -3,12 +3,9 @@ package gui;
 import model.HotelReservationSystem;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class AddHotelForm extends InputForm{
     private JTextField hotelNameField;
-    private JButton enterButton;
 
     public AddHotelForm(HotelReservationSystem HRS){
         super(HRS);
@@ -17,13 +14,8 @@ public class AddHotelForm extends InputForm{
     @Override
     protected void addInputFields(){
         hotelNameField = addTextField("Enter Hotel Name: ");
-        enterButton = addEnterButton();
-        enterButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onEnter();
-            }
-        });
+        JButton enterButton = addEnterButton();
+        enterButton.addActionListener(_ -> onEnter());
     }
 
     @Override

@@ -26,12 +26,7 @@ public abstract class InputForm extends JPanel implements ActionListener {
         // Add cancel button to button panel
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setSize(60, 20);
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-            }
-        });
+        cancelButton.addActionListener(_ -> setVisible(false));
         buttonPanel.add(cancelButton);
 
         // Add button panel to the bottom of the input form
@@ -93,7 +88,7 @@ public abstract class InputForm extends JPanel implements ActionListener {
         add(component, gbc);
     }
 
-    protected void addInputFields(HotelReservationSystem HRS){};
+    protected void addInputFields(HotelReservationSystem HRS){}
 
-    protected void onEnter(){};
+    protected void onEnter(){}
 }

@@ -7,13 +7,11 @@ import model.Room;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 public abstract class ViewReservationForm extends InputForm{
     private ComboBox hotelComboBox;
     private ComboBox reservationComboBox;
-    private JButton enterButton;
 
     public ViewReservationForm(HotelReservationSystem HRS) {
         super(HRS);
@@ -31,30 +29,20 @@ public abstract class ViewReservationForm extends InputForm{
 
     @Override
     protected void addInputFields(HotelReservationSystem HRS){
-        hotelComboBox = addComboBox("Select A Hotel", HRS.getHotels().toArray());
+        hotelComboBox = addComboBox("Select a Hotel:", HRS.getHotelNames().toArray());
         reservationComboBox = addComboBox();
-        reservationComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                hotelComboBoxClicked(e);
-            }
-        });
-        enterButton = addEnterButton();
-        enterButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onEnter();
-            }
-        });
+        reservationComboBox.addActionListener(this::hotelComboBoxClicked);
+        JButton enterButton = addEnterButton();
+        enterButton.addActionListener(_ -> onEnter());
     }
 
     @Override
     protected void onEnter(){
-        Hotel hotel = (Hotel) hotelComboBox.getSelectedItem();
+        String hotelName = (String) hotelComboBox.getSelectedItem();
         String guestName = (String) reservationComboBox.getSelectedItem();
-        if(hotel != null) {
-            Reservation reservation = hotel.getReservation(guestName);
-            JOptionPane.showMessageDialog(
+        Hotel hotel = HRS.getHotel(hotelName);
+        Reservation reservation = hotel.getReservation(guestName);
+        JOptionPane.showMessageDialog(
                     this, "Guest Name: " + guestName + "\n" +
                             "Hotel: " + reservation.getRoom().getHotel() + "\n" +
                             "Room Number: " + reservation.getRoom().getRoomNumber() + "\n" +
@@ -63,6 +51,5 @@ public abstract class ViewReservationForm extends InputForm{
                             "Check-Out Date: " + reservation.getCheckOutDate() + "\n" +
                             "Total Price: " + reservation.getTotalPrice() + "\n" +
                             "Discount Code: " + reservation.getDiscountCode());
-        }
     }
 }

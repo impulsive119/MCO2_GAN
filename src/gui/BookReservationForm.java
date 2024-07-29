@@ -6,7 +6,6 @@ import model.Room;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 public class BookReservationForm extends InputForm{
@@ -16,7 +15,6 @@ public class BookReservationForm extends InputForm{
     private JTextField checkInDateField;
     private JTextField checkOutDateField;
     private JTextField discountCodeField;
-    private JButton enterButton;
 
     public BookReservationForm(HotelReservationSystem HRS){
         super(HRS);
@@ -26,23 +24,13 @@ public class BookReservationForm extends InputForm{
     protected void addInputFields() {
         hotelComboBox = addComboBox("Select a Hotel:",  HRS.getHotelNames().toArray());
         roomComboBox = addComboBox("Select a Room", null);
-        roomComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                hotelComboBoxClicked(e);
-            }
-        });
+        roomComboBox.addActionListener(this::hotelComboBoxClicked);
         guestNameField = addTextField("Enter Guest Name: ");
         checkInDateField = addTextField("Enter Check-In Date: ");
         checkOutDateField = addTextField("Enter Check-Out Date: ");
         discountCodeField = addTextField("Enter Discount Code: ");
-        enterButton = addEnterButton();
-        enterButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onEnter();
-            }
-        });
+        JButton enterButton = addEnterButton();
+        enterButton.addActionListener(_ -> onEnter());
 
     }
 
@@ -50,7 +38,7 @@ public class BookReservationForm extends InputForm{
         if (hotelComboBox.getSelectedItem() == ComboBox.NONE) {
             roomComboBox.removeAllItems();
         } else if(hotelComboBox.getSelectedItem()  != null){
-            Hotel  hotel = (Hotel) hotelComboBox.getSelectedItem();
+            Hotel hotel = HRS.getHotel((String)hotelComboBox.getSelectedItem());
             List<Room> rooms = hotel.getRooms();
             roomComboBox.setItems(rooms.toArray());
         }
