@@ -23,13 +23,18 @@ public class Gui {
         createHotel.add(new JMenuItem("Enter Hotel Name")).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                InputForm addHotelForm = setForm(new AddHotelForm(HRS));
             }
         });
 
-
-        createHotel.addSeparator();
-
         JMenu viewHotel = new JMenu("View Hotel");
+
+        viewHotel.add(new JMenu("View Availability On Date")).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
 
         JMenu manageHotel = new JMenu("Manage Hotel");
 
@@ -53,10 +58,11 @@ public class Gui {
         root.setVisible(true);
     }
 
-    private void setForm(InputForm form) {
+    private InputForm setForm(InputForm form) {
         root.getContentPane().removeAll();
         root.getContentPane().add(form);
         root.setVisible(true);
+        return form;
     }
 
 }

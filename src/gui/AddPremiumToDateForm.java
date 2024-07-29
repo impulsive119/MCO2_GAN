@@ -4,18 +4,31 @@ import model.Hotel;
 import model.HotelReservationSystem;
 
 import javax.swing.*;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public abstract class AddPremiumToDateForm extends InputForm{
     private ComboBox hotelComboBox;
     private JTextField premiumField;
     private JTextField dateField;
+    private JButton enterButton;
+
+    public AddPremiumToDateForm(HotelReservationSystem HRS){
+        super(HRS);
+    }
 
     @Override
-    protected void addInputFields(HotelReservationSystem HRS){
+    protected void addInputFields(){
         hotelComboBox = addComboBox("Select a Hotel:", HRS.getHotelNames().toArray());
         dateField = addTextField("Enter Date: ");
         premiumField = addTextField("Enter Premium: ");
+        enterButton = addEnterButton();
+        enterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onEnter();
+            }
+        });
     }
 
     @Override

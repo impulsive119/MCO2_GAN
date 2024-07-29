@@ -4,28 +4,46 @@ import model.Hotel;
 import model.HotelReservationSystem;
 import model.Room;
 
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
+import java.awt.event.ActionListener;
 import java.util.List;
 
-public abstract class BookReservationForm extends InputForm{
+public class BookReservationForm extends InputForm{
     private JTextField guestNameField;
     private ComboBox hotelComboBox;
     private ComboBox roomComboBox;
     private JTextField checkInDateField;
     private JTextField checkOutDateField;
     private JTextField discountCodeField;
+    private JButton enterButton;
+
+    public BookReservationForm(HotelReservationSystem HRS){
+        super(HRS);
+    }
 
     @Override
-    protected void addInputFields(HotelReservationSystem HRS) {
+    protected void addInputFields() {
         hotelComboBox = addComboBox("Select a Hotel:",  HRS.getHotelNames().toArray());
-        roomComboBox = addComboBox("Select a Room");
+        roomComboBox = addComboBox();
+        roomComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                hotelComboBoxClicked(e);
+            }
+        });
         guestNameField = addTextField("Enter Guest Name: ");
         checkInDateField = addTextField("Enter Check-In Date: ");
         checkOutDateField = addTextField("Enter Check-Out Date: ");
         discountCodeField = addTextField("Enter Discount Code: ");
+        enterButton = addEnterButton();
+        enterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onEnter();
+            }
+        });
+
     }
 
     private void hotelComboBoxClicked(ActionEvent e) {
@@ -40,7 +58,6 @@ public abstract class BookReservationForm extends InputForm{
 
     @Override
     protected void onEnter() {
-        Hotel hotel = (Hotel) hotelComboBox.getSelectedItem();
         Room room = (Room) roomComboBox.getSelectedItem();
         String guestName = guestNameField.getText();
         int checkInDate  = Integer.parseInt(checkInDateField.getText());

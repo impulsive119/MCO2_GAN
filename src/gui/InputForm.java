@@ -1,6 +1,5 @@
 package gui;
 
-import model.Hotel;
 import model.HotelReservationSystem;
 
 import javax.swing.JButton;
@@ -16,11 +15,12 @@ import java.awt.event.ActionListener;
 
 public abstract class InputForm extends JPanel implements ActionListener {
 
-    private JPanel buttonPanel = new JPanel();
+    private final JPanel buttonPanel = new JPanel();
+    protected final HotelReservationSystem HRS;
 
-    public InputForm() {
+    public InputForm(HotelReservationSystem HRS) {
         super(new GridBagLayout());
-
+        this.HRS = HRS;
         addInputFields();
 
         // Add cancel button to button panel
@@ -51,8 +51,8 @@ public abstract class InputForm extends JPanel implements ActionListener {
 
     }
 
-    protected ComboBox addComboBox(String label) {
-        return addComboBox(label, new Object[] {});
+    protected ComboBox addComboBox() {
+        return addComboBox("Select a Room", new Object[] {});
     }
 
     protected ComboBox addComboBox(String label, Object[] items) {
@@ -72,8 +72,8 @@ public abstract class InputForm extends JPanel implements ActionListener {
         return textField;
     }
 
-    protected JButton addButton(String name) {
-        JButton button = new JButton(name);
+    protected JButton addEnterButton() {
+        JButton button = new JButton("Enter");
         button.setSize(60, 20);
         button.addActionListener(this);
         buttonPanel.add(button);
@@ -93,9 +93,7 @@ public abstract class InputForm extends JPanel implements ActionListener {
         add(component, gbc);
     }
 
-    protected abstract void addInputFields(HotelReservationSystem HRS);
+    protected void addInputFields(HotelReservationSystem HRS){};
 
-    protected abstract void onEnter();
-
-    protected abstract void onEnter(HotelReservationSystem HRS);
+    protected void onEnter(){};
 }
