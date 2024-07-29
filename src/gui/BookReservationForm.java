@@ -25,7 +25,7 @@ public class BookReservationForm extends InputForm{
     @Override
     protected void addInputFields() {
         hotelComboBox = addComboBox("Select a Hotel:",  HRS.getHotelNames().toArray());
-        roomComboBox = addComboBox();
+        roomComboBox = addComboBox("Select a Room", null);
         roomComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
