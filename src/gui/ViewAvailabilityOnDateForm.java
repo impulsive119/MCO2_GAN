@@ -27,14 +27,19 @@ public abstract class ViewAvailabilityOnDateForm extends InputForm{
         int date = Integer.parseInt(dateField.getText());
         Hotel hotel = HRS.getHotel(hotelName);
 
+        if(hotel == null){
+            JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
+            return;
+        }
+
         if(date < 1 || date > 31) {
-            JOptionPane.showMessageDialog(this, "Invalid Hotel Name");
-        }else if (hotel != null) {
-                JOptionPane.showMessageDialog(this,
-                        "Available Rooms:"+ "\n" +
-                                hotel.getAvailableRoomsOnDate(date) +"\n" +
-                                "Reserved Rooms: " + "\n" +
-                                hotel.getReservedRoomsOnDate(date));
+            JOptionPane.showMessageDialog(this, "Invalid Date");
+        }else {
+            JOptionPane.showMessageDialog(this,
+                    "Available Rooms:"+ "\n" +
+                            hotel.getAvailableRoomsOnDate(date) +"\n" +
+                            "Reserved Rooms: " + "\n" +
+                            hotel.getReservedRoomsOnDate(date));
 
         }
     }

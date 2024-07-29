@@ -31,6 +31,11 @@ public abstract class AddRoomsForm extends InputForm{
         String roomType = (String) roomTypeComboBox.getSelectedItem();
         int numOfRooms = Integer.parseInt(numOfRoomsField.getText());
         int room = 0;
+
+        if(hotel == null){
+            JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
+            return;
+        }
         switch (roomType) {
             case "Standard":
                 room = 1;
@@ -44,7 +49,7 @@ public abstract class AddRoomsForm extends InputForm{
             case null, default:
                     break;
             }
-            JOptionPane.showMessageDialog(this, hotel.addRooms(numOfRooms, room));
+            JOptionPane.showMessageDialog(this, "Rooms " + hotel.addRooms(numOfRooms, room) + " Added");
 
     }
 }

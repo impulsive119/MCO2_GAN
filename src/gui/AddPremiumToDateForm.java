@@ -27,6 +27,10 @@ public abstract class AddPremiumToDateForm extends InputForm{
     protected void onEnter() {
         String hotelName = (String) hotelComboBox.getSelectedItem();
         Hotel hotel = HRS.getHotel(hotelName);
+        if(hotel == null){
+            JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
+            return;
+        }
         int date = Integer.parseInt(dateField.getText());
         double premium = Double.parseDouble(premiumField.getText());
         if(date < 1 || date > 31){

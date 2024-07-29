@@ -6,7 +6,7 @@ import model.Room;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.util.List;
+import java.util.ArrayList;
 
 public abstract class RemoveRoomForm extends InputForm{
     private ComboBox roomComboBox;
@@ -19,19 +19,27 @@ public abstract class RemoveRoomForm extends InputForm{
     @Override
     protected void addInputFields(){
         hotelComboBox = addComboBox("Select a Hotel:", HRS.getHotelNames().toArray());
-        roomComboBox = addComboBox();
-        roomComboBox.addActionListener(this::hotelComboBoxClicked);
+        roomComboBox = addComboBox("Select a Room", null);
+        hotelComboBox.addActionListener(this::hotelComboBoxClicked);
         JButton enterButton = addEnterButton();
         enterButton.addActionListener(_ -> onEnter());
     }
 
     private void hotelComboBoxClicked(ActionEvent e) {
-        if (hotelComboBox.getSelectedItem() == ComboBox.NONE) {
+        if (hotelComboBox.getSelectedItem() == null || hotelComboBox.getSelectedItem().equals("NONE")) {
             roomComboBox.removeAllItems();
-        } else if(hotelComboBox.getSelectedItem()  != null){
-            Hotel  hotel = (Hotel) hotelComboBox.getSelectedItem();
-            List<Room> rooms = hotel.getRooms();
-            roomComboBox.setItems(rooms.toArray());
+        } else {
+            Hotel hotel = HRS.getHotel((String) hotelComboBox.getSelectedItem());
+            if (hotel != null) {
+                ArrayList<Integer> rooms = new ArrayList<>();
+                for (Room room : hotel.getRooms()) {
+                    rooms.add(room.getRoomNumber());
+                }
+                roomComboBox.removeAllItems();
+                for (Integer roomNumber : rooms) {
+                    roomComboBox.addItem(roomNumber);
+                }
+            }
         }
     }
 
@@ -40,6 +48,7 @@ public abstract class RemoveRoomForm extends InputForm{
         String hotelName = (String) hotelComboBox.getSelectedItem();
         Hotel hotel = HRS.getHotel(hotelName);
         Room chosenRoom = hotel.selectRoom((int)roomComboBox.getSelectedItem());
+
 
         if(chosenRoom != null) {
             hotel.removeRoom(chosenRoom);

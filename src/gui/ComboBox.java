@@ -2,8 +2,9 @@ package gui;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import java.lang.reflect.Array;
 
-public class ComboBox extends JComboBox {
+public class ComboBox extends JComboBox<Object> {
 
     public static final Object NONE = new Object() {
         @Override
@@ -12,9 +13,14 @@ public class ComboBox extends JComboBox {
         }
     };
 
-    public static Object[] addNone(Object[] items) {
-        Object[] newArray = new Object[items.length + 1];
-        newArray[0] = NONE;
+    @SuppressWarnings("unchecked")
+    public static <T> T[] addNone(T[] items) {
+        if (items == null) {
+            // Handle null items array case
+            return (T[]) Array.newInstance(Object.class, 1); // Array of size 1 for the NONE item
+        }
+        T[] newArray = (T[]) Array.newInstance(items.getClass().getComponentType(), items.length + 1);
+        newArray[0] = (T) NONE;
         System.arraycopy(items, 0, newArray, 1, items.length);
         return newArray;
     }
@@ -24,7 +30,7 @@ public class ComboBox extends JComboBox {
     }
 
     public void setItems(Object[] items) {
-        this.setModel(new DefaultComboBoxModel(addNone(items)));
+        this.setModel(new DefaultComboBoxModel<>(addNone(items)));
     }
 
     @Override
@@ -32,5 +38,4 @@ public class ComboBox extends JComboBox {
         super.removeAllItems();
         addItem(NONE);
     }
-
 }

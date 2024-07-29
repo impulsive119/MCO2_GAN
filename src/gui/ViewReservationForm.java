@@ -3,11 +3,10 @@ package gui;
 import model.Hotel;
 import model.HotelReservationSystem;
 import model.Reservation;
-import model.Room;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.util.List;
+import java.util.ArrayList;
 
 public abstract class ViewReservationForm extends InputForm{
     private ComboBox hotelComboBox;
@@ -18,20 +17,28 @@ public abstract class ViewReservationForm extends InputForm{
     }
 
     private void hotelComboBoxClicked(ActionEvent e) {
-        if (hotelComboBox.getSelectedItem() == ComboBox.NONE) {
+        if (hotelComboBox.getSelectedItem() == null || hotelComboBox.getSelectedItem().equals("NONE")) {
             reservationComboBox.removeAllItems();
-        } else if(hotelComboBox.getSelectedItem()  != null){
-            Hotel  hotel = (Hotel) hotelComboBox.getSelectedItem();
-            List<Room> rooms = hotel.getRooms();
-            reservationComboBox.setItems(rooms.toArray());
+        } else {
+            Hotel hotel = HRS.getHotel((String) hotelComboBox.getSelectedItem());
+            if (hotel != null) {
+                ArrayList<String> reservations = new ArrayList<>();
+                for (Reservation reservation : hotel.getReservations()) {
+                    reservations.add(reservation.getGuestName());
+                }
+                reservationComboBox.removeAllItems();
+                for (String reservation : reservations) {
+                    reservationComboBox.addItem(reservation);
+                }
+            }
         }
     }
 
     @Override
     protected void addInputFields(HotelReservationSystem HRS){
         hotelComboBox = addComboBox("Select a Hotel:", HRS.getHotelNames().toArray());
-        reservationComboBox = addComboBox();
-        reservationComboBox.addActionListener(this::hotelComboBoxClicked);
+        reservationComboBox = addComboBox("Select a Reservation", null);
+        hotelComboBox.addActionListener(this::hotelComboBoxClicked);
         JButton enterButton = addEnterButton();
         enterButton.addActionListener(_ -> onEnter());
     }
@@ -42,6 +49,10 @@ public abstract class ViewReservationForm extends InputForm{
         String guestName = (String) reservationComboBox.getSelectedItem();
         Hotel hotel = HRS.getHotel(hotelName);
         Reservation reservation = hotel.getReservation(guestName);
+        if(reservation == null){
+            JOptionPane.showMessageDialog(this, "Please Select a Valid Reservation");
+            return;
+        }
         JOptionPane.showMessageDialog(
                     this, "Guest Name: " + guestName + "\n" +
                             "Hotel: " + reservation.getRoom().getHotel() + "\n" +

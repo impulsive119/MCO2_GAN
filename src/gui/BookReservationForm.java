@@ -6,7 +6,7 @@ import model.Room;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.util.List;
+import java.util.ArrayList;
 
 public class BookReservationForm extends InputForm{
     private JTextField guestNameField;
@@ -24,7 +24,7 @@ public class BookReservationForm extends InputForm{
     protected void addInputFields() {
         hotelComboBox = addComboBox("Select a Hotel:",  HRS.getHotelNames().toArray());
         roomComboBox = addComboBox("Select a Room", null);
-        roomComboBox.addActionListener(this::hotelComboBoxClicked);
+        hotelComboBox.addActionListener(this::hotelComboBoxClicked);
         guestNameField = addTextField("Enter Guest Name: ");
         checkInDateField = addTextField("Enter Check-In Date: ");
         checkOutDateField = addTextField("Enter Check-Out Date: ");
@@ -35,22 +35,40 @@ public class BookReservationForm extends InputForm{
     }
 
     private void hotelComboBoxClicked(ActionEvent e) {
-        if (hotelComboBox.getSelectedItem() == ComboBox.NONE) {
+        if (hotelComboBox.getSelectedItem() == null || hotelComboBox.getSelectedItem().equals("NONE")) {
             roomComboBox.removeAllItems();
-        } else if(hotelComboBox.getSelectedItem()  != null){
-            Hotel hotel = HRS.getHotel((String)hotelComboBox.getSelectedItem());
-            List<Room> rooms = hotel.getRooms();
-            roomComboBox.setItems(rooms.toArray());
+        } else {
+            Hotel hotel = HRS.getHotel((String) hotelComboBox.getSelectedItem());
+            if (hotel != null) {
+                ArrayList<Integer> rooms = new ArrayList<>();
+                for (Room room : hotel.getRooms()) {
+                    rooms.add(room.getRoomNumber());
+                }
+                roomComboBox.removeAllItems();
+                for (Integer roomNumber : rooms) {
+                    roomComboBox.addItem(roomNumber);
+                }
+            }
         }
     }
 
     @Override
     protected void onEnter() {
+        String hotelName = (String) hotelComboBox.getSelectedItem();
         Room room = (Room) roomComboBox.getSelectedItem();
         String guestName = guestNameField.getText();
         int checkInDate  = Integer.parseInt(checkInDateField.getText());
         int checkOutDate  = Integer.parseInt(checkOutDateField.getText());
         String discountCode = discountCodeField.getText();
+
+        if(hotelName == null || hotelName.equals("NONE")){
+            JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
+            return;
+        }
+        if(room == null){
+            JOptionPane.showMessageDialog(this, "Please Select a Valid Room");
+            return;
+        }
 
         if(checkInDate < 1 || checkInDate > 30){
             JOptionPane.showMessageDialog(this, "Invalid Check-In Date");
@@ -58,9 +76,9 @@ public class BookReservationForm extends InputForm{
             JOptionPane.showMessageDialog(this, "Invalid Check-Out Date");
         } else if (checkInDate >= checkOutDate) {
             JOptionPane.showMessageDialog(this, "Check-In Date must be before Check-Out Date");
-        } else if (room != null && room.isReserved(checkInDate, checkOutDate)) {
+        } else if (room.isReserved(checkInDate, checkOutDate)) {
             JOptionPane.showMessageDialog(this, "Room is Reserved on these Dates");
-        } else if(room != null){
+        } else{
             room.addReservation( guestName, checkInDate, checkOutDate, discountCode);
             JOptionPane.showMessageDialog(this, "Reservation Booked");
 
