@@ -5,18 +5,40 @@ import model.HotelReservationSystem;
 
 import javax.swing.*;
 
-public abstract class AddPremiumToDateForm extends InputForm{
+/**
+ * A form that allows users to add a premium rate to a given date for a selected hotel.
+ * This form extends {@link InputForm} and provides validation for the inputs and updates the hotel with the new premium rate information.
+ */
+
+public class AddPremiumToDateForm extends InputForm{
     private ComboBox hotelComboBox;
     private JTextField premiumField;
     private JTextField dateField;
+
+    /**
+     * Constructs a new AddPremiumToDate with the given hotel reservation system and root frame.
+     *
+     * @param HRS  The hotel reservation system that this form will interact with.
+     * @param root The main frame of the application.
+     */
 
     public AddPremiumToDateForm(HotelReservationSystem HRS, JFrame root) {
         super(HRS, root);
     }
 
+    /**
+     * Returns the title for this form.
+     *
+     * @return The title of the form.
+     */
+
     protected String getTitle() {
         return "Hotel Reservation System - Add Premium To Date";
     }
+
+    /**
+     * Adds the input fields to the form.
+     */
 
     @Override
     protected void addInputFields(){
@@ -26,6 +48,14 @@ public abstract class AddPremiumToDateForm extends InputForm{
         JButton enterButton = addEnterButton();
         enterButton.addActionListener(_ -> onEnter());
     }
+
+    /**
+     * Handles the action performed when the "Enter" button is clicked.
+     * This method gets the selected hotel, date, and premium rate,
+     * validates the inputs, and updates the selected hotel with the new premium rate information.
+     * Shows an appropriate message dialog for errors or successful updates.
+     */
+
 
     @Override
     protected void onEnter() {

@@ -8,17 +8,39 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
-public abstract class RemoveReservationForm extends InputForm{
+/**
+ * A form that allows users to remove a reservation from a selected hotel.
+ * This form extends {@link InputForm} and provides validation for the inputs and updates the system accordingly.
+ */
+
+public class RemoveReservationForm extends InputForm{
     private ComboBox reservationComboBox;
     private ComboBox hotelComboBox;
+
+    /**
+     * Constructs a new RemoveReservationForm with the given hotel reservation system and root frame.
+     *
+     * @param HRS  The hotel reservation system that this form will interact with.
+     * @param root The main frame of the application.
+     */
 
     public RemoveReservationForm(HotelReservationSystem HRS, JFrame root) {
         super(HRS, root);
     }
 
+    /**
+     * Returns the title for this form.
+     *
+     * @return The title of the form.
+     */
+
     protected String getTitle() {
         return "Hotel Reservation System - Remove Reservation";
     }
+
+    /**
+     * Adds the input fields to the form.
+     */
 
     @Override
     protected void addInputFields(){
@@ -28,6 +50,10 @@ public abstract class RemoveReservationForm extends InputForm{
         JButton enterButton = addEnterButton();
         enterButton.addActionListener(_ -> onEnter());
     }
+
+    /**
+     * Updates reservationComboBox based on the selected hotel in hotelComboBox
+     */
 
     private void hotelComboBoxClicked(ActionEvent e) {
         if (hotelComboBox.getSelectedItem() == null || hotelComboBox.getSelectedItem().equals("NONE")) {
@@ -46,6 +72,14 @@ public abstract class RemoveReservationForm extends InputForm{
             }
         }
     }
+
+    /**
+     * Handles the action performed when the "Enter" button is clicked.
+     * This method gets the selected hotel and reservation info, validates it,
+     * then removes the reservation from the hotel if it is valid.
+     * Shows an appropriate message dialog for errors or successful updates.
+     * Updates its own ComboBox accordingly.
+     */
 
     @Override
     protected void onEnter(){

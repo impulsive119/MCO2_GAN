@@ -8,17 +8,39 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
-public abstract class ViewReservationForm extends InputForm{
+/**
+ * A form that allows users to view a given reservation's information.
+ * This form extends {@link InputForm} and provides validation for the inputs and views selected reservations.
+ */
+
+public class ViewReservationForm extends InputForm{
     private ComboBox hotelComboBox;
     private ComboBox reservationComboBox;
+
+    /**
+     * Constructs a new ViewReservationForm with the given hotel reservation system and root frame.
+     *
+     * @param HRS  The hotel reservation system that this form will interact with.
+     * @param root The main frame of the application.
+     */
 
     public ViewReservationForm(HotelReservationSystem HRS, JFrame root) {
         super(HRS, root);
     }
 
+    /**
+     * Returns the title for this form.
+     *
+     * @return The title of the form.
+     */
+
     protected String getTitle() {
         return "Hotel Reservation System - View Reservation";
     }
+
+    /**
+     * Updates reservationComboBox according to the selected hotel in HotelComboBox.
+     */
 
     private void hotelComboBoxClicked(ActionEvent e) {
         if (hotelComboBox.getSelectedItem() == null || hotelComboBox.getSelectedItem() == ComboBox.NONE) {
@@ -38,6 +60,10 @@ public abstract class ViewReservationForm extends InputForm{
         }
     }
 
+    /**
+     * Adds the input fields to the form.
+     */
+
     @Override
     protected void addInputFields(){
         hotelComboBox = addComboBox("Select a Hotel:", HRS.getHotelNames().toArray());
@@ -46,6 +72,13 @@ public abstract class ViewReservationForm extends InputForm{
         JButton enterButton = addEnterButton();
         enterButton.addActionListener(_ -> onEnter());
     }
+
+    /**
+     * Handles the action performed when the "Enter" button is clicked.
+     * This method gets the selected hotel and reservation, validates the information,
+     * then displays the reservation information if the inputs are valid.
+     * Shows an appropriate message dialog for errors or successful viewings.
+     */
 
     @Override
     protected void onEnter(){

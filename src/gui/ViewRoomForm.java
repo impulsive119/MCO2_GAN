@@ -8,17 +8,39 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
-public abstract class ViewRoomForm extends InputForm{
+/**
+ * A form that allows users to view a given room's information.
+ * This form extends {@link InputForm} and provides validation for the inputs and views selected room.
+ */
+
+public class ViewRoomForm extends InputForm{
     private ComboBox roomComboBox;
     private ComboBox hotelComboBox;
+
+    /**
+     * Constructs a new ViewRoomForm with the given hotel reservation system and root frame.
+     *
+     * @param HRS  The hotel reservation system that this form will interact with.
+     * @param root The main frame of the application.
+     */
 
     public ViewRoomForm(HotelReservationSystem HRS, JFrame root) {
         super(HRS, root);
     }
 
+    /**
+     * Returns the title for this form.
+     *
+     * @return The title of the form.
+     */
+
     protected String getTitle() {
         return "Hotel Reservation System - View Room";
     }
+
+    /**
+     * Adds the input fields to the form.
+     */
 
     @Override
     protected void addInputFields(){
@@ -28,6 +50,10 @@ public abstract class ViewRoomForm extends InputForm{
         JButton enterButton = addEnterButton();
         enterButton.addActionListener(_ -> onEnter());
     }
+
+    /**
+     * Updates roomComboBox according to the selected hotel in HotelComboBox.
+     */
 
     private void hotelComboBoxClicked(ActionEvent e) {
         if (hotelComboBox.getSelectedItem() == null || hotelComboBox.getSelectedItem() == ComboBox.NONE) {
@@ -46,6 +72,13 @@ public abstract class ViewRoomForm extends InputForm{
             }
         }
     }
+
+    /**
+     * Handles the action performed when the "Enter" button is clicked.
+     * This method gets the selected hotel and room, validates the information,
+     * then displays the room information if the inputs are valid.
+     * Shows an appropriate message dialog for errors or successful viewings.
+     */
 
     @Override
     protected void onEnter(){

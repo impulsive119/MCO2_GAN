@@ -6,19 +6,41 @@ import model.HotelReservationSystem;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public abstract class AddRoomsForm extends InputForm{
+/**
+ * A form that allows users to add rooms to a selected hotel.
+ * This form extends {@link InputForm} and provides validation for the inputs and updates the hotel with the new room information.
+ */
+
+public class AddRoomsForm extends InputForm{
     private ComboBox roomTypeComboBox;
     private JTextField numOfRoomsField;
     private ComboBox hotelComboBox;
+
+    /**
+     * Constructs a new AddRoomsForm with the given hotel reservation system and root frame.
+     *
+     * @param HRS  The hotel reservation system that this form will interact with.
+     * @param root The main frame of the application.
+     */
 
     public AddRoomsForm(HotelReservationSystem HRS, JFrame root) {
         super(HRS, root);
 
     }
 
+    /**
+     * Returns the title for this form.
+     *
+     * @return The title of the form.
+     */
+
     protected String getTitle() {
         return "Hotel Reservation System - Add Rooms";
     }
+
+    /**
+     * Adds the input fields to the form.
+     */
 
     @Override
     protected void addInputFields(){
@@ -32,6 +54,13 @@ public abstract class AddRoomsForm extends InputForm{
         JButton enterButton = addEnterButton();
         enterButton.addActionListener(_ -> onEnter());
     }
+
+    /**
+     * Handles the action performed when the "Enter" button is clicked.
+     * This method gets the selected hotel, room type, and number of rooms,
+     * validates the inputs, and updates the selected hotel with the new room information.
+     * Shows an appropriate message dialog for errors or successful updates.
+     */
 
     @Override
     protected void onEnter() {

@@ -8,6 +8,11 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
+/**
+ * A form that allows users to book a reservation for a selected room in a hotel.
+ * This form extends {@link InputForm} and provides validation for the inputs and updates the room with the new reservation.
+ */
+
 public class BookReservationForm extends InputForm{
     private JTextField guestNameField;
     private ComboBox hotelComboBox;
@@ -16,14 +21,33 @@ public class BookReservationForm extends InputForm{
     private JTextField checkOutDateField;
     private JTextField discountCodeField;
 
+    /**
+     * Constructs a new BookReservation with the given hotel reservation system and root frame.
+     *
+     * @param HRS  The hotel reservation system that this form will interact with.
+     * @param root The main frame of the application.
+     */
+
     public BookReservationForm(HotelReservationSystem HRS, JFrame root) {
         super(HRS, root);
     }
+
+
+    /**
+     * Returns the title for this form.
+     *
+     * @return The title of the form.
+     */
 
     @Override
     protected String getTitle() {
         return "Hotel Reservation System - Book Reservation";
     }
+
+
+    /**
+     * Adds the input fields to the form.
+     */
 
     @Override
     protected void addInputFields() {
@@ -38,6 +62,10 @@ public class BookReservationForm extends InputForm{
         enterButton.addActionListener(_ -> onEnter());
 
     }
+
+    /**
+     * Updates roomComboBox based on the selected hotel in hotelComboBox
+     */
 
     private void hotelComboBoxClicked(ActionEvent e) {
         if (hotelComboBox.getSelectedItem() == null || hotelComboBox.getSelectedItem().equals("NONE")) {
@@ -56,6 +84,13 @@ public class BookReservationForm extends InputForm{
             }
         }
     }
+
+    /**
+     * Handles the action performed when the "Enter" button is clicked.
+     * This method gets the selected hotel, room, and reservation details,
+     * validates the inputs, and updates the room with the reservation information.
+     * Shows an appropriate message dialog for errors or successful bookings.
+     */
 
     @Override
     protected void onEnter() {

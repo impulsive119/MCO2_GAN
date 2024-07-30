@@ -5,17 +5,39 @@ import model.HotelReservationSystem;
 
 import javax.swing.*;
 
+/**
+ * A form that allows users to change a selected hotel's base price.
+ * This form extends {@link InputForm} and provides validation for the inputs and updates the hotel with the base price.
+ */
+
 public class ChangePriceForm extends InputForm{
     private JTextField priceField;
     private ComboBox hotelComboBox;
+
+    /**
+     * Constructs a new ChangePriceForm with the given hotel reservation system and root frame.
+     *
+     * @param HRS  The hotel reservation system that this form will interact with.
+     * @param root The main frame of the application.
+     */
 
     public ChangePriceForm(HotelReservationSystem HRS, JFrame root) {
         super(HRS, root);
     }
 
+    /**
+     * Returns the title for this form.
+     *
+     * @return The title of the form.
+     */
+
     protected String getTitle() {
         return "Hotel Reservation System - Change Price";
     }
+
+    /**
+     * Adds the input fields to the form.
+     */
 
     @Override
     protected void addInputFields(){
@@ -24,6 +46,13 @@ public class ChangePriceForm extends InputForm{
         JButton enterButton = addEnterButton();
         enterButton.addActionListener(_ -> onEnter());
     }
+
+    /**
+     * Handles the action performed when the "Enter" button is clicked.
+     * This method gets the selected hotel and new price,
+     * validates the inputs, and updates the room with the price information.
+     * Shows an appropriate message dialog for errors or successful updates.
+     */
 
     @Override
     protected void onEnter() {
