@@ -88,5 +88,9 @@ public class BookReservationForm extends InputForm{
             room.addReservation(guestName, checkInDate, checkOutDate, discountCode);
             JOptionPane.showMessageDialog(this, "Reservation Booked");
         }
+        guestNameField.setText("");
+        checkInDateField.setText("");
+        checkOutDateField.setText("");
+        discountCodeField.setText("");
     }
 }

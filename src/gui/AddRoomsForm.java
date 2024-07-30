@@ -61,5 +61,6 @@ public abstract class AddRoomsForm extends InputForm{
                     break;
             }
             JOptionPane.showMessageDialog(this, "Rooms " + hotel.addRooms(numOfRooms, roomType) + " Added");
+        numOfRoomsField.setText("");
     }
 }

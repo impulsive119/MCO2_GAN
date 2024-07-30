@@ -43,5 +43,6 @@ public class ChangeHotelNameForm extends InputForm{
         }else{
             JOptionPane.showMessageDialog(this, "Invalid Hotel Name");
         }
+        hotelNameField.setText("");
     }
 }

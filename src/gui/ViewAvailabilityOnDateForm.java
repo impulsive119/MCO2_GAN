@@ -50,5 +50,6 @@ public abstract class ViewAvailabilityOnDateForm extends InputForm{
                             hotel.getReservedRoomsOnDate(date));
 
         }
+        dateField.setText("");
     }
 }

@@ -42,5 +42,6 @@ public class ChangePriceForm extends InputForm{
             hotel.changePrice(price);
             JOptionPane.showMessageDialog(this, "New Price: " + price);
         }
+        priceField.setText("");
     }
 }

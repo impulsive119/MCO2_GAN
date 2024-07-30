@@ -47,5 +47,7 @@ public abstract class AddPremiumToDateForm extends InputForm{
             JOptionPane.showMessageDialog(this,"Premium Added");
 
         }
+        dateField.setText("");
+        premiumField.setText("");
     }
 }

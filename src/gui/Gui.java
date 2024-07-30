@@ -69,7 +69,6 @@ public class Gui {
     }
 
     private void setForm(InputForm form) {
-        System.out.println("Title: " + form.getTitle());
         root.setTitle(form.getTitle());
         root.getContentPane().removeAll();
         root.getContentPane().add(form);

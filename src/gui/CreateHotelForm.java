@@ -33,5 +33,6 @@ public class CreateHotelForm extends InputForm{
         }else{
             JOptionPane.showMessageDialog(this,"Hotel Name is Already Used");
         }
+        hotelNameField.setText("");
     }
 }
