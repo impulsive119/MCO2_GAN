@@ -35,7 +35,7 @@ public abstract class AddPremiumToDateForm extends InputForm{
             return;
         }
 
-        Hotel hotel = HRS.getHotel(hotelName);
+        Hotel hotel = HRS.getHotelUsingName(hotelName);
         int date = Integer.parseInt(dateField.getText());
         double premium = Double.parseDouble(premiumField.getText());
         if(date < 1 || date > 31){

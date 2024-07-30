@@ -30,7 +30,7 @@ public abstract class RemoveHotelForm extends InputForm{
             JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
             return;
         }
-        Hotel hotel = HRS.getHotel(hotelName);
+        Hotel hotel = HRS.getHotelUsingName(hotelName);
         if(hotel != null){
             HRS.removeHotel(hotel);
             JOptionPane.showMessageDialog(this, "Hotel Removed");

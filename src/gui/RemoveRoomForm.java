@@ -33,7 +33,7 @@ public abstract class RemoveRoomForm extends InputForm{
         if (hotelComboBox.getSelectedItem() == null || hotelComboBox.getSelectedItem().equals("NONE")) {
             roomComboBox.removeAllItems();
         } else {
-            Hotel hotel = HRS.getHotel((String) hotelComboBox.getSelectedItem());
+            Hotel hotel = HRS.getHotelUsingName((String) hotelComboBox.getSelectedItem());
             if (hotel != null) {
                 ArrayList<Integer> rooms = new ArrayList<>();
                 for (Room room : hotel.getRooms()) {
@@ -55,7 +55,7 @@ public abstract class RemoveRoomForm extends InputForm{
             return;
         }
 
-        Hotel hotel = HRS.getHotel(hotelName);
+        Hotel hotel = HRS.getHotelUsingName(hotelName);
 
         Object selectedRoom = roomComboBox.getSelectedItem();
         if (!(selectedRoom instanceof Integer roomNumber)) {
