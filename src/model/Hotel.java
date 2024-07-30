@@ -234,7 +234,7 @@ public class Hotel {
      */
 
 
-    public Room selectRoom(int roomNumber) {
+    public Room getRoom(int roomNumber) {
         try {
             for (Room room: getRooms()){
                 if(room.getRoomNumber() == roomNumber){

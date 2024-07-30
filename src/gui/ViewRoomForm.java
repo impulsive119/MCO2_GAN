@@ -61,7 +61,7 @@ public abstract class ViewRoomForm extends InputForm{
             JOptionPane.showMessageDialog(this, "Please Select a Valid Reservation");
             return;
         }
-        Room chosenRoom = hotel.selectRoom(roomNumber);
+        Room chosenRoom = hotel.getRoom(roomNumber);
         JOptionPane.showMessageDialog(
                 this, "Room Number: " + roomNumber + "\n" +
                         "Room Type: " + chosenRoom.getRoomType() + "\n" +

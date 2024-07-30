@@ -43,8 +43,8 @@ public class ControlHRS {
     public void viewRoom(Hotel hotel){
         View.printSelectRoom(hotel);
         int roomNumber = InputHelper.nextInt();
-        if(hotel.selectRoom(roomNumber) != null){
-            View.printRoomInfo(hotel.selectRoom(roomNumber));
+        if(hotel.getRoom(roomNumber) != null){
+            View.printRoomInfo(hotel.getRoom(roomNumber));
             toggleMenu();
         }else{
             View.printInvalidRoom();
@@ -107,7 +107,7 @@ public class ControlHRS {
         while(hotel.getNumberOfRooms() > 1 && !exit) {
             View.printSelectRoom(hotel);
             int roomNumber = InputHelper.nextInt();
-            Room room = hotel.selectRoom(roomNumber);
+            Room room = hotel.getRoom(roomNumber);
             if (room == null) {
                 View.printInvalidRoom();
                 return;
@@ -212,7 +212,7 @@ public class ControlHRS {
         }
         View.printSelectRoom(hotel);
         int roomNumber = InputHelper.nextInt();
-        Room room = hotel.selectRoom(roomNumber);
+        Room room = hotel.getRoom(roomNumber);
         if(room == null){
             View.printInvalidRoom();
             return;

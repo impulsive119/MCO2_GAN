@@ -70,7 +70,7 @@ public class BookReservationForm extends InputForm{
             JOptionPane.showMessageDialog(this, "Please Select a Valid Room");
             return;
         }
-        Room room = hotel.selectRoom(roomNumber);
+        Room room = hotel.getRoom(roomNumber);
         String guestName = guestNameField.getText();
         int checkInDate  = Integer.parseInt(checkInDateField.getText());
         int checkOutDate  = Integer.parseInt(checkOutDateField.getText());

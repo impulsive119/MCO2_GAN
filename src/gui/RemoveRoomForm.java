@@ -63,7 +63,7 @@ public abstract class RemoveRoomForm extends InputForm{
             return;
         }
 
-        Room chosenRoom = hotel.selectRoom(roomNumber);
+        Room chosenRoom = hotel.getRoom(roomNumber);
         hotel.removeRoom(chosenRoom);
         JOptionPane.showMessageDialog(this, "Room Removed");
 
