@@ -149,7 +149,7 @@ public class ControlHRS {
             return;
         }
         if(confirmModification()){
-            hotel.changePrice(price);
+            hotel.setPrice(price);
         }
     }
 

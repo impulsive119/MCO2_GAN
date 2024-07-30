@@ -39,7 +39,7 @@ public class ChangePriceForm extends InputForm{
         } else if (!hotel.getReservations().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Hotel Must Have No Active Reservations");
         } else {
-            hotel.changePrice(price);
+            hotel.setPrice(price);
             JOptionPane.showMessageDialog(this, "New Price: " + price);
         }
         priceField.setText("");
