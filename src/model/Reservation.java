@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 /**
- * The model.Reservation class represents a booking made by a guest for a selected room in a hotel.
+ * The Reservation class represents a booking made by a guest for a selected room in a hotel.
  */
 
 
@@ -34,6 +34,16 @@ public class Reservation {
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
     }
+
+    /**
+     * Creates a new reservation given the guest's name, room number, check-in date, check-out date, and discount code.
+     *
+     * @param guestName    The name of the guest.
+     * @param room         The room being reserved.
+     * @param checkInDate  The check-in date.
+     * @param checkOutDate The check-out date.
+     * @param discount     The discount code used to book the reservation.
+     */
 
     public Reservation(String guestName, Room room, int checkInDate, int checkOutDate, String discount){
         this.guestName = guestName;
@@ -83,13 +93,19 @@ public class Reservation {
     /**
      * Gets the room that is being reserved.
      *
-     * @return The model.Room object that is reserved.
+     * @return The Room object that is reserved.
      */
 
 
     public Room getRoom(){
         return room;
     }
+
+    /**
+     * Gets the total price of the reservation.
+     *
+     * @return The total price of the reservation.
+     */
 
     public double getTotalPrice(){
         double price = 0;
@@ -104,9 +120,21 @@ public class Reservation {
         };
     }
 
+    /**
+     * Gets the discount code of the reservation.
+     *
+     * @return The discount code of the reservation.
+     */
+
     public String getDiscountCode(){
         return discount;
     }
+
+    /**
+     * Gets the list of dates being reserved by this reservation.
+     *
+     * @return The list of dates being reserved.
+     */
 
     public ArrayList<Date> getReservedDates(){
         ArrayList<Date> dates = new ArrayList<>();

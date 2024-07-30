@@ -3,6 +3,10 @@ import cli.InputHelper;
 import cli.ViewHRS;
 import model.HotelReservationSystem;
 
+/**
+ * This is the driver for the command line interface
+ */
+
 public class CommandLineDriver {
     public static void main (String[] args){
         HotelReservationSystem HRS = new HotelReservationSystem();

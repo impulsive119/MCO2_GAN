@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 
 /**
- * The model.Room class represents a room in a hotel, which can be reserved on certain dates and has a room number and
+ * The Room class represents a room in a hotel, which can be reserved on certain dates and has a room number and
  * a price based on the hotel it is in.
  */
 
@@ -16,7 +16,7 @@ public class Room {
 
 
     /**
-     * Creates a new model.Room given a specified room number and hotel to be added to.
+     * Creates a new Room given a specified room number and floor to be added to.
      *
      * @param roomNumber The room number.
      * @param floor      The hotel it will be added to.
@@ -30,9 +30,9 @@ public class Room {
     }
 
     /**
-     * Gets the price of the room.
+     * Gets the room number.
      *
-     * @return The price of the room.
+     * @return The room number.
      */
 
 
@@ -56,7 +56,7 @@ public class Room {
     /**
      * Gets the dates on which the room is reserved.
      *
-     * @return An ArrayList of the dates the room is reserved.
+     * @return The list of dates in which the room is reserved.
      */
 
     public ArrayList<Integer> getReservedDates(){
@@ -70,6 +70,12 @@ public class Room {
         return reservedDates;
     }
 
+    /**
+     * Gets the dates on which the room is reserved.
+     *
+     * @return The list of dates in which the room is available.
+     */
+
     public ArrayList<Integer> getAvailableDates(){
         ArrayList<Integer> reservedDates = getReservedDates();
         ArrayList<Integer> availableDates = new ArrayList<>();
@@ -80,6 +86,16 @@ public class Room {
         }
         return availableDates;
     }
+
+    /**
+     * Books a reservation for the room given the guest's name, check-in date, check-out date, and discount type, if applicable.
+     *
+     * @param guestName  The name of the guest.
+     * @param checkInDate The check-in date.
+     * @param checkOutDate  The check-out date.
+     * @param discountType The discount type used for the reservation.
+     * @return 1 if the reservation was added successfully, 2 if the STAY4_GET1 discount was used incorrectly, and 3 if the PAYDAY discount was used incorrectly.
+     */
 
     public int addReservation(String guestName, int checkInDate, int checkOutDate, String discountType) {
         Reservation newReservation = null;
@@ -113,11 +129,11 @@ public class Room {
 
 
     /**
-     * Checks if the room is reserved during the specified check-in and check-out dates.
+     * Checks if the room is reserved during the given check-in and check-out dates.
      *
      * @param checkInDate  The check-in date.
      * @param checkOutDate The check-out date.
-     * @return true if the room is reserved for any date within the specified range, otherwise false.
+     * @return true if the room is reserved for any date within the given range, false otherwise.
      */
 
 
@@ -135,7 +151,7 @@ public class Room {
 
 
     /**
-     * Removes a reservation from the room, marking dates as available again.
+     * Removes a reservation from the room, marking the dates it reserved as available again.
      *
      * @param reservation The reservation to be removed.
      */
@@ -154,7 +170,7 @@ public class Room {
     /**
      * Gets the total earnings of the room in a month based on its reservations.
      *
-     * @return The total earnings the room makes in a month.
+     * @return The total earnings of the room.
      */
 
 
@@ -173,12 +189,18 @@ public class Room {
     /**
      * Gets the hotel the room is in.
      *
-     * @return The model.Hotel object the room is in.
+     * @return The Hotel the room is in.
      */
 
     public Hotel getHotel(){
         return floor.getHotel();
     }
+
+    /**
+     * Gets the room's type.
+     *
+     * @return The roomType of the room.
+     */
 
     public String getRoomType(){
         return roomType;

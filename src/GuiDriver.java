@@ -1,8 +1,10 @@
 import gui.Gui;
 import model.HotelReservationSystem;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+/**
+ * This is the driver file for the graphical user interface.
+ */
+
 public class GuiDriver {
 
     public static void main(String[] args) {
