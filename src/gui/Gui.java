@@ -2,10 +2,7 @@ package gui;
 
 import model.HotelReservationSystem;
 
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import javax.swing.*;
 
 public class Gui {
     private final HotelReservationSystem HRS;
@@ -22,40 +19,40 @@ public class Gui {
 
         JMenu viewHotel = new JMenu("View Hotel");
 
-        viewHotel.add(new JMenuItem("View Availability On Date")).addActionListener(_ -> setForm(new ViewAvailabilityOnDateForm(HRS) {
+        viewHotel.add(new JMenuItem("View Availability On Date")).addActionListener(_ -> setFormIfHotelExists(new ViewAvailabilityOnDateForm(HRS) {
         }));
 
-        viewHotel.add(new JMenuItem("View Room Information")).addActionListener(_ -> setForm(new ViewRoomForm(HRS) {
+        viewHotel.add(new JMenuItem("View Room Information")).addActionListener(_ -> setFormIfHotelExists(new ViewRoomForm(HRS) {
         }));
 
-        viewHotel.add(new JMenuItem("View Reservation")).addActionListener(_ -> setForm(new ViewReservationForm(HRS) {
+        viewHotel.add(new JMenuItem("View Reservation")).addActionListener(_ -> setFormIfHotelExists(new ViewReservationForm(HRS) {
         }));
 
         JMenu manageHotel = new JMenu("Manage Hotel");
 
-        manageHotel.add(new JMenuItem("Change Name")).addActionListener(_ -> setForm(new ChangeHotelNameForm(HRS) {
+        manageHotel.add(new JMenuItem("Change Name")).addActionListener(_ -> setFormIfHotelExists(new ChangeHotelNameForm(HRS) {
         }));
 
-        manageHotel.add(new JMenuItem("Add Rooms")).addActionListener(_ -> setForm(new AddRoomsForm(HRS) {
+        manageHotel.add(new JMenuItem("Add Rooms")).addActionListener(_ -> setFormIfHotelExists(new AddRoomsForm(HRS) {
         }));
 
-        manageHotel.add(new JMenuItem("Remove Rooms")).addActionListener(_ -> setForm(new RemoveRoomForm(HRS) {
+        manageHotel.add(new JMenuItem("Remove Rooms")).addActionListener(_ -> setFormIfHotelExists(new RemoveRoomForm(HRS) {
         }));
 
-        manageHotel.add(new JMenuItem("Change Price")).addActionListener(_ -> setForm(new ChangePriceForm(HRS) {
+        manageHotel.add(new JMenuItem("Change Price")).addActionListener(_ -> setFormIfHotelExists(new ChangePriceForm(HRS) {
         }));
 
-        manageHotel.add(new JMenuItem("Add Premium To Date")).addActionListener(_ -> setForm(new AddPremiumToDateForm(HRS) {
+        manageHotel.add(new JMenuItem("Add Premium To Date")).addActionListener(_ -> setFormIfHotelExists(new AddPremiumToDateForm(HRS) {
         }));
 
-        manageHotel.add(new JMenuItem("Remove Reservation")).addActionListener(_ -> setForm(new RemoveReservationForm(HRS) {
+        manageHotel.add(new JMenuItem("Remove Reservation")).addActionListener(_ -> setFormIfHotelExists(new RemoveReservationForm(HRS) {
         }));
 
-        manageHotel.add(new JMenuItem("Remove Hotel")).addActionListener(_ -> setForm(new RemoveHotelForm(HRS) {
+        manageHotel.add(new JMenuItem("Remove Hotel")).addActionListener(_ -> setFormIfHotelExists(new RemoveHotelForm(HRS) {
         }));
 
         JMenu bookReservation = new JMenu("Book Reservation");
-        bookReservation.add(new JMenuItem("Book Reservation")).addActionListener(_ -> setForm(new BookReservationForm(HRS)));
+        bookReservation.add(new JMenuItem("Book Reservation")).addActionListener(_ -> setFormIfHotelExists(new BookReservationForm(HRS)));
 
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(createHotel);
@@ -74,6 +71,17 @@ public class Gui {
         root.getContentPane().removeAll();
         root.getContentPane().add(form);
         root.setVisible(true);
+    }
+
+    private void setFormIfHotelExists(InputForm form){
+        if (HRS.getNumOfHotels() > 0){
+            root.getContentPane().removeAll();
+            root.getContentPane().add(form);
+            root.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "There are no active hotels");
+        }
     }
 
 }

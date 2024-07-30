@@ -54,21 +54,22 @@ public class BookReservationForm extends InputForm{
 
     @Override
     protected void onEnter() {
-        String hotelName = (String) hotelComboBox.getSelectedItem();
-        Room room = (Room) roomComboBox.getSelectedItem();
+        Object selectedHotel = hotelComboBox.getSelectedItem();
+        if (!(selectedHotel instanceof String hotelName)) {
+            JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
+            return;
+        }
+        Hotel hotel = HRS.getHotel(hotelName);
+        Object selectedRoom = roomComboBox.getSelectedItem();
+        if (!(selectedRoom instanceof Integer roomNumber)) {
+            JOptionPane.showMessageDialog(this, "Please Select a Valid Room");
+            return;
+        }
+        Room room = hotel.selectRoom(roomNumber);
         String guestName = guestNameField.getText();
         int checkInDate  = Integer.parseInt(checkInDateField.getText());
         int checkOutDate  = Integer.parseInt(checkOutDateField.getText());
         String discountCode = discountCodeField.getText();
-
-        if(hotelName == null || hotelName.equals("NONE")){
-            JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
-            return;
-        }
-        if(room == null){
-            JOptionPane.showMessageDialog(this, "Please Select a Valid Room");
-            return;
-        }
 
         if(checkInDate < 1 || checkInDate > 30){
             JOptionPane.showMessageDialog(this, "Invalid Check-In Date");
@@ -79,9 +80,8 @@ public class BookReservationForm extends InputForm{
         } else if (room.isReserved(checkInDate, checkOutDate)) {
             JOptionPane.showMessageDialog(this, "Room is Reserved on these Dates");
         } else{
-            room.addReservation( guestName, checkInDate, checkOutDate, discountCode);
+            room.addReservation(guestName, checkInDate, checkOutDate, discountCode);
             JOptionPane.showMessageDialog(this, "Reservation Booked");
-
         }
     }
 }

@@ -23,13 +23,19 @@ public class ChangeHotelNameForm extends InputForm{
 
     @Override
     protected void onEnter(){
-        String hotelName = (String) hotelComboBox.getSelectedItem();
-        String newHotelName = hotelNameField.getText();
+        Object selectedHotel = hotelComboBox.getSelectedItem();
+        if (!(selectedHotel instanceof String hotelName)) {
+            JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
+            return;
+        }
+
         Hotel hotel = HRS.getHotel(hotelName);
+        String newHotelName = hotelNameField.getText();
 
         if(hotel != null && hotel.setName(newHotelName)) {
             String message = "Hotel " + newHotelName + " Added";
             JOptionPane.showMessageDialog(this, message);
+            hotelComboBox.setItems(HRS.getHotelNames().toArray());
         }else{
             JOptionPane.showMessageDialog(this, "Invalid Hotel Name");
         }

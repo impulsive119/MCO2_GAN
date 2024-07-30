@@ -4,6 +4,7 @@ import model.Hotel;
 import model.HotelReservationSystem;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public abstract class AddRoomsForm extends InputForm{
     private ComboBox roomTypeComboBox;
@@ -16,9 +17,12 @@ public abstract class AddRoomsForm extends InputForm{
 
     @Override
     protected void addInputFields(){
-        String[] roomTypes = new String[]{"Standard", "Deluxe", "Executive"};
         hotelComboBox = addComboBox("Select a Hotel:",  HRS.getHotelNames().toArray());
-        roomTypeComboBox = addComboBox("Select a Room Type: ", roomTypes);
+        ArrayList<String> roomTypes = new ArrayList<>();
+        roomTypes.add("Standard");
+        roomTypes.add("Deluxe");
+        roomTypes.add("Executive");
+        roomTypeComboBox = addComboBox("Select a Room Type: ", roomTypes.toArray());
         numOfRoomsField = addTextField("Enter Number of Rooms: ");
         JButton enterButton = addEnterButton();
         enterButton.addActionListener(_ -> onEnter());
@@ -26,30 +30,32 @@ public abstract class AddRoomsForm extends InputForm{
 
     @Override
     protected void onEnter() {
-        String hotelName = (String) hotelComboBox.getSelectedItem();
-        Hotel hotel = HRS.getHotel(hotelName);
-        String roomType = (String) roomTypeComboBox.getSelectedItem();
-        int numOfRooms = Integer.parseInt(numOfRoomsField.getText());
-        int room = 0;
-
-        if(hotel == null){
+        Object selectedHotel = hotelComboBox.getSelectedItem();
+        if (!(selectedHotel instanceof String hotelName)) {
             JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
             return;
         }
-        switch (roomType) {
+
+        Hotel hotel = HRS.getHotel(hotelName);
+
+        String roomTypeString = (String) roomTypeComboBox.getSelectedItem();
+        int numOfRooms = Integer.parseInt(numOfRoomsField.getText());
+        int roomType = 0;
+
+        switch (roomTypeString) {
             case "Standard":
-                room = 1;
+                roomType = 1;
                 break;
                 case "Deluxe":
-                    room = 2;
+                    roomType = 2;
                     break;
                 case "Executive":
-                    room = 3;
+                    roomType = 3;
                     break;
             case null, default:
                     break;
             }
-            JOptionPane.showMessageDialog(this, "Rooms " + hotel.addRooms(numOfRooms, room) + " Added");
+            JOptionPane.showMessageDialog(this, "Rooms " + hotel.addRooms(numOfRooms, roomType) + " Added");
 
     }
 }

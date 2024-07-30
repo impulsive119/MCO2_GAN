@@ -35,7 +35,7 @@ public abstract class ViewReservationForm extends InputForm{
     }
 
     @Override
-    protected void addInputFields(HotelReservationSystem HRS){
+    protected void addInputFields(){
         hotelComboBox = addComboBox("Select a Hotel:", HRS.getHotelNames().toArray());
         reservationComboBox = addComboBox("Select a Reservation", null);
         hotelComboBox.addActionListener(this::hotelComboBoxClicked);
@@ -45,14 +45,18 @@ public abstract class ViewReservationForm extends InputForm{
 
     @Override
     protected void onEnter(){
-        String hotelName = (String) hotelComboBox.getSelectedItem();
-        String guestName = (String) reservationComboBox.getSelectedItem();
+        Object selectedHotel = hotelComboBox.getSelectedItem();
+        if (!(selectedHotel instanceof String hotelName)) {
+            JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
+            return;
+        }
         Hotel hotel = HRS.getHotel(hotelName);
-        Reservation reservation = hotel.getReservation(guestName);
-        if(reservation == null){
+        Object selectedReservation = reservationComboBox.getSelectedItem();
+        if (!(selectedReservation instanceof String guestName)) {
             JOptionPane.showMessageDialog(this, "Please Select a Valid Reservation");
             return;
         }
+        Reservation reservation = hotel.getReservation(guestName);
         JOptionPane.showMessageDialog(
                     this, "Guest Name: " + guestName + "\n" +
                             "Hotel: " + reservation.getRoom().getHotel() + "\n" +

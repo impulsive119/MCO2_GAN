@@ -44,17 +44,29 @@ public abstract class RemoveRoomForm extends InputForm{
     }
 
     @Override
-    protected void onEnter(){
-        String hotelName = (String) hotelComboBox.getSelectedItem();
+    protected void onEnter() {
+        Object selectedHotel = hotelComboBox.getSelectedItem();
+        if (!(selectedHotel instanceof String hotelName)) {
+            JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
+            return;
+        }
+
         Hotel hotel = HRS.getHotel(hotelName);
-        Room chosenRoom = hotel.selectRoom((int)roomComboBox.getSelectedItem());
 
-
-        if(chosenRoom != null) {
-            hotel.removeRoom(chosenRoom);
-            JOptionPane.showMessageDialog(this, "Room Removed");
-        }else{
+        Object selectedRoom = roomComboBox.getSelectedItem();
+        if (!(selectedRoom instanceof Integer roomNumber)) {
             JOptionPane.showMessageDialog(this, "Please Select a Valid Room");
+            return;
+        }
+
+        Room chosenRoom = hotel.selectRoom(roomNumber);
+        hotel.removeRoom(chosenRoom);
+        JOptionPane.showMessageDialog(this, "Room Removed");
+
+        ArrayList<Room> rooms = new ArrayList<>(hotel.getRooms());
+        roomComboBox.removeAllItems();
+        for (Room room : rooms) {
+            roomComboBox.addItem(room.getRoomNumber());
         }
     }
 }

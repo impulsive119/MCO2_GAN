@@ -23,9 +23,13 @@ public abstract class ViewAvailabilityOnDateForm extends InputForm{
 
     @Override
     protected void onEnter(){
-        String hotelName = (String) hotelComboBox.getSelectedItem();
-        int date = Integer.parseInt(dateField.getText());
+        Object selectedHotel = hotelComboBox.getSelectedItem();
+        if (!(selectedHotel instanceof String hotelName)) {
+            JOptionPane.showMessageDialog(this, "Invalid hotel selection");
+            return;
+        }
         Hotel hotel = HRS.getHotel(hotelName);
+        int date = Integer.parseInt(dateField.getText());
 
         if(hotel == null){
             JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");

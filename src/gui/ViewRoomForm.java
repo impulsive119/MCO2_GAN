@@ -45,21 +45,19 @@ public abstract class ViewRoomForm extends InputForm{
 
     @Override
     protected void onEnter(){
-        String hotelName = (String) hotelComboBox.getSelectedItem();
+        Object selectedHotel = hotelComboBox.getSelectedItem();
+        if (!(selectedHotel instanceof String hotelName)) {
+            JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
+            return;
+        }
+
         Hotel hotel = HRS.getHotel(hotelName);
-        int roomNumber= (int) roomComboBox.getSelectedItem();
-        if(hotel == null){
-            JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
+        Object selectedRoom = roomComboBox.getSelectedItem();
+        if (!(selectedRoom instanceof Integer roomNumber)) {
+            JOptionPane.showMessageDialog(this, "Please Select a Valid Reservation");
             return;
         }
-        Room chosenRoom = null;
-        for (Room room : hotel.getRooms()) {
-            if (room.getRoomNumber() == roomNumber) chosenRoom = room;
-        }
-        if(chosenRoom == null){
-            JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
-            return;
-        }
+        Room chosenRoom = hotel.selectRoom(roomNumber);
         JOptionPane.showMessageDialog(
                 this, "Room Number: " + roomNumber + "\n" +
                         "Room Type: " + chosenRoom.getRoomType() + "\n" +

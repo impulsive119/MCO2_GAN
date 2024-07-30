@@ -102,8 +102,8 @@ public class Room {
                     isDiscountValid = 3;
                 }
                 break;
-
-
+            default:
+                newReservation = new Reservation(guestName, this,checkInDate, checkOutDate);
         }
         if(isDiscountValid == 1){
             reservations.add(newReservation);

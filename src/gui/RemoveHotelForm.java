@@ -21,11 +21,16 @@ public abstract class RemoveHotelForm extends InputForm{
 
     @Override
     protected void onEnter(){
-        String hotelName = (String) hotelComboBox.getSelectedItem();
+        Object selectedHotel = hotelComboBox.getSelectedItem();
+        if (!(selectedHotel instanceof String hotelName)) {
+            JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
+            return;
+        }
         Hotel hotel = HRS.getHotel(hotelName);
         if(hotel != null){
             HRS.removeHotel(hotel);
             JOptionPane.showMessageDialog(this, "Hotel Removed");
+            hotelComboBox.setItems(HRS.getHotelNames().toArray());
         }else{
             JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
         }
