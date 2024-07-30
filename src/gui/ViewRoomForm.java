@@ -12,8 +12,12 @@ public abstract class ViewRoomForm extends InputForm{
     private ComboBox roomComboBox;
     private ComboBox hotelComboBox;
 
-    public ViewRoomForm(HotelReservationSystem HRS) {
-        super(HRS);
+    public ViewRoomForm(HotelReservationSystem HRS, JFrame root) {
+        super(HRS, root);
+    }
+
+    protected String getTitle() {
+        return "Hotel Reservation System - View Room";
     }
 
     @Override
@@ -26,7 +30,7 @@ public abstract class ViewRoomForm extends InputForm{
     }
 
     private void hotelComboBoxClicked(ActionEvent e) {
-        if (hotelComboBox.getSelectedItem() == null || hotelComboBox.getSelectedItem().equals("NONE")) {
+        if (hotelComboBox.getSelectedItem() == null || hotelComboBox.getSelectedItem() == ComboBox.NONE) {
             roomComboBox.removeAllItems();
         } else {
             Hotel hotel = HRS.getHotel((String) hotelComboBox.getSelectedItem());

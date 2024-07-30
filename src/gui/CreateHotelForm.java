@@ -4,11 +4,16 @@ import model.HotelReservationSystem;
 
 import javax.swing.*;
 
-public class AddHotelForm extends InputForm{
+public class CreateHotelForm extends InputForm{
     private JTextField hotelNameField;
 
-    public AddHotelForm(HotelReservationSystem HRS){
-        super(HRS);
+    public CreateHotelForm(HotelReservationSystem HRS, JFrame root) {
+        super(HRS, root);
+    }
+
+    @Override
+    protected String getTitle() {
+        return "Hotel Reservation System - Create Hotel";
     }
 
     @Override

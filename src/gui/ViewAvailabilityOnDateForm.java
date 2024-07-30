@@ -9,8 +9,12 @@ public abstract class ViewAvailabilityOnDateForm extends InputForm{
     private ComboBox hotelComboBox;
     private JTextField dateField;
 
-    public ViewAvailabilityOnDateForm(HotelReservationSystem HRS) {
-        super(HRS);
+    public ViewAvailabilityOnDateForm(HotelReservationSystem HRS, JFrame root) {
+        super(HRS, root);
+    }
+
+    protected String getTitle() {
+        return "Hotel Reservation System - View Availability On Date";
     }
 
     @Override

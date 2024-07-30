@@ -16,8 +16,13 @@ public class BookReservationForm extends InputForm{
     private JTextField checkOutDateField;
     private JTextField discountCodeField;
 
-    public BookReservationForm(HotelReservationSystem HRS){
-        super(HRS);
+    public BookReservationForm(HotelReservationSystem HRS, JFrame root) {
+        super(HRS, root);
+    }
+
+    @Override
+    protected String getTitle() {
+        return "Hotel Reservation System - Book Reservation";
     }
 
     @Override

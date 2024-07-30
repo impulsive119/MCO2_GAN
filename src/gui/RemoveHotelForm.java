@@ -8,8 +8,12 @@ import javax.swing.*;
 public abstract class RemoveHotelForm extends InputForm{
     private ComboBox hotelComboBox;
 
-    public RemoveHotelForm(HotelReservationSystem HRS) {
-        super(HRS);
+    public RemoveHotelForm(HotelReservationSystem HRS, JFrame root) {
+        super(HRS, root);
+    }
+
+    protected String getTitle() {
+        return "Hotel Reservation System - Remove Hotel";
     }
 
     @Override

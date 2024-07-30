@@ -9,8 +9,12 @@ public class ChangeHotelNameForm extends InputForm{
     private JTextField hotelNameField;
     private ComboBox hotelComboBox;
 
-    public ChangeHotelNameForm(HotelReservationSystem HRS){
-        super(HRS);
+    public ChangeHotelNameForm(HotelReservationSystem HRS, JFrame root) {
+        super(HRS, root);
+    }
+
+    protected String getTitle() {
+        return "Hotel Reservation System - Change Hotel Name";
     }
 
     @Override

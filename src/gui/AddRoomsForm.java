@@ -11,8 +11,13 @@ public abstract class AddRoomsForm extends InputForm{
     private JTextField numOfRoomsField;
     private ComboBox hotelComboBox;
 
-    public AddRoomsForm(HotelReservationSystem HRS){
-        super(HRS);
+    public AddRoomsForm(HotelReservationSystem HRS, JFrame root) {
+        super(HRS, root);
+
+    }
+
+    protected String getTitle() {
+        return "Hotel Reservation System - Add Rooms";
     }
 
     @Override
@@ -56,6 +61,5 @@ public abstract class AddRoomsForm extends InputForm{
                     break;
             }
             JOptionPane.showMessageDialog(this, "Rooms " + hotel.addRooms(numOfRooms, roomType) + " Added");
-
     }
 }

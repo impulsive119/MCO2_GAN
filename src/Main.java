@@ -1,5 +1,4 @@
-package gui;
-
+import gui.Gui;
 import model.HotelReservationSystem;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or

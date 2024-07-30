@@ -10,8 +10,12 @@ public abstract class AddPremiumToDateForm extends InputForm{
     private JTextField premiumField;
     private JTextField dateField;
 
-    public AddPremiumToDateForm(HotelReservationSystem HRS){
-        super(HRS);
+    public AddPremiumToDateForm(HotelReservationSystem HRS, JFrame root) {
+        super(HRS, root);
+    }
+
+    protected String getTitle() {
+        return "Hotel Reservation System - Add Premium To Date";
     }
 
     @Override
@@ -41,6 +45,7 @@ public abstract class AddPremiumToDateForm extends InputForm{
         }else{
             hotel.addPremiumToDate(date, premium);
             JOptionPane.showMessageDialog(this,"Premium Added");
+
         }
     }
 }

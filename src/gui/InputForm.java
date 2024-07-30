@@ -2,11 +2,7 @@ package gui;
 
 import model.HotelReservationSystem;
 
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -17,16 +13,22 @@ public abstract class InputForm extends JPanel implements ActionListener {
 
     private final JPanel buttonPanel = new JPanel();
     protected final HotelReservationSystem HRS;
+    protected final JFrame root;
 
-    public InputForm(HotelReservationSystem HRS) {
+    public InputForm(HotelReservationSystem HRS, JFrame root) {
         super(new GridBagLayout());
         this.HRS = HRS;
+        this.root = root;
+
         addInputFields();
 
         // Add cancel button to button panel
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setSize(60, 20);
-        cancelButton.addActionListener(_ -> setVisible(false));
+        cancelButton.addActionListener(_ -> {
+            setVisible(false);
+            root.setTitle("Hotel Reservation System");
+        });
         buttonPanel.add(cancelButton);
 
         // Add button panel to the bottom of the input form
@@ -34,6 +36,10 @@ public abstract class InputForm extends JPanel implements ActionListener {
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.gridwidth = 2;
         add(buttonPanel, gbc);
+    }
+
+    protected String getTitle() {
+        return "Hotel Reservation System";
     }
 
     @Override

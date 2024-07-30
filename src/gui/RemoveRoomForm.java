@@ -12,8 +12,12 @@ public abstract class RemoveRoomForm extends InputForm{
     private ComboBox roomComboBox;
     private ComboBox hotelComboBox;
 
-    public RemoveRoomForm(HotelReservationSystem HRS) {
-        super(HRS);
+    public RemoveRoomForm(HotelReservationSystem HRS, JFrame root) {
+        super(HRS, root);
+    }
+
+    protected String getTitle() {
+        return "Hotel Reservation System - Remove Room";
     }
 
     @Override
