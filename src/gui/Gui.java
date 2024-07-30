@@ -19,6 +19,9 @@ public class Gui {
 
         JMenu viewHotel = new JMenu("View Hotel");
 
+        viewHotel.add(new JMenuItem("Hotel Overview")).addActionListener(_ -> setFormIfHotelExists(new HotelOverviewForm(HRS, root) {
+        }));
+
         viewHotel.add(new JMenuItem("View Availability On Date")).addActionListener(_ -> setFormIfHotelExists(new ViewAvailabilityOnDateForm(HRS, root) {
         }));
 

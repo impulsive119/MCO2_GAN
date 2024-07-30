@@ -29,16 +29,11 @@ public abstract class ViewAvailabilityOnDateForm extends InputForm{
     protected void onEnter(){
         Object selectedHotel = hotelComboBox.getSelectedItem();
         if (!(selectedHotel instanceof String hotelName)) {
-            JOptionPane.showMessageDialog(this, "Invalid hotel selection");
+            JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
             return;
         }
         Hotel hotel = HRS.getHotel(hotelName);
         int date = Integer.parseInt(dateField.getText());
-
-        if(hotel == null){
-            JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
-            return;
-        }
 
         if(date < 1 || date > 31) {
             JOptionPane.showMessageDialog(this, "Invalid Date");
