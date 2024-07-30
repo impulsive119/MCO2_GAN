@@ -33,7 +33,7 @@ public class ChangeHotelNameForm extends InputForm{
             return;
         }
 
-        Hotel hotel = HRS.getHotelUsingName(hotelName);
+        Hotel hotel = HRS.getHotel(hotelName);
         String newHotelName = hotelNameField.getText();
 
         if(hotel != null && hotel.setName(newHotelName)) {

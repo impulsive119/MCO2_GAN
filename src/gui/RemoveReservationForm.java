@@ -33,7 +33,7 @@ public abstract class RemoveReservationForm extends InputForm{
         if (hotelComboBox.getSelectedItem() == null || hotelComboBox.getSelectedItem().equals("NONE")) {
             reservationComboBox.removeAllItems();
         } else {
-            Hotel hotel = HRS.getHotelUsingName((String) hotelComboBox.getSelectedItem());
+            Hotel hotel = HRS.getHotel((String) hotelComboBox.getSelectedItem());
             if (hotel != null) {
                 ArrayList<String> reservations = new ArrayList<>();
                 for (Reservation reservation : hotel.getReservations()) {
@@ -55,7 +55,7 @@ public abstract class RemoveReservationForm extends InputForm{
             JOptionPane.showMessageDialog(this, "Please Select a Valid Hotel");
             return;
         }
-        Hotel hotel = HRS.getHotelUsingName(hotelName);
+        Hotel hotel = HRS.getHotel(hotelName);
         Object selectedReservation = reservationComboBox.getSelectedItem();
         if (!(selectedReservation instanceof String guestName)) {
             JOptionPane.showMessageDialog(this, "Please Select a Valid Reservation");

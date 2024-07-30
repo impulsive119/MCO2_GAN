@@ -22,7 +22,7 @@ public class ControlHRS {
         View.printEnterNewHotelName();
         String hotelName = InputHelper.nextStr();
         if(HRS.createHotel(hotelName)){
-            View.printNewHotelName(HRS.getHotelUsingName(hotelName));
+            View.printNewHotelName(HRS.getHotel(hotelName));
         } else{
             View.printHotelNameError();
         }
@@ -59,7 +59,7 @@ public class ControlHRS {
         }
         View.printSelectReservation(hotel);
         int reservationNumber = InputHelper.nextInt();
-        Reservation reservation = hotel.selectReservation(reservationNumber);
+        Reservation reservation = hotel.getReservation(reservationNumber);
         if( reservation != null) {
             View.printReservationInfo(reservation);
             toggleMenu();
@@ -182,13 +182,13 @@ public class ControlHRS {
         }
         View.printSelectReservation(hotel);
         int reservation = InputHelper.nextInt();
-        if(hotel.selectReservation(reservation) == null){
+        if(hotel.getReservation(reservation) == null){
             View.printInvalidReservation();
             return;
 
         }
         if(confirmModification()){
-            hotel.removeReservation(hotel.selectReservation(reservation));
+            hotel.removeReservation(hotel.getReservation(reservation));
         }
     }
 
@@ -205,7 +205,7 @@ public class ControlHRS {
         }
         View.printSelectHotel(HRS);
         int hotelNumber = InputHelper.nextInt();
-        Hotel hotel = HRS.getHotelUsingIndex(hotelNumber);
+        Hotel hotel = HRS.getHotel(hotelNumber);
         if(hotel == null){
             View.printInvalidHotel();
             return;
@@ -280,7 +280,7 @@ public class ControlHRS {
         boolean exit = false;
         View.printSelectHotel(HRS);
         int hotelNumber = InputHelper.nextInt();
-        Hotel hotel = HRS.getHotelUsingIndex(hotelNumber);
+        Hotel hotel = HRS.getHotel(hotelNumber);
         if(hotel == null){
             View.printInvalidHotel();
             return;
@@ -315,7 +315,7 @@ public class ControlHRS {
         boolean exit = false;
         View.printSelectHotel(HRS);
         int hotelNumber = InputHelper.nextInt();
-        Hotel hotel = HRS.getHotelUsingIndex(hotelNumber);
+        Hotel hotel = HRS.getHotel(hotelNumber);
         if(hotel == null){
             View.printInvalidHotel();
             return;

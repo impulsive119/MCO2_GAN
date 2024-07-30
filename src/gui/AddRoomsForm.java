@@ -41,7 +41,7 @@ public abstract class AddRoomsForm extends InputForm{
             return;
         }
 
-        Hotel hotel = HRS.getHotelUsingName(hotelName);
+        Hotel hotel = HRS.getHotel(hotelName);
 
         String roomTypeString = (String) roomTypeComboBox.getSelectedItem();
         int numOfRooms = Integer.parseInt(numOfRoomsField.getText());

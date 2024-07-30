@@ -32,7 +32,7 @@ public abstract class ViewAvailabilityOnDateForm extends InputForm{
             JOptionPane.showMessageDialog(this, "Invalid hotel selection");
             return;
         }
-        Hotel hotel = HRS.getHotelUsingName(hotelName);
+        Hotel hotel = HRS.getHotel(hotelName);
         int date = Integer.parseInt(dateField.getText());
 
         if(hotel == null){

@@ -32,7 +32,7 @@ public class ChangePriceForm extends InputForm{
             JOptionPane.showMessageDialog(this, "IPlease Select a Valid Hotel");
             return;
         }
-        Hotel hotel = HRS.getHotelUsingName(hotelName);
+        Hotel hotel = HRS.getHotel(hotelName);
         double price = Double.parseDouble(priceField.getText());
         if (price < 100) {
             JOptionPane.showMessageDialog(this, "Price Must Be Greater than 100.00");

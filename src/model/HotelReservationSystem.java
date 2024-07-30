@@ -49,7 +49,7 @@ public class HotelReservationSystem {
      */
 
 
-    public Hotel getHotelUsingIndex(int hotelNumber){
+    public Hotel getHotel(int hotelNumber){
         try {
 
             if (hotelNumber > 0 && hotelNumber <= hotels.size()) {
@@ -62,11 +62,7 @@ public class HotelReservationSystem {
         }
     }
 
-
-
-
-
-    public Hotel getHotelUsingName(String name){
+    public Hotel getHotel(String name){
         for(Hotel hotel: hotels){
             if(hotel.getName().equals(name)){
                 return hotel;

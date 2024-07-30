@@ -257,7 +257,7 @@ public class Hotel {
      */
 
 
-    public Reservation selectReservation(int reservationNumber){
+    public Reservation getReservation(int reservationNumber){
         try {
             if (reservationNumber > 0 && reservationNumber <= getReservations().size()) {
                 return getReservations().get(reservationNumber - 1);
