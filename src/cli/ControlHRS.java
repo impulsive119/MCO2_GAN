@@ -6,18 +6,17 @@ import model.Reservation;
 import model.Room;
 
 /**
- * The ControlHRS class handles user interactions for managing hotels, rooms, and reservations within a hotel reservation system.
- * It facilitates the execution of various operations such as creating hotels, viewing availability, managing rooms and reservations,
- * and modifying hotel details.
+ * The ControlHRS class handles user interactions for managing hotels, rooms, and reservations within the hotel reservation system  such as creating hotels,
+ * viewing availability, managing rooms and reservations, and modifying hotel details.
  */
 public class ControlHRS {
     private final HotelReservationSystem HRS;
     private final ViewHRS View;
 
     /**
-     * Constructs a ControlHRS object with the specified HotelReservationSystem and ViewHRS objects.
+     * Constructs a ControlHRS object using the given HotelReservationSystem and ViewHRS objects.
      *
-     * @param HRS The HotelReservationSystem instance used to manage hotel operations.
+     * @param HRS The HotelReservationSystem used to manage hotel operations.
      * @param View The ViewHRS instance used to interact with the user.
      */
     public ControlHRS(HotelReservationSystem HRS, ViewHRS View){
@@ -33,7 +32,7 @@ public class ControlHRS {
     }
 
     /**
-     * Creates a new hotel with a name provided by the user.
+     * Creates a new hotel using a name provided by the user.
      */
     public void createHotel(){
         View.printEnterNewHotelName();
@@ -49,7 +48,7 @@ public class ControlHRS {
     }
 
     /**
-     * Displays the availability of rooms in a specified hotel on a given date.
+     * Displays the availability of rooms in a given hotel on a given date.
      *
      * @param hotel The Hotel object to check for room availability.
      */
@@ -63,9 +62,9 @@ public class ControlHRS {
     }
 
     /**
-     * Displays information about a specific room in the specified hotel.
+     * Displays information about a given room in the specified hotel.
      *
-     * @param hotel The Hotel object containing the room.
+     * @param hotel The Hotel containing the room.
      */
     public void viewRoom(Hotel hotel){
         View.printSelectRoom(hotel);
@@ -79,9 +78,9 @@ public class ControlHRS {
     }
 
     /**
-     * Displays details about a specific reservation in the specified hotel.
+     * Displays details about a given reservation in the given hotel.
      *
-     * @param hotel The Hotel object containing the reservation.
+     * @param hotel The Hotel containing the reservation.
      */
     public void viewReservation(Hotel hotel){
         if(hotel.getNumberOfReservations() == 0){
@@ -100,9 +99,9 @@ public class ControlHRS {
     }
 
     /**
-     * Changes the name of the specified hotel to a new name provided by the user.
+     * Changes the name of the given hotel to a name provided by the user.
      *
-     * @param hotel The Hotel object whose name is to be changed.
+     * @param hotel The Hotel whose name is to be changed.
      */
     public void changeName(Hotel hotel){
         View.printEnterNewHotelName();
@@ -118,9 +117,9 @@ public class ControlHRS {
     }
 
     /**
-     * Adds a specified number of rooms of a certain type to the given hotel.
+     * Adds a given number of rooms of a given type to the given hotel.
      *
-     * @param hotel The Hotel object to which rooms are to be added.
+     * @param hotel The Hotel to which rooms will be added.
      */
     public void addRooms(Hotel hotel){
         if(hotel.getNumberOfRooms() == 50){
@@ -145,7 +144,7 @@ public class ControlHRS {
     }
 
     /**
-     * Removes rooms from the specified hotel, with restrictions on the minimum number of rooms.
+     * Removes rooms from the given hotel as long as the hotel always has at least 1 room.
      *
      * @param hotel The Hotel object from which rooms are to be removed.
      */
@@ -191,9 +190,9 @@ public class ControlHRS {
     }
 
     /**
-     * Changes the price per day of the specified hotel.
+     * Changes the base price of the given hotel.
      *
-     * @param hotel The Hotel object whose price is to be changed.
+     * @param hotel The Hotel whose price is to be changed.
      */
     public void changePrice(Hotel hotel){
         if(hotel.getNumberOfReservations() > 0){
@@ -212,9 +211,9 @@ public class ControlHRS {
     }
 
     /**
-     * Sets a premium price for a specific date in the given hotel.
+     * Sets a premium rate for a given date in the given hotel.
      *
-     * @param hotel The Hotel object where the premium price is to be set.
+     * @param hotel The Hotel where the premium rate is to be set.
      */
     public void setPremiumOnDate(Hotel hotel){
         if(hotel.getNumberOfReservations() > 0){
@@ -238,9 +237,9 @@ public class ControlHRS {
     }
 
     /**
-     * Removes a reservation from the specified hotel.
+     * Removes a reservation from the given hotel.
      *
-     * @param hotel The Hotel object from which the reservation is to be removed.
+     * @param hotel The Hotel from which the reservation is to be removed.
      */
     public void removeReservation(Hotel hotel){
         if(hotel.getReservations().isEmpty()){
@@ -259,9 +258,9 @@ public class ControlHRS {
     }
 
     /**
-     * Removes a specified hotel from the HotelReservationSystem.
+     * Removes a given hotel from the HotelReservationSystem.
      *
-     * @param hotel The Hotel object to be removed.
+     * @param hotel The Hotel to be removed.
      */
     public void removeHotel(Hotel hotel){
         if(confirmModification()){
@@ -270,7 +269,7 @@ public class ControlHRS {
     }
 
     /**
-     * Books a reservation in a specified hotel for a selected room and date range.
+     * Books a reservation in a given hotel for a selected room and date range.
      */
     public void bookReservation(){
         if(HRS.getNumOfHotels() == 0){
@@ -364,7 +363,7 @@ public class ControlHRS {
     }
 
     /**
-     * Allows the user to view and manage details of a specific hotel.
+     * Allows the user to view and manage details of a given hotel.
      */
     public void viewHotel(){
         if(HRS.getNumOfHotels() == 0){
@@ -402,7 +401,7 @@ public class ControlHRS {
     }
 
     /**
-     * Provides options to manage a specific hotel, including renaming, adding/removing rooms, changing prices, and more.
+     * Provides options to manage a given hotel, including renaming, adding/removing rooms, changing prices, and more.
      */
     public void manageHotel(){
         if(HRS.getNumOfHotels() == 0){
