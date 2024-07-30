@@ -92,7 +92,7 @@ public class ControlHRS {
         }
         View.printEnterNumOfRooms();
         int numOfRooms = InputHelper.nextInt();
-        if(!HRS.isNumberOfRoomsValid(hotel, numOfRooms)){
+        if(!hotel.isNumberOfRoomsValid(numOfRooms)){
             View.printTooManyRooms();
             return;
         }

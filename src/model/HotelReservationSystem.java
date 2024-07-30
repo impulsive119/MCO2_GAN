@@ -63,19 +63,8 @@ public class HotelReservationSystem {
     }
 
 
-    /**
-     * Asks for confirmation before modifying an object.
-     *
-     * @return True if the user confirms, false otherwise.
-     */
 
-    public boolean isNumberOfRoomsValid(Hotel hotel, int numOfRooms){
-        return numOfRooms >= 1 && numOfRooms + hotel.getNumberOfRooms() <= 50;
-    }
 
-    public ArrayList<Hotel> getHotels(){
-        return hotels;
-    }
 
     public Hotel getHotel(String name){
         for(Hotel hotel: hotels){

@@ -214,6 +214,9 @@ public class Hotel {
         return reservedRooms;
     }
 
+    public boolean isNumberOfRoomsValid(int numOfRooms){
+        return numOfRooms >= 1 && numOfRooms + getNumberOfRooms() <= 50;
+    }
 
     /**
      * Prints the names of all guests with reservations in the hotel.
