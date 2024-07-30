@@ -5,16 +5,9 @@ import model.HotelReservationSystem;
 import model.Reservation;
 import model.Room;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
-public class ViewHRS extends JFrame {
-
-    ViewHRS (){
-  //      JPanel hrsPanel = new JPanel();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(1000, 1000);
-    }
+public class ViewHRS {
 
     public void printEnterNewHotelName(){
         System.out.print("Enter New Hotel Name: ");

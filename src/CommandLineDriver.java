@@ -1,8 +1,9 @@
-package cli;
-
+import cli.ControlHRS;
+import cli.InputHelper;
+import cli.ViewHRS;
 import model.HotelReservationSystem;
 
-public class Driver {
+public class CommandLineDriver {
     public static void main (String[] args){
         HotelReservationSystem HRS = new HotelReservationSystem();
         ViewHRS view = new ViewHRS();
