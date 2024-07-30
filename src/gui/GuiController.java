@@ -9,7 +9,7 @@ import javax.swing.*;
  * This class sets up the main window, menu items, and handles navigation between different input forms to allow the user to view whatever information
  * they want to view.
  */
-public class Gui {
+public class GuiController {
     private final HotelReservationSystem HRS;
 
     /**
@@ -17,7 +17,7 @@ public class Gui {
      *
      * @param HRS The hotel reservation system that this GUI interacts with.
      */
-    public Gui(HotelReservationSystem HRS) {
+    public GuiController(HotelReservationSystem HRS) {
         this.HRS = HRS;
     }
 

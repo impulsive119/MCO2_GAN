@@ -1,4 +1,4 @@
-import gui.Gui;
+import gui.GuiController;
 import model.HotelReservationSystem;
 
 /**
@@ -8,7 +8,7 @@ import model.HotelReservationSystem;
 public class GuiDriver {
 
     public static void main(String[] args) {
-        Gui gui = new Gui(new HotelReservationSystem());
+        GuiController gui = new GuiController(new HotelReservationSystem());
         gui.start();
     }
 }
