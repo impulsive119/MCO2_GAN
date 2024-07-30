@@ -8,15 +8,19 @@ import model.Room;
 import java.util.ArrayList;
 
 public class ViewHRS {
-    public String inputHotelName(){
+    public String inputString(){
         String hotelName = InputHelper.nextStr();
         if(hotelName.isBlank()){
-            System.out.println("Invalid Hotel Name");
+            System.out.println("Invalid Input");
             return null;
         }
         else{
             return hotelName;
         }
+    }
+
+    public String inputPossiblyBlankString(){
+        return InputHelper.nextStr();
     }
 
     public int inputDate(){
@@ -27,6 +31,34 @@ public class ViewHRS {
         }else{
             return date;
         }
+    }
+
+    public int inputRoomType(){
+        int roomType = InputHelper.nextInt();
+        if(roomType < 1 || roomType > 3){
+            System.out.println("Invalid Room Type");
+            return  -1;
+        }else{
+            return roomType;
+        }
+    }
+
+    public int inputInteger(){
+        return InputHelper.nextInt();
+    }
+
+    public boolean inputContinue(){
+        String continueAction = InputHelper.nextStr();
+        return continueAction.equals("CONTINUE");
+    }
+
+    public double inputDouble(){
+        return InputHelper.nextDouble();
+    }
+
+    public boolean inputConfirmModification(){
+        String confirm = InputHelper.nextStr();
+        return confirm.equals("CONFIRM");
     }
 
     public void printEnterNewHotelName(){

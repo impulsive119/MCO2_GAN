@@ -37,7 +37,10 @@ public class ControlHRS {
      */
     public void createHotel(){
         View.printEnterNewHotelName();
-        String hotelName = View.inputHotelName();
+        String hotelName = View.inputString();
+        if(hotelName == null){
+            return;
+        }
         if(HRS.createHotel(hotelName)){
             View.printNewHotelName(HRS.getHotel(hotelName));
         } else {
@@ -52,10 +55,8 @@ public class ControlHRS {
      */
     public void viewAvailabilityOnDate(Hotel hotel){
         View.printSelectDate();
-        int date = InputHelper.nextInt();
-        if(date < 1 || date > 31){
-            View.printInvalidDate();
-        } else {
+        int date = View.inputDate();
+        if(date != -1){
             View.printAvailabilityOnDate(hotel.getAvailableRoomsOnDate(date), hotel.getReservedRoomsOnDate(date));
             toggleMenu();
         }
@@ -68,7 +69,7 @@ public class ControlHRS {
      */
     public void viewRoom(Hotel hotel){
         View.printSelectRoom(hotel);
-        int roomNumber = InputHelper.nextInt();
+        int roomNumber = View.inputInteger();
         if(hotel.getRoom(roomNumber) != null){
             View.printRoomInfo(hotel.getRoom(roomNumber));
             toggleMenu();
@@ -88,7 +89,7 @@ public class ControlHRS {
             return;
         }
         View.printSelectReservation(hotel);
-        int reservationNumber = InputHelper.nextInt();
+        int reservationNumber = View.inputInteger();
         Reservation reservation = hotel.getReservation(reservationNumber);
         if(reservation != null) {
             View.printReservationInfo(reservation);
@@ -105,7 +106,10 @@ public class ControlHRS {
      */
     public void changeName(Hotel hotel){
         View.printEnterNewHotelName();
-        String name = InputHelper.nextStr();
+        String name = View.inputString();
+        if(name == null){
+            return;
+        }
         if(hotel.setName(name)){
             View.printNewHotelName(hotel);
         } else {
@@ -124,13 +128,13 @@ public class ControlHRS {
             return;
         }
         View.printEnterRoomType();
-        int roomType = InputHelper.nextInt();
+        int roomType = View.inputRoomType();
         if(roomType < 1 || roomType > 3){
             View.printInvalidRoomType();
             return;
         }
         View.printEnterNumOfRooms();
-        int numOfRooms = InputHelper.nextInt();
+        int numOfRooms = View.inputInteger();
         if(!hotel.isNumberOfRoomsValid(numOfRooms)){
             View.printTooManyRooms();
             return;
@@ -150,7 +154,7 @@ public class ControlHRS {
         boolean error = hotel.getNumberOfRooms() == 1;
         while(hotel.getNumberOfRooms() > 1 && !exit) {
             View.printSelectRoom(hotel);
-            int roomNumber = InputHelper.nextInt();
+            int roomNumber = View.inputInteger();
             Room room = hotel.getRoom(roomNumber);
             if(room == null){
                 View.printInvalidRoom();
@@ -183,7 +187,7 @@ public class ControlHRS {
      */
     public boolean continueRemovingRooms(){
         View.printKeepRemovingRooms();
-        return InputHelper.nextStr().equals("CONTINUE");
+        return View.inputContinue();
     }
 
     /**
@@ -197,7 +201,7 @@ public class ControlHRS {
             return;
         }
         View.printEnterNewPrice();
-        double price = InputHelper.nextDouble();
+        double price = View.inputDouble();
         if(price < 100){
             View.printMinimumHotelPrice();
             return;
@@ -218,13 +222,12 @@ public class ControlHRS {
             return;
         }
         View.printSelectDate();
-        int date = InputHelper.nextInt();
-        if(date < 1 || date > 31){
-            View.printInvalidDate();
+        int date = View.inputDate();
+        if(date == -1){
             return;
         }
         View.printSetPremium();
-        double premium = InputHelper.nextDouble();
+        double premium = View.inputDouble();
         if(premium < 0.5 || premium > 1.5){
             View.printInvalidPremium();
             return;
@@ -245,7 +248,7 @@ public class ControlHRS {
             return;
         }
         View.printSelectReservation(hotel);
-        int reservation = InputHelper.nextInt();
+        int reservation = View.inputInteger();
         if(hotel.getReservation(reservation) == null){
             View.printInvalidReservation();
             return;
@@ -275,14 +278,14 @@ public class ControlHRS {
             return;
         }
         View.printSelectHotel(HRS);
-        int hotelNumber = InputHelper.nextInt();
+        int hotelNumber = View.inputInteger();
         Hotel hotel = HRS.getHotel(hotelNumber);
         if(hotel == null){
             View.printInvalidHotel();
             return;
         }
         View.printSelectRoom(hotel);
-        int roomNumber = InputHelper.nextInt();
+        int roomNumber = View.inputInteger();
         Room room = hotel.getRoom(roomNumber);
         if(room == null){
             View.printInvalidRoom();
@@ -290,14 +293,20 @@ public class ControlHRS {
         }
         View.printCheckIn();
         View.printSelectDate();
-        int checkInDate = InputHelper.nextInt();
-        if(checkInDate < 1 || checkInDate > 30){
+        int checkInDate = View.inputDate();
+        if(checkInDate == -1){
+            return;
+        }
+        if(checkInDate == 31){
             View.printInvalidDate();
             return;
         }
         View.printCheckOut();
         View.printSelectDate();
-        int checkOutDate = InputHelper.nextInt();
+        int checkOutDate = View.inputDate();
+        if(checkOutDate == -1){
+            return;
+        }
         if(checkOutDate > 31 || checkOutDate < 2){
             View.printInvalidDate();
             return;
@@ -317,9 +326,12 @@ public class ControlHRS {
             return;
         }
         View.printEnterGuestName();
-        String guestName = InputHelper.nextStr();
+        String guestName = View.inputString();
+        if(guestName == null){
+            return;
+        }
         View.printEnterDiscountCode();
-        String discountCode = InputHelper.nextStr();
+        String discountCode = View.inputPossiblyBlankString();
         View.printCheckReservation(room.addReservation(guestName, checkInDate, checkOutDate, discountCode));
     }
 
@@ -330,8 +342,8 @@ public class ControlHRS {
      */
     public boolean confirmModification(){
         View.printConfirmation();
-        String confirmation = InputHelper.nextStr();
-        if(confirmation.equals("CONFIRM")){
+        boolean confirmation = View.inputConfirmModification();
+        if(confirmation){
             View.printModificationConfirmed();
             return true;
         } else {
@@ -345,7 +357,7 @@ public class ControlHRS {
      */
     public void toggleMenu(){
         View.printToggle();
-        String toggle = InputHelper.nextStr();
+        String toggle = View.inputPossiblyBlankString();
         if(toggle != null){
             View.printSpace();
         }
@@ -361,7 +373,7 @@ public class ControlHRS {
         }
         boolean exit = false;
         View.printSelectHotel(HRS);
-        int hotelNumber = InputHelper.nextInt();
+        int hotelNumber = View.inputInteger();
         Hotel hotel = HRS.getHotel(hotelNumber);
         if(hotel == null){
             View.printInvalidHotel();
@@ -369,7 +381,7 @@ public class ControlHRS {
         }
         while(!exit){
             View.printHotelInfo(hotel);
-            int option = InputHelper.nextInt();
+            int option = View.inputInteger();
             switch (option){
                 case 1:
                     viewAvailabilityOnDate(hotel);
@@ -399,7 +411,7 @@ public class ControlHRS {
         }
         boolean exit = false;
         View.printSelectHotel(HRS);
-        int hotelNumber = InputHelper.nextInt();
+        int hotelNumber = View.inputInteger();
         Hotel hotel = HRS.getHotel(hotelNumber);
         if(hotel == null){
             View.printInvalidHotel();
@@ -407,7 +419,7 @@ public class ControlHRS {
         }
         while(!exit){
             View.printHotelManagementMenu();
-            int option = InputHelper.nextInt();
+            int option = View.inputInteger();
             switch (option){
                 case 1:
                     changeName(hotel);
