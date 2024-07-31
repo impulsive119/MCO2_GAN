@@ -109,10 +109,12 @@ public class ControlHRS {
         if(name == null){
             return;
         }
-        if(hotel.setName(name)){
-            View.printNewHotelName(hotel);
-        } else {
-            View.printHotelNameError();
+        if(confirmModification()) {
+            if (hotel.setName(name)) {
+                View.printNewHotelName(hotel);
+            } else {
+                View.printHotelNameError();
+            }
         }
     }
 
