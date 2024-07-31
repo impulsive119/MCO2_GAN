@@ -119,7 +119,11 @@ public class BookReservationForm extends InputForm{
             JOptionPane.showMessageDialog(this, "Check-In Date must be before Check-Out Date");
         } else if (room.isReserved(checkInDate, checkOutDate)) {
             JOptionPane.showMessageDialog(this, "Room is Reserved on these Dates");
-        } else{
+        } else if(discountCode.equals("STAY4_GET1") && (checkOutDate - checkInDate < 5)){
+            JOptionPane.showMessageDialog(this, "STAY4_GET1 Discount is Only Applicable for Reservations at Least 5 Days Long");
+        } else if(discountCode.equals("PAYDAY") && (!((checkInDate <= 15 && checkOutDate > 15) || checkOutDate > 30))){
+        JOptionPane.showMessageDialog(this, "PAYDAY Discount is Only Applicable for Reservations That Occur on Paydays");
+        }else{
             room.addReservation(guestName, checkInDate, checkOutDate, discountCode);
             JOptionPane.showMessageDialog(this, "Reservation Booked");
         }
