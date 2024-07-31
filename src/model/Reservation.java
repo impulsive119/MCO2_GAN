@@ -115,7 +115,7 @@ public class Reservation {
         return switch (discount) {
             case "I_WORK_HERE" -> price * 0.9;
             case "STAY4_GET1" -> price - getReservedDates().getFirst().getPrice();
-            case "PAYADAY" -> price * 0.93;
+            case "PAYDAY" -> price * 0.93;
             default -> price;
         };
     }
@@ -139,7 +139,7 @@ public class Reservation {
     public ArrayList<Date> getReservedDates(){
         ArrayList<Date> dates = new ArrayList<>();
         for(int i = checkInDate; i < checkOutDate; i++){
-            dates.add(new Date(i, (room.getPrice() * hotel.getPremiums()[i])));
+            dates.add(new Date(i, (room.getPrice() * hotel.getPremiums()[i - 1])));
         }
         return dates;
     }
