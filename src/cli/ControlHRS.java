@@ -109,12 +109,12 @@ public class ControlHRS {
         if(name == null){
             return;
         }
-        if(confirmModification()) {
-            if (hotel.setName(name)) {
+        if (hotel.setName(name)) {
+            if(confirmModification()){
                 View.printNewHotelName(hotel);
-            } else {
-                View.printHotelNameError();
             }
+        } else {
+            View.printHotelNameError();
         }
     }
 
@@ -136,6 +136,10 @@ public class ControlHRS {
         }
         View.printEnterNumOfRooms();
         int numOfRooms = View.inputInteger();
+        if(numOfRooms < 1){
+            View.printInvalidOption();
+            return;
+        }
         if(!hotel.isNumberOfRoomsValid(numOfRooms)){
             View.printTooManyRooms();
             return;

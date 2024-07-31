@@ -7,7 +7,7 @@ import model.HotelReservationSystem;
  * This is the driver for the command line interface
  */
 
-public class CommandLineDriver {
+public class CommandDriver {
     public static void main (String[] args){
         HotelReservationSystem HRS = new HotelReservationSystem();
         ViewHRS view = new ViewHRS();
