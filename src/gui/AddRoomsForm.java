@@ -96,7 +96,9 @@ public class AddRoomsForm extends InputForm {
         }
         if (hotel.isNumberOfRoomsValid(numOfRooms)) {
             JOptionPane.showMessageDialog(this, "Rooms " + hotel.addRooms(numOfRooms, roomType) + " Added");
-        } else {
+        } else if(numOfRooms < 1){
+            JOptionPane.showMessageDialog(this, "Invalid Input");
+        }else{
             JOptionPane.showMessageDialog(this, "The Number of Rooms Cannot Exceed 50");
         }
 

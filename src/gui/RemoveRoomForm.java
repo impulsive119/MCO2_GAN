@@ -97,8 +97,17 @@ public class RemoveRoomForm extends InputForm{
             JOptionPane.showMessageDialog(this, "Please Select a Valid Room");
             return;
         }
+        if (hotel.getNumberOfRooms() == 1) {
+            JOptionPane.showMessageDialog(this, "Hotels Must Always Have At Least 1 Room");
+            return;
+        }
 
         Room chosenRoom = hotel.getRoom(roomNumber);
+        if (!chosenRoom.getReservations().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Cannot Remove Room with Active Reservations");
+            return;
+        }
+
         hotel.removeRoom(chosenRoom);
         JOptionPane.showMessageDialog(this, "Room Removed");
 

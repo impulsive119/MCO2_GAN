@@ -65,6 +65,10 @@ public class ChangeHotelNameForm extends InputForm{
 
         Hotel hotel = HRS.getHotel(hotelName);
         String newHotelName = hotelNameField.getText();
+        if(newHotelName.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please Enter a Valid Name");
+            return;
+        }
 
         if(hotel != null && hotel.setName(newHotelName)) {
             String message = "Hotel " + newHotelName + " Added";
