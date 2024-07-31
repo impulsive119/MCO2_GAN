@@ -41,7 +41,7 @@ public class ControlHRS {
             return;
         }
         if(HRS.createHotel(hotelName)){
-            View.printNewHotelName(HRS.getHotel(hotelName));
+            View.printNewHotel(HRS.getHotel(hotelName));
         } else {
             View.printHotelNameError();
         }

@@ -117,8 +117,13 @@ public class ViewHRS {
      *
      * @param hotel The newly created hotel.
      */
-    public void printNewHotelName(Hotel hotel) {
+    public void printNewHotel(Hotel hotel) {
         System.out.println("[Hotel " + hotel.getName() + " Created]");
+        System.out.println(" ");
+    }
+
+    public void printNewHotelName(Hotel hotel) {
+        System.out.println("[New Hotel Name: " + hotel.getName() + " ]");
         System.out.println(" ");
     }
 
