@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * This form extends {@link InputForm} and provides validation for the inputs and updates the hotel with the new room information.
  */
 
-public class AddRoomsForm extends InputForm{
+public class AddRoomsForm extends InputForm {
     private ComboBox roomTypeComboBox;
     private JTextField numOfRoomsField;
     private ComboBox hotelComboBox;
@@ -43,8 +43,8 @@ public class AddRoomsForm extends InputForm{
      */
 
     @Override
-    protected void addInputFields(){
-        hotelComboBox = addComboBox("Select a Hotel:",  HRS.getHotelNames().toArray());
+    protected void addInputFields() {
+        hotelComboBox = addComboBox("Select a Hotel:", HRS.getHotelNames().toArray());
         ArrayList<String> roomTypes = new ArrayList<>();
         roomTypes.add("Standard");
         roomTypes.add("Deluxe");
@@ -52,7 +52,7 @@ public class AddRoomsForm extends InputForm{
         roomTypeComboBox = addComboBox("Select a Room Type: ", roomTypes.toArray());
         numOfRoomsField = addTextField("Enter Number of Rooms: ");
         JButton enterButton = addEnterButton();
-        enterButton.addActionListener(_ -> onEnter());
+        enterButton.addActionListener(e -> onEnter());
     }
 
     /**
@@ -70,9 +70,14 @@ public class AddRoomsForm extends InputForm{
             return;
         }
 
+        Object selectedReservation = roomTypeComboBox.getSelectedItem();
+        if (!(selectedReservation instanceof String roomTypeString)) {
+            JOptionPane.showMessageDialog(this, "Please Select a Valid Reservation");
+            return;
+        }
+
         Hotel hotel = HRS.getHotel(hotelName);
 
-        String roomTypeString = (String) roomTypeComboBox.getSelectedItem();
         int numOfRooms = Integer.parseInt(numOfRoomsField.getText());
         int roomType = 0;
 
@@ -80,20 +85,20 @@ public class AddRoomsForm extends InputForm{
             case "Standard":
                 roomType = 1;
                 break;
-                case "Deluxe":
-                    roomType = 2;
-                    break;
-                case "Executive":
-                    roomType = 3;
-                    break;
-            case null, default:
-                    break;
-            }
-            if(hotel.isNumberOfRoomsValid(numOfRooms)){
-                JOptionPane.showMessageDialog(this, "Rooms " + hotel.addRooms(numOfRooms, roomType) + " Added");
-            }else{
-                JOptionPane.showMessageDialog(this, "The Number of Rooms Cannot Exceed 50");
-            }
+            case "Deluxe":
+                roomType = 2;
+                break;
+            case "Executive":
+                roomType = 3;
+                break;
+            default:
+                break;
+        }
+        if (hotel.isNumberOfRoomsValid(numOfRooms)) {
+            JOptionPane.showMessageDialog(this, "Rooms " + hotel.addRooms(numOfRooms, roomType) + " Added");
+        } else {
+            JOptionPane.showMessageDialog(this, "The Number of Rooms Cannot Exceed 50");
+        }
 
         numOfRoomsField.setText("");
     }

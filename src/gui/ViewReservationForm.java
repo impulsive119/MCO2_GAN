@@ -70,7 +70,7 @@ public class ViewReservationForm extends InputForm{
         reservationComboBox = addComboBox("Select a Reservation", null);
         hotelComboBox.addActionListener(this::hotelComboBoxClicked);
         JButton enterButton = addEnterButton();
-        enterButton.addActionListener(_ -> onEnter());
+        enterButton.addActionListener(e -> onEnter());
     }
 
     /**

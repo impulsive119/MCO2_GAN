@@ -46,7 +46,7 @@ public class AddPremiumToDateForm extends InputForm{
         dateField = addTextField("Enter Date: ");
         premiumField = addTextField("Enter Premium: ");
         JButton enterButton = addEnterButton();
-        enterButton.addActionListener(_ -> onEnter());
+        enterButton.addActionListener(e -> onEnter());
     }
 
     /**

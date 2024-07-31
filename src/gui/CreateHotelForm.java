@@ -42,7 +42,7 @@ public class CreateHotelForm extends InputForm{
     protected void addInputFields(){
         hotelNameField = addTextField("Enter Hotel Name: ");
         JButton enterButton = addEnterButton();
-        enterButton.addActionListener(_ -> onEnter());
+        enterButton.addActionListener(e -> onEnter());
     }
 
     /**

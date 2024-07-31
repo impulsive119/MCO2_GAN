@@ -114,7 +114,7 @@ public class Reservation {
         }
         return switch (discount) {
             case "I_WORK_HERE" -> price * 0.9;
-            case "STAY4_GET1" -> price - getReservedDates().getFirst().getPrice();
+            case "STAY4_GET1" -> price - getReservedDates().get(0).getPrice();
             case "PAYDAY" -> price * 0.93;
             default -> price;
         };

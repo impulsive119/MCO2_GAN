@@ -29,25 +29,25 @@ public class GuiController {
      */
     public void start() {
         JMenu createHotel = new JMenu("Create Hotel");
-        createHotel.add(new JMenuItem("Enter Hotel Name")).addActionListener(_ -> setForm(new CreateHotelForm(HRS, root)));
+        createHotel.add(new JMenuItem("Enter Hotel Name")).addActionListener(e -> setForm(new CreateHotelForm(HRS, root)));
 
         JMenu viewHotel = new JMenu("View Hotel");
-        viewHotel.add(new JMenuItem("Hotel Overview")).addActionListener(_ -> setFormIfHotelExists(new HotelOverviewForm(HRS, root)));
-        viewHotel.add(new JMenuItem("View Availability On Date")).addActionListener(_ -> setFormIfHotelExists(new ViewAvailabilityOnDateForm(HRS, root)));
-        viewHotel.add(new JMenuItem("View Room Information")).addActionListener(_ -> setFormIfHotelExists(new ViewRoomForm(HRS, root)));
-        viewHotel.add(new JMenuItem("View Reservation")).addActionListener(_ -> setFormIfHotelExists(new ViewReservationForm(HRS, root)));
+        viewHotel.add(new JMenuItem("Hotel Overview")).addActionListener(e -> setFormIfHotelExists(new HotelOverviewForm(HRS, root)));
+        viewHotel.add(new JMenuItem("View Availability On Date")).addActionListener(e -> setFormIfHotelExists(new ViewAvailabilityOnDateForm(HRS, root)));
+        viewHotel.add(new JMenuItem("View Room Information")).addActionListener(e -> setFormIfHotelExists(new ViewRoomForm(HRS, root)));
+        viewHotel.add(new JMenuItem("View Reservation")).addActionListener(e -> setFormIfHotelExists(new ViewReservationForm(HRS, root)));
 
         JMenu manageHotel = new JMenu("Manage Hotel");
-        manageHotel.add(new JMenuItem("Change Name")).addActionListener(_ -> setFormIfHotelExists(new ChangeHotelNameForm(HRS, root)));
-        manageHotel.add(new JMenuItem("Add Rooms")).addActionListener(_ -> setFormIfHotelExists(new AddRoomsForm(HRS, root)));
-        manageHotel.add(new JMenuItem("Remove Rooms")).addActionListener(_ -> setFormIfHotelExists(new RemoveRoomForm(HRS, root)));
-        manageHotel.add(new JMenuItem("Change Price")).addActionListener(_ -> setFormIfHotelExists(new ChangePriceForm(HRS, root)));
-        manageHotel.add(new JMenuItem("Add Premium To Date")).addActionListener(_ -> setFormIfHotelExists(new AddPremiumToDateForm(HRS, root)));
-        manageHotel.add(new JMenuItem("Remove Reservation")).addActionListener(_ -> setFormIfHotelExists(new RemoveReservationForm(HRS, root)));
-        manageHotel.add(new JMenuItem("Remove Hotel")).addActionListener(_ -> setFormIfHotelExists(new RemoveHotelForm(HRS, root)));
+        manageHotel.add(new JMenuItem("Change Name")).addActionListener(e -> setFormIfHotelExists(new ChangeHotelNameForm(HRS, root)));
+        manageHotel.add(new JMenuItem("Add Rooms")).addActionListener(e -> setFormIfHotelExists(new AddRoomsForm(HRS, root)));
+        manageHotel.add(new JMenuItem("Remove Rooms")).addActionListener(e -> setFormIfHotelExists(new RemoveRoomForm(HRS, root)));
+        manageHotel.add(new JMenuItem("Change Price")).addActionListener(e -> setFormIfHotelExists(new ChangePriceForm(HRS, root)));
+        manageHotel.add(new JMenuItem("Add Premium To Date")).addActionListener(e -> setFormIfHotelExists(new AddPremiumToDateForm(HRS, root)));
+        manageHotel.add(new JMenuItem("Remove Reservation")).addActionListener(e -> setFormIfHotelExists(new RemoveReservationForm(HRS, root)));
+        manageHotel.add(new JMenuItem("Remove Hotel")).addActionListener(e -> setFormIfHotelExists(new RemoveHotelForm(HRS, root)));
 
         JMenu bookReservation = new JMenu("Book Reservation");
-        bookReservation.add(new JMenuItem("Book Reservation")).addActionListener(_ -> setFormIfHotelExists(new BookReservationForm(HRS, root)));
+        bookReservation.add(new JMenuItem("Book Reservation")).addActionListener(e -> setFormIfHotelExists(new BookReservationForm(HRS, root)));
 
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(createHotel);

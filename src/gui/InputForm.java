@@ -36,7 +36,7 @@ public class InputForm extends JPanel implements ActionListener {
         // Add cancel button to button panel
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setSize(60, 20);
-        cancelButton.addActionListener(_ -> {
+        cancelButton.addActionListener(e -> {
             setVisible(false);
             root.setTitle("Hotel Reservation System");
         });

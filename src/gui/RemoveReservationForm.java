@@ -48,7 +48,7 @@ public class RemoveReservationForm extends InputForm{
         reservationComboBox = addComboBox();
         reservationComboBox.addActionListener(this::hotelComboBoxClicked);
         JButton enterButton = addEnterButton();
-        enterButton.addActionListener(_ -> onEnter());
+        enterButton.addActionListener(e -> onEnter());
     }
 
     /**

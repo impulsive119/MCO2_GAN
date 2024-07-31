@@ -45,7 +45,7 @@ public class ChangeHotelNameForm extends InputForm{
         hotelComboBox = addComboBox("Select a Hotel:", HRS.getHotelNames().toArray());
         hotelNameField = addTextField("Enter Hotel Name: ");
         JButton enterButton = addEnterButton();
-        enterButton.addActionListener(_ -> onEnter());
+        enterButton.addActionListener(e -> onEnter());
     }
 
     /**

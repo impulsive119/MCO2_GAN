@@ -44,7 +44,7 @@ public class ViewAvailabilityOnDateForm extends InputForm{
         hotelComboBox = addComboBox("Select a Hotel",  HRS.getHotelNames().toArray());
         dateField = addTextField("Enter Date: ");
         JButton enterButton = addEnterButton();
-        enterButton.addActionListener(_ -> onEnter());
+        enterButton.addActionListener(e -> onEnter());
     }
 
     /**

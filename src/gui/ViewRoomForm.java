@@ -48,7 +48,7 @@ public class ViewRoomForm extends InputForm{
         roomComboBox = addComboBox("Select a Room", null);
         hotelComboBox.addActionListener(this::hotelComboBoxClicked);
         JButton enterButton = addEnterButton();
-        enterButton.addActionListener(_ -> onEnter());
+        enterButton.addActionListener(e -> onEnter());
     }
 
     /**

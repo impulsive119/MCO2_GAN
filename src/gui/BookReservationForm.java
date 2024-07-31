@@ -59,7 +59,7 @@ public class BookReservationForm extends InputForm{
         checkOutDateField = addTextField("Enter Check-Out Date: ");
         discountCodeField = addTextField("Enter Discount Code: ");
         JButton enterButton = addEnterButton();
-        enterButton.addActionListener(_ -> onEnter());
+        enterButton.addActionListener(e -> onEnter());
 
     }
 

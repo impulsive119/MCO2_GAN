@@ -43,7 +43,7 @@ public class RemoveHotelForm extends InputForm{
     protected void addInputFields(){
         hotelComboBox = addComboBox("Select a Hotel:", HRS.getHotelNames().toArray());
         JButton enterButton = addEnterButton();
-        enterButton.addActionListener(_ -> onEnter());
+        enterButton.addActionListener(e -> onEnter());
     }
 
     /**
